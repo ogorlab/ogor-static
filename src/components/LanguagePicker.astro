@@ -1,0 +1,31 @@
+---
+const { localizedUrls } = Astro.locals
+
+function isSelected(locale: string) {
+  return locale === Astro.currentLocale
+}
+---
+
+<select id="language_picker">
+  { Object.entries(localizedUrls).map(([locale, href]) => (
+    <option value={ locale } selected={ isSelected(locale) } data-href={href}>{ locale.toUpperCase() }</option>
+  )) }
+</select>
+
+<script>
+  // @ts-nocheck
+  import { navigate } from "astro:transitions/client"
+  
+  function handleChange(event) {
+    const elem = event.target
+    const href = elem.selectedOptions[0].dataset.href
+
+    window.location = href
+    // i suspect navigate doesn't work since the module is only loaded once
+    // yup. whenever i change the view with view transition
+    navigate(href)
+  }
+  document.querySelector("#language_picker").onchange = handleChange
+</script>
+
+

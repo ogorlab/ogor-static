@@ -1,0 +1,61 @@
+---
+import { getPath } from "@/middleware"
+
+const social = [
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/ogor.ro",
+    icon: "/icon_facebook.svg",
+  },
+  {
+    name: "YouTube",
+    url: "https://www.youtube.com/channel/UCyJXrLqqYUTwTaEC2FtKUDg",
+    icon: "/icon_facebook.svg",
+    // icon: "",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/company/ogor/",
+    icon: "/icon_facebook.svg",
+    // icon: "",
+  }
+]
+---
+
+
+<footer>
+  <div>
+    <a href="https://anpc.ro/" rel="external nofollow">ANPC</a>
+    <a href={ getPath(undefined, "legal") + "#terms"}>Terms and conditions</a>
+    <a href={ getPath(undefined, "legal") + "#privacy"}>Privacy policy</a>
+    <a href={ getPath(undefined, "legal") + "#cookie"}>Cookie policy</a>
+  </div>
+
+  <div>
+    { social.map(platform => 
+      <a href={ platform.url } title={ platform.name } rel="external">
+        <img src={ platform.icon } alt="Icon">
+        { platform.name } 
+      </a> 
+    )} 
+  </div>
+
+  <div>
+    <p>Field Data Zoom SRL (OGOR). CUI 41399686. Str. Gheorghe Missail nr.67, 011542 Sector 1, București</p>
+  </div>
+</footer>
+  
+
+
+<!-- Social media links -->
+
+
+<!-- Impressum -->
+
+
+<style>
+  footer {
+    padding: 2rem;
+    background: lavender;
+  }
+</style>

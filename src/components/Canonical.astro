@@ -1,0 +1,16 @@
+---
+import { defaultLocale } from "@/middleware"
+const { localizedUrls } = Astro.locals
+---
+
+{
+  Object.entries(localizedUrls).map(([locale, href]) => (
+    <link rel="alternate" hreflang={locale} href={href} />
+  ))
+}
+
+{/**
+ * Default for unmatched languages
+ * https://developers.google.com/search/docs/specialty/international/localized-versions#all-method-guidelines 
+ */}
+<link rel="alternate" hreflang="x-default" href={localizedUrls[defaultLocale]} />

@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getLocalizedPaths } from "@/middleware"
+import Layout from "@/layouts/Layout.astro";
+
+export const getStaticPaths = (() => {
+  return getLocalizedPaths()
+}) satisfies GetStaticPaths
+
+interface Props {
+  Content: () => void;
+}
+
+const { Content } = Astro.props
+---
+<Layout>
+  <Content />
+</Layout>

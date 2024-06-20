@@ -1,0 +1,22 @@
+---
+import LanguagePicker from "./LanguagePicker.astro"
+import { getPath } from "@/middleware"
+---
+
+<nav style="display: flow-root;">
+  <a href={ getPath(Astro.currentLocale, "home", true) }>OGOR</a>
+  { import.meta.env.MODE }
+  
+  <LanguagePicker />
+  
+  <span style="float: right">
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>Login</a>
+  </span>
+</nav>
+
+<style>
+  nav {
+    padding: 2rem;
+    background: lavender;
+  }
+</style>
