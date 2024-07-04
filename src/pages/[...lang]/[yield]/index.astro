@@ -1,0 +1,13 @@
+---
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (() => {
+  return [
+    { params: { lang: undefined, yield: "productie" }},
+    { params: { lang: "en", yield: "yield" }},
+    { params: { lang: "fr", yield: "rendement" }},
+  ];
+}) satisfies GetStaticPaths;
+---
+
+About the yield project: { Astro.currentLocale }

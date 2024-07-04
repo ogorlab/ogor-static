@@ -1,0 +1,38 @@
+---
+import { getLocalizedPaths } from "@/i18n";
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { useI18n } from "@/i18n";
+
+interface Props {
+  entry: CollectionEntry<"forecast">
+}
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("forecast")
+
+  const paths = entries.flatMap(entry => {
+    return getLocalizedPaths("yield/forecast", (item) => {
+      item.params.slug = entry.id
+      item.props = { entry }
+      return item
+    })
+  })
+  return paths
+}) satisfies GetStaticPaths;
+
+const { t } = useI18n(Astro.currentLocale)
+const { entry } = Astro.props
+
+---
+Forecast date: { entry.data.forecast_date } <br>
+Next forecast: { entry.data.next_forecast_date }
+
+<ul>
+{ entry.data.crops.map(crop => (
+  <li>
+    { t("crops:" + crop.code) }: {crop.avg_yield} t/ha
+  </li>
+))}
+</ul>

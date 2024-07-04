@@ -1,0 +1,21 @@
+{
+  "forecast_date": "2024-05-31",
+  "next_forecast_date": "2024-06-25",
+  "crops": [
+    {
+      "code": 101,
+      "avg_yield": 4.75,
+      "total_surface": 2942598.6
+    },
+    {
+      "code": 105,
+      "avg_yield": 5.77,
+      "total_surface": 247388.03
+    },
+    {
+      "code": 202,
+      "avg_yield": 2.75,
+      "total_surface": 582379.75
+    }
+  ]
+}

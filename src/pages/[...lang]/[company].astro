@@ -1,0 +1,14 @@
+---
+import { getLocalizedPaths } from "@/i18n";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (() => getLocalizedPaths("company")) satisfies GetStaticPaths;
+---
+
+Company
+
+<section>
+
+</section>
+
+<!-- How do I pull partials? -->

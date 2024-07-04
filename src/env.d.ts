@@ -1,4 +1,5 @@
 /// <reference path="../.astro/types.d.ts" />
+/// <reference types="i18next" />
 /// <reference types="astro/client" />
 /// <reference path="./middleware.ts" />
 

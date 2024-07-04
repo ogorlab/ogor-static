@@ -3,7 +3,6 @@ import { ViewTransitions } from 'astro:transitions';
 import NavbarAnonymous from "@/components/NavbarAnonymous.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/global.css"
-import Canonical from '@/components/Canonical.astro';
 
 const { title } = Astro.locals;
 ---
@@ -17,20 +16,19 @@ const { title } = Astro.locals;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<Canonical/>
 
 		<!-- See LanguagePicker -->
 		<!-- <ViewTransitions /> -->
 	</head>
 	<body>
-		<NavbarAnonymous />
-		<hr>
-
-		currentLocale: { Astro.currentLocale }, { title }, 
-
-		<hr>
-		<slot />
-		<hr>
-		<Footer />
+		<div id="viewport">
+			<NavbarAnonymous />
+			<div id="content">
+				<slot />
+			</div>
+		</div>
+		<slot name="footer">
+			<Footer />
+		</slot>
 	</body>
 </html>

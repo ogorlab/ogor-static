@@ -10,6 +10,6 @@
     "src/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.astro",
-    "src/middleware.ts"
+    "src/middleware.ts",
   ]
 }

@@ -1,0 +1,179 @@
+---
+import { useI18n } from "@/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import type { GetStaticPaths } from "astro";
+
+const { t } = useI18n(Astro.currentLocale)
+
+export const getStaticPaths = (() => {  
+  return [
+    { params: { lang: undefined }},
+    { params: { lang: "en" }},
+    { params: { lang: "fr" }}
+  ];
+}) satisfies GetStaticPaths;
+---
+<BaseLayout>
+  Lastest approach: { Astro.currentLocale }
+
+
+  <section id="hero">
+
+    <div class="_body">
+      <h1>{ t("home.hero_heading") }</h1>
+      <p set:html={ t("home.hero_description") } />
+    </div>
+
+    <div class="_media1">
+      <img src="" alt="1">
+    </div>
+
+    <div class="_media2">
+      <img src="" alt="2">
+    </div>
+
+    <div class="_cta">
+      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+        <span class="underline">{ t("home.hero_cta") }</span> →
+      </a>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2>{ t("home.why_ogor") }</h2>
+
+    <section>
+      <h3>{ t("home.feature1_heading") }</h3>
+      <p>{ t("home.feature1_description") }</p>
+
+      <div class="_media">
+        <img src="" alt="feature">
+      </div>
+    </section>
+
+    <section>
+      <h3>{ t("home.feature2_heading") }</h3>
+      <p>{ t("home.feature2_description") }</p>
+
+      <div class="_media">
+        <img src="" alt="feature">
+      </div>
+    </section>
+
+    <div>
+      <p set:html={ t("home.context") }/>
+    </div>
+
+    <section>
+      <h3>{ t("home.feature3_heading") }</h3>
+      <p>{ t("home.feature3_description") }</p>
+
+      <div class="_media">
+        <img src="" alt="feature">
+      </div>
+    </section>
+
+    <section>
+      <h3>{ t("home.feature4_heading") }</h3>
+      <p>{ t("home.feature4_description") }</p>
+
+      <div class="_media">
+        <img src="" alt="feature">
+      </div>
+    </section>
+
+    <p>Plus:</p>
+
+    { [
+        {
+          name: t("accumulated_precipitation"),
+        },
+        {
+          name: t("weather_forecast"),
+        },
+        {
+          name: t("water_capacity"),
+        },
+        {
+          name: t("crop_rotation"),
+        },
+        {
+          name: t("soil_map"),
+        },
+        {
+          name: t("vra"),
+        },
+        {
+          name: t("soil_analysis"),
+        }
+      ].map(f => (
+        <details>
+          <summary set:html={ f.name } />
+        </details>
+      ))
+    }
+  </section>
+
+  <section id="testimonials">
+    <h2>{ t("home.testimonials_heading") }</h2>
+    <p set:html={ t("home.testimonials_description") } />
+
+    <div>
+      <button>←</button>
+      <button>→</button>
+    </div>
+
+    <div>
+      <blockquote>
+        <p>Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!</p>
+        <cite>
+          Alin Oprea
+          Ing. agronom jud. IF
+        </cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section id="cta">
+    <p>
+      <strong>{ t("home.got_questions") }</strong>
+      { t("home.here_to_help") }
+    </p>
+    <p>
+      <a href="tel:+40754347347">+40 (754) 347 347</a>
+      <a href="mail:contact@ogor.ro">contact@ogor.ro</a>
+    </p>
+    <p>
+      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+        <svg width="32" height="32">
+          <use href="/logos/ogor.svg#logo" />
+        </svg>
+        <Fragment set:html={ t("home.cta") }/>
+      </a>
+    </p>
+    <ul>
+      <li>{ t("home.cta_assurance1") }</li>
+      <li>{ t("home.cta_assurance2") }</li>
+      <li>{ t("home.cta_assurance3") }</li>
+    </ul>
+  </section>
+  
+  <section id="partners">
+    <p>
+      { t("home.with_the_support_of") }: <br>
+      <span>
+        <img src="" alt="ESA">
+        <img src="" alt="ROSA">
+      </span>
+    </p>
+    <p>
+      { t('home.partners') }: <br>
+      <span>
+        <img src="" alt="Alcedo">
+      </span>
+    </p>
+  </section>
+</BaseLayout>
+
+
+<!-- i could use urls with diacritics that also create pages without -->

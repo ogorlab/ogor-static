@@ -1,3 +1,44 @@
-html {
-  font-family: system-ui, sans-serif;
+@charset "UTF-8";
+@font-face {
+  font-family: "Instrument Sans";
+  font-weight: 400 900;
+  font-display: block;
+  src: url("/fonts/InstrumentSans-VF.ttf") format("truetype");
 }
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: block;
+  src: url("/fonts/InstrumentSans-Italic-VF.ttf") format("truetype");
+}
+
+html {
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-size: 100%;
+
+  @media (min-width: 800px) { font-size: 125%; }
+  @media (min-width: 1200px) { font-size: 150%; }
+}
+
+body {
+  margin: 0;
+}
+
+#viewport {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#content {
+  flex-grow: 1;
+}
+
+.container {
+  margin-inline: 
+}
+
+select, textarea, input, button {
+  font: inherit;
+}
+

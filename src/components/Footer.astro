@@ -1,5 +1,7 @@
 ---
-import { getPath } from "@/middleware"
+import { useI18n } from "@/i18n"
+
+const { t } = useI18n(Astro.currentLocale)
 
 const social = [
   {
@@ -24,11 +26,22 @@ const social = [
 
 
 <footer>
+  <a href="/">
+    <svg viewBox="0 0 960 384" height="64" >
+      <use href="/logos/ogor.svg#logo" width="384" />
+      <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+    </svg>
+  </a>
+
+  <h4>{ t("company.tagline") }</h4>
+  <p>{ t("company.description") }</p>
+
+
   <div>
     <a href="https://anpc.ro/" rel="external nofollow">ANPC</a>
-    <a href={ getPath(undefined, "legal") + "#terms"}>Terms and conditions</a>
-    <a href={ getPath(undefined, "legal") + "#privacy"}>Privacy policy</a>
-    <a href={ getPath(undefined, "legal") + "#cookie"}>Cookie policy</a>
+    <a href="/legal#terms">{t("legal.terms")}</a>
+    <a href="/legal#privacy">{t("legal.privacy")}</a>
+    <a href="/legal#cookie">{t("legal.cookie")}</a>
   </div>
 
   <div>
@@ -41,7 +54,17 @@ const social = [
   </div>
 
   <div>
-    <p>Field Data Zoom SRL (OGOR). CUI 41399686. Str. Gheorghe Missail nr.67, 011542 Sector 1, București</p>
+
+
+    <address>
+      { t("company.name") } <br>
+      { t("company.cui") }  <br>
+      { t("company.address") }
+    </address>
+
+    <a href={"mailto:" + t("company.email")}>{t("company.email")}</a>
+    {/* TODO: add a phone format to i18next */}
+    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")}>{t("company.phone")}</a>
   </div>
 </footer>
   

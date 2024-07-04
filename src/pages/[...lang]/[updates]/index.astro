@@ -1,0 +1,13 @@
+---
+import { getLocalizedPaths, useI18n } from "@/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { GetStaticPaths } from "astro";
+
+const { t } = useI18n(Astro.currentLocale)
+
+export const getStaticPaths = (() => getLocalizedPaths("updates")) satisfies GetStaticPaths;
+---
+
+<BaseLayout>
+  { t("updates") }
+</BaseLayout>

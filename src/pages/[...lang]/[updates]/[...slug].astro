@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from "astro";
+import UpdatesLayout from "@/layouts/UpdatesLayout.astro"
+import { getCollection } from "astro:content";
+import i18next from "i18next";
+import astroConfig from "astro.config.mjs";
+
+/**
+ * Generate paths for each update.
+ * Take notice, not all updates need translation!
+ * Some are specific to a language (region)
+ * 
+ * We will apply the same pattern to banners.
+ */
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("updates")
+  const paths = entries.map(entry => {
+    let lang = entry.id.split("/")[0]
+    if (lang === astroConfig.i18n?.defaultLocale) {
+      lang = undefined
+    }
+    const updates = i18next.t(entry.collection, { lng: lang, ns: "urls" })
+    return { 
+      params: { lang, updates, slug: entry.slug },
+      props: { entry }
+    }
+  })
+  return paths
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+<UpdatesLayout>
+  <Content />
+</UpdatesLayout>

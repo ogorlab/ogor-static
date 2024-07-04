@@ -1,17 +1,42 @@
 ---
+import { useI18n } from "@/i18n"
 import LanguagePicker from "./LanguagePicker.astro"
-import { getPath } from "@/middleware"
+
+const { t } = useI18n(Astro.currentLocale)
+
 ---
 
-<nav style="display: flow-root;">
-  <a href={ getPath(Astro.currentLocale, "home", true) }>OGOR</a>
-  { import.meta.env.MODE }
+<nav style="display: flow-root;" title={ import.meta.env.MODE }>
+  <a href="/">
+    <svg viewBox="0 0 960 384" height="64" >
+      <use href="/logos/ogor.svg#logo" width="384" />
+      <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+    </svg>
+  </a>
+
+  <style>
+    a:hover {
+      color: blue;
+    }
+  </style>
   
-  <LanguagePicker />
   
   <span style="float: right">
-    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>Login</a>
+    <a href="">
+      📞 { t("company.phone") }
+    </a>
+    &ensp;
+    <a href="">
+      ✉️ { t("company.email") }
+    </a>
+
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+      { t("your_account") }
+    </a>
   </span>
+
+
+
 </nav>
 
 <style>

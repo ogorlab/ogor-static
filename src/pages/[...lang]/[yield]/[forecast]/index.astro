@@ -1,0 +1,33 @@
+---
+import { getLocalizedPaths } from "@/i18n";
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
+interface Props {
+  entries: CollectionEntry<"forecast">[]
+}
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("forecast")
+
+  return getLocalizedPaths("yield/forecast", (item) => {
+    item.props = {
+      entries
+    }
+    return item
+  })
+}) satisfies GetStaticPaths;
+
+const { entries } = Astro.props
+---
+
+Forecast index page: { Astro.currentLocale }
+
+<ol>
+{ entries.map(entry => (
+  <li>
+    <a href="#">{ entry.data.forecast_date }</a>
+  </li>
+))}
+</ol>
