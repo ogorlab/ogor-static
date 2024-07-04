@@ -169,17 +169,15 @@ export const getStaticPaths = (() => {
   
   <section id="partners">
     <p>
-      { t("home.with_the_support_of") }: <br>
-      <span>
-        <img src="" alt="ESA">
-        <img src="" alt="ROSA">
-      </span>
+      <strong>{ t("home.with_the_support_of") }:</strong>
+      <br>
+      <img src="/src/images/esa.png" id="esa" alt="ESA" height="48"/>
+      <img src="/src/images/rosa.png" alt="ROSA" height="80" />
     </p>
     <p>
-      { t('home.partners') }: <br>
-      <span>
-        <img src="" alt="Alcedo">
-      </span>
+      <strong>{ t('home.partners') }: </strong>
+      <br>
+      <img src="/src/images/Alcedo.svg" alt="Alcedo" height="64">
     </p>
   </section>
 </BaseLayout>
@@ -247,5 +245,28 @@ export const getStaticPaths = (() => {
       color: hsla(197, 83%, 61%, 1);
     }
   }
+  #partners {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 2em;
+    & p {
+      display: inline-block;
+      max-width: calc(var(--container) / 2);
+      width: 45%;
+      min-width: fit-content;
+    }
+    img{
+      vertical-align: middle;
+    }
+    strong{
+      display: inline-block;
+      vertical-align: top;
+      margin-bottom: 1em;
+    }
+    #esa{
+      margin-right: 2em;
+    }
+}
 </style>
 <!-- i could use urls with diacritics that also create pages without -->
