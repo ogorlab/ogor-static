@@ -164,29 +164,17 @@ export const getStaticPaths = (() => {
   
   <section id="partners">
     <p>
-      { t("home.with_the_support_of") }: <br>
-      <span>
-        <img src="" alt="ESA">
-        <img src="" alt="ROSA">
-      </span>
-    </p><p>
-      { t('home.partners') }: <br>
-      <span>
-        <img src="" alt="Alcedo">
-      </span>
+      <strong>{ t("home.with_the_support_of") }:</strong>
+      <br>
+      <img src="/src/images/esa.png" alt="ESA" style="height: 3em; margin-right: 1em"/>
+      <img src="/src/images/rosa.png" alt="ROSA" style="height: 5em"/>
+    </p>
+    <p>
+      <strong>{ t('home.partners') }:</strong>
+      <br>
+      <img src="/src/images/Alcedo.svg" alt="Alcedo" style="height: 4em; margin-top: .5em">
     </p>
   </section>
-  <style>
-    #partners {
-      text-align: center;
-      & p {
-        display: inline-block;
-        max-width: calc(var(--container) / 2);
-        width: 50%;
-        min-width: fit-content;
-      }
-    }
-  </style>
 </BaseLayout>
 
 
@@ -258,7 +246,6 @@ export const getStaticPaths = (() => {
     }
   }
 
-
   #cta {
     --paper: #FFF0C6;
     padding: 2em;
@@ -296,6 +283,27 @@ export const getStaticPaths = (() => {
     .decoration {
       align-self: center;
       color: hsla(197, 83%, 61%, 1);
+    }
+  }
+
+  #partners {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 2em;
+    & p {
+      display: inline-block;
+      max-width: calc(var(--container) / 2);
+      width: 45%;
+      min-width: fit-content;
+      vertical-align: top;
+    }
+    img {
+      vertical-align: middle;
+    }
+    strong {
+      display: inline-block;
+      margin-bottom: 1em;
     }
   }
 </style>
