@@ -140,22 +140,31 @@ export const getStaticPaths = (() => {
       { t("home.here_to_help") }
     </p>
     <p>
-      <a href="tel:+40754347347">+40 (754) 347 347</a>
-      <a href="mail:contact@ogor.ro">contact@ogor.ro</a>
+      <a href="tel:+40754347347" class="btn btn-text rounded">
+        <span class="emoji">📞</span>
+        { t("company.phone")}
+      </a>
+      <a href="mail:contact@ogor.ro" class="btn btn-text rounded">
+        <svg class="icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 15.0156L24.0156 10H7.98438L16 15.0156ZM24.0156 22V12.0156L16 16.9844L7.98438 12.0156V22H24.0156ZM24.0156 7.98438C24.5469 7.98438 25 8.1875 25.375 8.59375C25.7812 9 25.9844 9.46875 25.9844 10V22C25.9844 22.5312 25.7812 23 25.375 23.4062C25 23.8125 24.5469 24.0156 24.0156 24.0156H7.98438C7.45312 24.0156 6.98438 23.8125 6.57812 23.4062C6.20312 23 6.01562 22.5312 6.01562 22V10C6.01562 9.46875 6.20312 9 6.57812 8.59375C6.98438 8.1875 7.45312 7.98438 7.98438 7.98438H24.0156Z" fill="#295EFF"/>
+        </svg>          
+      </a>
     </p>
     <p>
-      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
         <svg width="32" height="32">
           <use href="/logos/ogor.svg#logo" />
         </svg>
         <Fragment set:html={ t("home.cta") }/>
       </a>
     </p>
-    <ul>
-      <li>{ t("home.cta_assurance1") }</li>
-      <li>{ t("home.cta_assurance2") }</li>
-      <li>{ t("home.cta_assurance3") }</li>
-    </ul>
+    <div class="assurances">
+      <p>{ t("home.cta_assurance1") }</p>
+      <span class="decoration">★</span>
+      <p>{ t("home.cta_assurance2") }</p>
+      <span class="decoration">★</span>
+      <p>{ t("home.cta_assurance3") }</p>
+    </div>
   </section>
   
   <section id="partners">
@@ -176,4 +185,68 @@ export const getStaticPaths = (() => {
 </BaseLayout>
 
 
+<style>
+  
+
+  #hero {
+    @media (min-width: 800px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr auto;
+      grid-template-areas: 
+        "body   body"
+        "media1 media2"
+        "cta cta"
+      ;
+    }
+    @media (min-width: 1200px) {
+      grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: 
+        ". body   media1 ."
+        ". media2 media1 ."
+        ". media2 cta    ."
+      ;
+      min-height: 20em;
+    }
+
+    ._body   { grid-area: body; }
+    ._media1 { grid-area: media1; }
+    ._media2 { grid-area: media2; }
+    ._cta    { grid-area: cta; }
+  }
+
+
+  #cta {
+    --paper: #FFF0C6;
+    padding: 2em;
+    text-align: center;
+    background: #FFF0C6;
+
+    & p {
+      margin-inline: auto;
+      max-width: 40em;
+    }
+
+    .btn-text {
+      --bg: var(--action-bg);
+    }
+
+    .assurances {
+      max-width: var(--container);
+      margin-inline: auto;
+      font-stretch: semi-condensed;
+      
+      @media (min-width: 40rem) {
+        display: flex;
+        gap: 1em;
+        flex-direction: row;
+      }
+    }
+    .decoration {
+      align-self: center;
+      color: hsla(197, 83%, 61%, 1);
+    }
+  }
+</style>
 <!-- i could use urls with diacritics that also create pages without -->

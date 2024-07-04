@@ -14,13 +14,6 @@ const { t } = useI18n(Astro.currentLocale)
     </svg>
   </a>
 
-  <style>
-    a:hover {
-      color: blue;
-    }
-  </style>
-  
-  
   <span style="float: right">
     <a href="">
       📞 { t("company.phone") }
@@ -30,7 +23,7 @@ const { t } = useI18n(Astro.currentLocale)
       ✉️ { t("company.email") }
     </a>
 
-    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
       { t("your_account") }
     </a>
   </span>

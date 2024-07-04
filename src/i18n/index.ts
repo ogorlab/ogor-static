@@ -134,6 +134,24 @@ i18next.services.formatter?.add('ha', (value, lng, options) => {
   return value
 })
 
+
+
+
+
+/*
+
+- [ ] link catre o pagina in functie limba...
+- [ ] linkurile href lang
+
+getLocalizedPaths intoarce toate limbile...
+
+
+*/
+
+
+
+
+
 type GetLocalizedPathCallback = (item: GetStaticPathsItem) => GetStaticPathsItem;
 
 /**
