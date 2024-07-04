@@ -21,6 +21,10 @@ html {
   @media (min-width: 1200px) { font-size: 150%; }
 }
 
+a {
+  color: inherit;
+}
+
 body {
   margin: 0;
 }
@@ -42,3 +46,6 @@ select, textarea, input, button {
   font: inherit;
 }
 
+.inline-block {
+  display: inline-block;
+}
