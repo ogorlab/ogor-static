@@ -7,18 +7,18 @@ const social = [
   {
     name: "Facebook",
     url: "https://www.facebook.com/ogor.ro",
-    icon: "/icon_facebook.svg",
+    icon: "/icons.svg#facebook",
   },
   {
     name: "YouTube",
     url: "https://www.youtube.com/channel/UCyJXrLqqYUTwTaEC2FtKUDg",
-    icon: "/icon_facebook.svg",
+    icon: "/icons.svg#youtube",
     // icon: "",
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/company/ogor/",
-    icon: "/icon_facebook.svg",
+    icon: "/icons.svg#linkedin",
     // icon: "",
   },
 ];
@@ -41,7 +41,9 @@ const social = [
         {
           social.map((platform) => (
             <a href={platform.url} title={platform.name} rel="external">
-              <img src={platform.icon} alt="Icon" />
+              <svg class="icon" viewBox="0 0 48 48" style="font-size: 200%;">
+                <use href={ platform.icon }/>
+              </svg>
               {/* {platform.name} */}
             </a>
           ))

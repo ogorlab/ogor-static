@@ -1,18 +1,4 @@
 @charset "UTF-8";
-
-
-@counter-style features {
-  system: additive;
-  additive-symbols: 1 ⏺;
-}
-
-section {
-  counter-increment: section;
-  list-style: features;
-  &::before {
-    content: counter(section)
-  }
-}
 @font-face {
   font-family: "Instrument Sans";
   font-weight: 400 900;
@@ -60,7 +46,7 @@ html {
   font-family: "Instrument Sans", system-ui, sans-serif;
   font-size: 100%;
 
-  @media (min-width: 800px) { font-size: 125%; }
+  @media (min-width: 800px)  { font-size: 125%; }
   @media (min-width: 1200px) { font-size: 150%; }
 }
 
@@ -82,7 +68,7 @@ body {
 }
 
 .container {
-  margin-inline: 
+  margin-inline: auto;
 }
 
 select, textarea, input, button {
@@ -233,14 +219,16 @@ button,
 /* Icons */
 .icon {
   display: inline-block;
-  width: 1.44em;
-  height: 1.44em;
-  /* font-size: 133%; */
+  width: 1em;
+  height: 1em;
+  font-size: 150%;
   line-height: 1;
-  vertical-align: middle;
-  /* vertical-align: -0.4em; */
+  vertical-align: -0.25em;
+  
+  & use {
+    fill: currentColor;
+  }
 }
 .emoji {
   vertical-align: middle;
 }
-
