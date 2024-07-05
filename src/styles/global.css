@@ -34,6 +34,9 @@ html {
   --action-bg-alt: hsla(225, 100%, 60%, 0.2);
   --action-bg:     hsla(225, 100%, 60%, 0.1);
 
+  --brand-yellow-6: #FFF0C6;
+  --brand-yellow-5: #FFE79F;
+  --brand-orange: #C58336;
   
   /* Sizing */
   --btn-radius: .25em;

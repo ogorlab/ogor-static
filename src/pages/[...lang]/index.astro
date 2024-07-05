@@ -19,16 +19,20 @@ export const getStaticPaths = (() => {
       <h1>{ t("home.hero_heading") }</h1>
       <p set:html={ t("home.hero_description") } />
     </div>
-    <div class="_media1">
-      <img src="" alt="1">
-    </div>
     <div class="_media2">
-      <img src="" alt="2">
+      <img src="/src/images/on-field.jpeg" alt="Ogor on field" style="transform: scaleX(-1);">
+    </div>
+    <div class="_body" >
+      <h1 style="max-width: 30ch;">{ t("home.hero_heading") }</h1>
+      <p  style="max-width: 50ch;" set:html={ t("home.hero_description") } class="reading-width-description"/>
     </div>
     <div class="_cta">
-      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>
+      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="flex justify-center items-center" style="height: 100%;">
         <span class="underline">{ t("home.hero_cta") }</span> →
       </a>
+    </div>
+    <div class="_media1 flex justify-center items-center">
+      <img src="/src/images/app-showcase.png" alt="Ogor app showcase">
     </div>
   </section>
 
@@ -180,24 +184,67 @@ export const getStaticPaths = (() => {
 
 <style>
   #hero {
+    background-color: var(--brand-yellow-6);
+
     /* Layout */
+    ._body   { grid-area: body; }
+    ._media1 { grid-area: media1;}
+    ._media2 { grid-area: media2;}
+    ._cta    { grid-area: cta; }
+
+    img { width: 100%; }
+
+    ._body {
+      padding: 2em;
+      line-height: 1.5;
+      background: var(--brand-yellow-6);
+      color: var(--action-color);
+    }
+    
+    ._media1 {
+      background-color: #F6F8F4;
+      padding: 2em;
+      img { 
+        height: 240px;
+        object-fit: contain;
+      }
+    }
+    ._media2 { img { object-fit: cover; height: 100%; }}
+
+    ._cta {
+      background-color: var(--brand-orange);
+      width: fit-content;
+      margin-left: 24px;
+      padding: 16px 24px;
+      a{color: white;}
+    }
+
+    /* Different devices */
     @media (min-width: 800px) {
+      background-color: var(--brand-yellow-5) ;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr auto;
+      grid-template-rows: auto 1fr auto;
       grid-template-areas: 
         "body   body"
         "media1 media2"
         "cta cta"
       ;
+      ._cta {
+        width: 100%;
+        margin-left: 0;
+        min-height: 8em;
+        box-sizing: border-box;
+      }
+      ._media1 { img { height: max-content; } }
     }
     @media (min-width: 1200px) {
       grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: 1fr 0.5fr 1fr;
       grid-template-areas: 
-        ". body   media1 ."
-        ". media2 media1 ."
-        ". media2 cta    ."
+        ". body   media2 media2"
+        "media1 media1 media2 media2"
+        "media1 media1 cta    ."
       ;
       min-height: 20em;
     }
