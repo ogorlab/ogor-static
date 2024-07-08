@@ -4,8 +4,21 @@ import NavbarAnonymous from "@/components/NavbarAnonymous.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/global.css"
 import "@/styles/utils.css"
+import config from "astro.config.mjs"
+import { getUrl } from "@/i18n"
 
-const { title } = Astro.locals;
+const { title, key } = Astro.locals;
+
+// console.log(Astro.props)
+// console.log(Astro.self)
+console.log("BaseLayout", Astro.props)
+console.log("BaseLayout", Astro.params)
+console.log("BaseLayout", key)
+// console.log(Astro.url)
+
+// hreflangs.push(
+// { [lang || defaultLocale]: getUrl(lang, key) }
+    // )
 ---
 
 <!doctype html>
@@ -17,6 +30,19 @@ const { title } = Astro.locals;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<slot name="seo">
+		</slot>
+		<slot name="hreflangs">
+			{	
+				config.i18n?.locales.map(locale => {
+					const lang = locale as string
+					return <link rel="alternate" hreflang={lang} href={ getUrl(lang, key) } />
+				})
+			}
+		</slot>
+
+
 
 		<!-- See LanguagePicker -->
 		<!-- <ViewTransitions /> -->

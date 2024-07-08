@@ -1,13 +1,31 @@
 ---
+import { getLocalizedPaths } from "@/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths = (() => {
-  return [
-    { params: { lang: undefined, yield: "productie" }},
-    { params: { lang: "en", yield: "yield" }},
-    { params: { lang: "fr", yield: "rendement" }},
-  ];
+export const getStaticPaths = (async() => {
+  const entries = await getCollection("forecast")
+  const paths = entries.flatMap(entry => {
+    return getLocalizedPaths("yield", (item) => {
+      item.props.entries = entries
+      return item
+    })
+  })
+
+  console.log(paths)
+  return paths
 }) satisfies GetStaticPaths;
+
+const { entries } = Astro.props
 ---
 
-About the yield project: { Astro.currentLocale }
+<BaseLayout>
+  <ol>
+  { entries.map(entry => (
+    <li>
+      <a href="#">{ entry.data.forecast_date }</a>
+    </li>
+  ))}
+  </ol>
+</BaseLayout>

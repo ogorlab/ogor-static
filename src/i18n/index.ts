@@ -8,6 +8,11 @@ import { toCodes } from "astro:i18n";
 const locales = toCodes( config.i18n!.locales ) as Locale[]
 const defaultLocale = config.i18n!.defaultLocale as Locale
 
+const prefixDefaultLocale = (
+  typeof config.i18n!.routing === "object" && 
+  config.i18n!.routing.prefixDefaultLocale
+)
+
 type Locale = "ro" | "en" | "fr"
 
 
@@ -34,6 +39,16 @@ i18next.init({
         "vra": "Aplicare variabilă (VRA)",
         "soil_analysis": "Analize de sol",
 
+        nav: {
+          company: "Compania",
+          company_long: "Prezentarea companiei",
+          products: "Produse",
+          products_long: "Produsele noastre",
+          forecast: "Prognoza",
+          forecast_long: "Prognoza OGOR",
+          updates: "Noutăți",
+          updates_long: "Ultimele noutăți",
+        },
         company: {
           tagline: "IT pentru Agricultură",
           description: "Înființată în 2019, compania noastră este specializată în procesarea datelor satelitare pentru agricultură. Colaborăm cu fermieri, agronomi și cercetători pentru a oferi soluții accesibile de monitorizare de la distanță a culturilor și de agricultură de precizie.",
@@ -80,6 +95,7 @@ i18next.init({
         updates: "noutati",
         yield: "productie",
         forecast: "prognoza",
+        legal: "legal",
       },
       crops: {
         101: "Grâu",
@@ -91,7 +107,18 @@ i18next.init({
       translation: {
         company: {
           address: "67 Gheorghe Missail Street, 011542 Sector 1, BUCHAREST, ROMANIA",
-        }
+        },
+
+        nav: {
+          company: "Compania",
+          company_long: "Prezentarea companiei",
+          products: "Produse",
+          products_long: "Produsele noastre",
+          forecast: "Prognoza",
+          forecast_long: "Prognoza OGOR",
+          updates: "Noutăți",
+          updates_long: "Ultimele noutăți",
+        },
       },
       urls: {
         company: "company",
@@ -149,10 +176,29 @@ getLocalizedPaths intoarce toate limbile...
 */
 
 
-
-
+// Review
+export const LOGIN_URL = import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL
 
 type GetLocalizedPathCallback = (item: GetStaticPathsItem) => GetStaticPathsItem;
+
+/**
+ * @todo make it work with interpolated params...
+ */
+export function getUrl(locale: string = defaultLocale, key: string) {
+  const params = key.split("/")
+
+  let url = params.map(param => t(param, { lng: locale, ns: "urls" })).join("/")
+
+  if (url[0] !== "/") {
+    url = "/" + url
+  }
+  if (prefixDefaultLocale || locale !== defaultLocale) {
+    url = "/" + locale + url
+  }
+
+  return url
+}
+
 
 /**
  * @todo use locales defined in config
@@ -185,6 +231,7 @@ export function getLocalizedPaths(key: string, cb?: GetLocalizedPathCallback) {
 
     const path = {
       params: Object.fromEntries(entries),
+      props: { key }
     }
 
     cb?.call(null, path)

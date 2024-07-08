@@ -1,7 +1,6 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="i18next" />
 /// <reference types="astro/client" />
-/// <reference path="./middleware.ts" />
 
 interface ImportMetaEnv {
   /** Where is OGOR App located */
@@ -17,6 +16,12 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
+
+/**
+ * @todo see if these definitions can live next to the code.
+ * /// <reference types="./middleware.ts" />
+ * /// <reference path="./middleware.ts" />
+ */
 declare namespace App {
   interface Locals {
     /** @todo reference definitions from middleware */
@@ -26,6 +31,11 @@ declare namespace App {
     title: string;
 
     /** Links to translated versions of the page */
-    localizedUrls: LocalizedUrls
+    localizedUrls: LocalizedUrls,
+
+    /** Get localized URLs based on current locale */
+    getUrl: typeof _getUrl.bind,
+
+    backUrl: string | undefined,
   }
 }

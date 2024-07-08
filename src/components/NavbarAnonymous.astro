@@ -1,40 +1,109 @@
 ---
 import { useI18n } from "@/i18n"
-import LanguagePicker from "./LanguagePicker.astro"
+import config from "astro.config.mjs"
 
 const { t } = useI18n(Astro.currentLocale)
-
+const { getUrl, backUrl } = Astro.locals
 ---
 
-<nav style="display: flow-root;" title={ import.meta.env.MODE }>
-  <a href="/">
-    <svg viewBox="0 0 960 384" height="64" >
-      <use href="/logos/ogor.svg#logo" width="384" />
-      <use href="/logos/ogor.svg#logotype" x="320" y="64" />
-    </svg>
-  </a>
+<nav id="secondary_nav">
+  <div class="inner">
+    <select id="language_picker" onchange="window.location.href = document.querySelector(`link[hreflang=${this.value}]`).href">
+      { config.i18n?.locales.map((locale) => (
+        <option value={ locale } selected={ locale === Astro.currentLocale }>
+          { locale.toUpperCase() }
+        </option>
+      )) }
+    </select>
 
-  <span style="float: right">
-    <a href="">
+    <ul>
+      <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
+      <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+      <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
+      <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
+    </ul>
+  </div>
+</nav>
+
+<nav id="primary_nav">
+  <div class="inner">
+    <a href={ getUrl("/") } id="nav_logo">
+      <svg viewBox="0 0 960 384" height="64" >
+        <use href="/logos/ogor.svg#logo" width="384" />
+        <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+      </svg>
+    </a>
+    
+    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")}>
       📞 { t("company.phone") }
     </a>
     &ensp;
-    <a href="">
+    <a href={"mailto:" + t("company.email")}>
       ✉️ { t("company.email") }
-    </a>
-
+    </a>  
     <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
       { t("your_account") }
     </a>
-  </span>
-
-
-
+  </div>
 </nav>
+  
+<style is:global>
+  #primary_nav,
+  #secondary_nav {
+    & a:not(.btn) {
+      color: inherit;
+    }
 
-<style>
-  nav {
-    padding: 2rem;
-    background: lavender;
+    & .inner {
+      padding: 0 1em;
+      max-width: var(--container);
+      margin-inline: auto;
+      box-sizing: border-box;
+    }
+  }
+  #primary_nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    
+    & .inner {
+      padding: .5em 1em;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+  }
+  #secondary_nav {
+    background: #fff;
+
+    & .inner {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+  
+      padding: .5em 1em;
+      background: hsla(200, 89%, 85%, 1);
+  
+      & ul {
+        display: flex;
+        display: contents;
+        list-style: none;
+        padding-inline-start: initial;
+      }
+    }
+  }
+
+  #nav_logo {
+    display: inline-block;
+    margin-right: auto;
+    
+    & :where(img, svg) {
+      display: block;
+    }
+  }
+
+  #language_picker {
+    margin-right: auto;
   }
 </style>

@@ -1,17 +1,11 @@
 ---
-import { useI18n } from "@/i18n";
+import { getLocalizedPaths, useI18n } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
 
 const { t } = useI18n(Astro.currentLocale)
 
-export const getStaticPaths = (() => {  
-  return [
-    { params: { lang: undefined }},
-    { params: { lang: "en" }},
-    { params: { lang: "fr" }}
-  ];
-}) satisfies GetStaticPaths;
+export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 ---
 <BaseLayout>
   <section id="hero">

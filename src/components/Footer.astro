@@ -3,6 +3,10 @@ import { useI18n } from "@/i18n";
 
 const { t } = useI18n(Astro.currentLocale);
 
+const { getUrl, backUrl } = Astro.locals
+
+// console.log(getUrl("updates"))
+
 const social = [
   {
     name: "Facebook",
@@ -57,17 +61,17 @@ const social = [
     </div>
     <hr />
     <ul class="more">
-      <li><a href="">Prezentarea companiei</a></li>
-      <li><a href="">Produsele noastre</a></li>
-      <li><a href="">Noutăți</a></li>
-      <li><a href="">Creează cont OGOR&nbsp;→</a></li>
+      <li><a href={ getUrl("company") }>{ t("nav.company_long") }</a></li>
+      <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+      <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
+      <li><a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>Creează cont OGOR&nbsp;→</a></li>
     </ul>
 
     <ul class="legal">
       <li><a href="https://anpc.ro/" rel="external nofollow">ANPC</a></li>
-      <li><a href="/legal#terms">{t("legal.terms")}</a></li>
-      <li><a href="/legal#privacy">{t("legal.privacy")}</a></li>
-      <li><a href="/legal#cookie">{t("legal.cookie")}</a></li>
+      <li><a href={ getUrl("legal") + "#terms" }>{t("legal.terms")}</a></li>
+      <li><a href={ getUrl("legal") + "#privacy" }>{t("legal.privacy")}</a></li>
+      <li><a href={ getUrl("legal") + "#cookie" }>{t("legal.cookie")}</a></li>
     </ul>
 
     <div class="ogor-details">

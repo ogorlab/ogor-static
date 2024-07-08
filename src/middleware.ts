@@ -1,18 +1,16 @@
 import { defineMiddleware } from "astro:middleware";
+import { getUrl as _getUrl } from "@/i18n"
 
 /**
  * @link https://docs.astro.build/en/guides/middleware/
  */
 export const onRequest = defineMiddleware((context, next) => {
+  Object.assign(context.locals, {
+    key: context.props.key,
+    getUrl: _getUrl.bind(null, context.currentLocale),
+    backUrl: "TODO"
+  })
 
-  // console.log(context.locals.name)
-  // console.log(context.locals.title)
-  // console.log(context.locals.localizedUrls)
-  // console.log(context.currentLocale)
-
-  // As putea sa generez hreflang tags aici...
-
-  console.log(context)
   // You can intercept request here and add variable to Astro.locals
   return next();
 });
