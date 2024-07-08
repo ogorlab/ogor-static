@@ -64,7 +64,7 @@ i18next.init({
           "feature4_description": "Fie că sunteți mai mulți în fermă care folosesc OGOR, fie că apelezi la consultanți externi, adaugă poze și note pe hartă pentru a ști mereu ce s-a întâmplat pe parcelă și ce lucrări au fost efectuate.",
           "context": "Într-un context tot mai provocator din punct de vedere climatic, de piață și al politicilor agricole, <strong>OGOR</strong> vine în sprijinul fermierilor cu soluții accesibile bazate pe imagini din satelit.",
           "testimonials_heading": "Ce spun clienții OGOR?",
-          "testimonials_description": "Păstrăm în permanență contact cu clienții noștri pentru a dezvolta cele mai bune soluții pentru ei. Iată ce au avut de spus când i-am întrebat: <q>Cu ce v-a ajutat OGOR până acum?</q>",
+          "testimonials_description": "Păstrăm în permanență contact cu clienții noștri pentru a dezvolta cele mai bune soluții pentru ei. Iată ce au avut de spus când i-am întrebat: <q><strong>Cu ce v-a ajutat OGOR până acum?</strong></q>",
           "got_questions": "Ai întrebări?",
           "here_to_help": "Suntem aici să te ajutăm. Îți stăm la dispoziție la telefon sau pe email de Luni până Vineri între orele 9:00–17:00.",
           "cta": "Creează cont <strong>OGOR</strong>",
