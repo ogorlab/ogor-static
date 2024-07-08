@@ -264,6 +264,8 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     }
     
     ._media1 {
+      max-width: 90em;
+      margin-left: auto;
       background-color: #F6F8F4;
       padding: 2em;
       img { 
@@ -271,7 +273,10 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
         object-fit: contain;
       }
     }
-    ._media2 { img { object-fit: cover; height: 100%; }}
+    ._media2 {
+       max-width: 90em;
+       img { object-fit: cover; height: 100%; }
+    }
 
     ._cta {
       background-color: var(--brand-orange);
