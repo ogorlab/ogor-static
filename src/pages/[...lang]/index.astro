@@ -30,80 +30,80 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     </div>
   </section>
 
-  <section id="features">
+  <section id="features" class="features">
     <h2>{ t("home.why_ogor") }</h2>
-
-    <section>
-      <h3>{ t("home.feature1_heading") }</h3>
-      <p>{ t("home.feature1_description") }</p>
-
+  
+    <section class="feature-1">
+      <div class="feature-content flex justify-center flex-column">
+        <h3>{ t("home.feature1_heading") }</h3>
+        <p>{ t("home.feature1_description") }</p>
+      </div>
+  
       <div class="_media">
-        <img src="" alt="feature">
+        <img src="https://placehold.co/900x400" alt="feature">
       </div>
     </section>
-
-    <section>
-      <h3>{ t("home.feature2_heading") }</h3>
-      <p>{ t("home.feature2_description") }</p>
-
+  
+    <section class="feature-2">
+      <div class="feature-content flex justify-center flex-column">
+        <h3>{ t("home.feature2_heading") }</h3>
+        <p>{ t("home.feature2_description") }</p>
+      </div>
+  
       <div class="_media">
-        <img src="" alt="feature">
+        <img src="https://placehold.co/512" alt="feature">
       </div>
     </section>
-
-    <div>
+  
+    <section class="context">
       <p set:html={ t("home.context") }/>
-    </div>
-
-    <section>
-      <h3>{ t("home.feature3_heading") }</h3>
-      <p>{ t("home.feature3_description") }</p>
-
-      <div class="_media">
-        <img src="" alt="feature">
-      </div>
     </section>
 
-    <section>
-      <h3>{ t("home.feature4_heading") }</h3>
-      <p>{ t("home.feature4_description") }</p>
-
+    <section class="feature-3">
+      <div class="feature-content flex justify-center flex-column">
+        <h3>{ t("home.feature3_heading") }</h3>
+        <p>{ t("home.feature3_description") }</p>
+      </div>
+  
       <div class="_media">
-        <img src="" alt="feature">
+        <img src="https://placehold.co/512" alt="feature">
       </div>
     </section>
-
-    <p>Plus:</p>
-
-    { [
-        {
-          name: t("accumulated_precipitation"),
-        },
-        {
-          name: t("weather_forecast"),
-        },
-        {
-          name: t("water_capacity"),
-        },
-        {
-          name: t("crop_rotation"),
-        },
-        {
-          name: t("soil_map"),
-        },
-        {
-          name: t("vra"),
-        },
-        {
-          name: t("soil_analysis"),
-        }
-      ].map(f => (
+  
+    <section class="feature-4">
+      <div class="feature-content flex justify-center flex-column">
+        <h3>{ t("home.feature4_heading") }</h3>
+        <p>{ t("home.feature4_description") }</p>
+      </div>
+  
+      <div class="_media">
+        <img src="https://placehold.co/512" alt="feature">
+      </div>
+    </section>
+  
+    <section class="plus">
+      <p>Plus:</p>
+  
+      {[
+        { name: t("accumulated_precipitation"), icon: "/src/images/icons/precipitatii.png" },
+        { name: t("weather_forecast"), icon: "/src/images/icons/prognoza.png"},
+        { name: t("water_capacity"), icon: "/src/images/icons/rezerva.png" },
+        { name: t("crop_rotation"), icon: "/src/images/icons/rotatia.png" },
+        { name: t("soil_map"), icon: "/src/images/icons/harta_solurilor.png" },
+        { name: t("vra"), icon: "/src/images/icons/VRA.png" },
+        { name: t("soil_analysis"), icon: "/src/images/icons/analize.png" }
+      ].map((f) => (
         <details>
-          <summary set:html={ f.name } />
+          <summary class="flex items-center">
+            <img src={f.icon} alt="312" />
+            <p class="flex items-center" set:html={ f.name }/>
+          </summary>
         </details>
-      ))
-    }
+      ))}
+    </section>
   </section>
+
+  
 
   <section id="testimonials" style="overflow: hidden;">
     <div class="testimonials-inner">
@@ -244,7 +244,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
   rightButton?.addEventListener('click', () => currentCardIndex < cards.length - maxCardOffset && updateCarousel('right'));
 </script>
 
-<style>
+<style is:inline>
   #hero {
     background-color: var(--brand-yellow-6);
 
@@ -325,40 +325,144 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 
   
   #features {
+  background-color: #CCE6CA;
+  padding: 2em 0;
+  line-height: 1.5;
+  
+  h2 { padding: 0 2rem; }
+  img { width: 100%; display: block; max-width: 16em; }
 
-    @media (min-width: 800px) {
-      display: grid;
-      grid-template-columns: [left] 1fr [right] 1fr;
+  & section {
+    padding: 2em;
+    grid-template-columns: subgrid;
+    counter-increment: features;
+    border-bottom: 1px solid black;
+    p { margin-top: 0; }
+  }
 
-      h2 {
-        grid-column: 1;
-        display: subgrid;
+  & section h3::before {
+    color: brown;
+    display: block;
+    margin-bottom: 1em;
+  }
+  
+  & section h3::before, h2 { color: #C58336; }
+  
+  .feature-1 { padding-top: 0; }
+
+  .context {
+      padding: 2em;
+      text-align: center;
+      background-color: hsla(44, 100%, 89%, 0.3);
+      p {
+        max-width: 55ch;
+        grid-column: 1/5;
+        margin: auto;
       }
     }
+  
+  .plus {
+    font-size: 125%;
+    font-weight: 700;
+    border-bottom: 0;
+    img{ width: fit-content; }
+    p { color: #B36E1F; }
 
-    & section {
-      grid-column: 1 / 2;
-      display: grid;
-      grid-template-columns: subgrid;
-      counter-increment: features;
+    details {
+        margin-bottom: 1.5em;
+        height: 3em;
+        img {
+          height: 3em;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+        }
 
-      & ._media {
-        grid-column: 2;
-      }
+        summary {
+          gap: 1em;
+          height: 100%;
+          font-weight: 550;
+          p {
+            color: black;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-bottom: 3px dotted black;
+          }
+        }
     }
-    & section h3::before {
-      color: brown;
-      display: block;
-      margin-bottom: 1em;
-    }
-    & section:nth-of-type(1) h3::before { content: "⏺"; }
-    & section:nth-of-type(2) h3::before { content: "⏺ ⏺"; }
-    & section:nth-of-type(3) h3::before { content: "⏺ ⏺ ⏺"; }
-    & section:nth-of-type(4) h3::before { content: "⏺ ⏺ ⏺ ⏺"; }
-    & section h3::before {
-      content: counter(features);
+    
+    details:last-of-type summary p {
+        border: none;
     }
   }
+
+  @media (min-width: 800px) {
+    padding: 0;
+    padding-top: 3em;
+    display: grid;
+    grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
+
+    h2 {
+      text-align: center;
+      grid-column: 2 / 4;
+      max-width: 60ch;
+      margin: auto;
+    }
+
+    h3 { font-size: 150%; }
+
+    & section {
+      padding-top: 4em;
+      padding-bottom: 0;
+      display: grid;
+      grid-template-rows: 1fr;
+      grid-column: 1/5;
+      column-gap: 2em;
+      border-bottom: 1px solid black;
+      
+      img { max-width: 100%; }
+      h3 { margin-top: 0; }
+      p { max-width: 60ch; }
+
+      .feature-content { grid-column: 2/3; padding: 2em 0; }
+      ._media { grid-row: 1/3; display: flex; align-items: center; }
+    }
+    
+    .introduction { grid-column: 2/4; }
+
+    .feature-1 {
+      padding-top: 0;
+      text-align: center;
+      .feature-content { grid-column: 2/4; p { margin: auto; } }
+      ._media { grid-column: 2/4; grid-row: 2/3; }
+    }
+
+    .feature-2 { ._media { grid-column: 3; } }
+    .feature-3 { ._media { grid-column: 2; } .feature-content { grid-column: 3; } }
+    .feature-4 { ._media { grid-column: 3; } }
+
+    .plus {
+      grid-column: 2/4;
+      grid-template-columns: subgrid;
+      padding-bottom: 0;
+
+      p { grid-column: 1/-1; margin-bottom: 1em; }
+      details:nth-last-of-type(2) summary p { border: none; }
+
+    }
+
+    & section:nth-of-type(1) h3::before { content: "⏺"; }
+    & section:nth-of-type(2) h3::before { content: "⏺ ⏺"; }
+    & section:nth-of-type(4) h3::before { content: "⏺ ⏺ ⏺"; }
+    & section:nth-of-type(5) h3::before { content: "⏺ ⏺ ⏺ ⏺"; }
+    
+    & section h3::before {
+      margin-bottom: 1rem;
+      content: counter(features);
+    }
+
+  }
+}
 
   #testimonials {
     background-color: #F6F8F4;
@@ -497,5 +601,15 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       margin-bottom: 1em;
     }
   }
+
+  @media (min-width: 800px) {
+  .features::after {
+    content: "";
+    grid-column: 3/-1;
+    height: 2rem;
+    background-color: hsla(32, 57%, 49%, 0.5);
+  }
+}
+
 </style>
 <!-- i could use urls with diacritics that also create pages without -->
