@@ -9,10 +9,6 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 ---
 <BaseLayout>
   <section id="hero">
-    <div class="_body">
-      <h1>{ t("home.hero_heading") }</h1>
-      <p set:html={ t("home.hero_description") } />
-    </div>
     <div class="_media2">
       <img src="/src/images/on-field.jpeg" alt="Ogor on field" style="transform: scaleX(-1);">
     </div>
@@ -326,7 +322,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
   
   #features {
   background-color: #CCE6CA;
-  padding: 2em 0;
+  padding-top: 2em;
   line-height: 1.5;
   
   h2 { padding: 0 2rem; }
