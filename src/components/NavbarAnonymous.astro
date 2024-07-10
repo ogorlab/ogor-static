@@ -1,9 +1,10 @@
 ---
 import { useI18n } from "@/i18n"
 import config from "astro.config.mjs"
+import { getUrl as _getUrl } from "@/i18n"
 
 const { t } = useI18n(Astro.currentLocale)
-const { getUrl, backUrl } = Astro.locals
+const { getUrl, key, backUrl } = Astro.locals
 ---
 
 <nav id="secondary_nav">
@@ -34,20 +35,85 @@ const { getUrl, backUrl } = Astro.locals
       </svg>
     </a>
     
-    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")}>
-      📞 { t("company.phone") }
-    </a>
-    &ensp;
-    <a href={"mailto:" + t("company.email")}>
-      ✉️ { t("company.email") }
-    </a>  
+    <div class="desktop-view">📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
+    <div class="desktop-view">✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
     <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
       { t("your_account") }
     </a>
+    <button open-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-open.svg" alt=""></button>
   </div>
+
+  <dialog data-dialog id="mobile-menu" class="mobile-view">
+    <nav class="menu-nav">
+      <div class="flex items-center">
+        <a href={ getUrl("/") } id="nav_logo">
+          <svg viewBox="0 0 960 384" height="64" >
+            <use href="/logos/ogor.svg#logo" width="384" />
+            <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+          </svg>
+        </a>
+        <button close-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-close.svg" alt=""></button>
+      </div>
+    </nav>
+    <a id="your_account" href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+      { t("your_account") } →
+    </a>
+    <ul>
+      <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
+      <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+      <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
+      <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
+    </ul>
+    <div class="contact">
+      <div>📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
+      <div>✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
+    </div>
+    <p id="dialog-language-picker">
+      {config.i18n?.locales.map((locale) => (
+        locale === Astro.currentLocale ? (
+          <span class='muted'>{locale.toUpperCase()}</span>
+        ) : (
+          <a href={_getUrl(locale as string, key)}>
+            {locale.toUpperCase()}
+          </a>
+        )
+      ))}      
+    </p>
+    
+  </dialog>
 </nav>
+
+
+
+<script>
+  const openDialogButton = document.querySelector("[open-dialog-button]");
+  const closeDialogButton = document.querySelector("[close-dialog-button]");
+  const mobileMenu = document.querySelector("[data-dialog]");
+  const body = document.querySelector("body");
+
+  closeDialogButton.addEventListener("click", () => {
+    closeMenu();
+  });
+
+  openDialogButton.addEventListener("click", () => {
+    openMenu();
+  });
+
+  mobileMenu.addEventListener("close", () => {
+    body.style.overflow = "auto";
+  });
+
+  function openMenu(){
+    body.style.overflow = "hidden";
+    mobileMenu!.showModal();
+  }
+  function closeMenu(){
+    mobileMenu!.close();
+  }
+</script>
   
-<style is:global>
+<style is:inline>
+
   #primary_nav,
   #secondary_nav {
     & a:not(.btn) {
@@ -57,8 +123,10 @@ const { getUrl, backUrl } = Astro.locals
     & .inner {
       padding: 0 1em;
       max-width: var(--container);
+      width: 100%;
       margin-inline: auto;
       box-sizing: border-box;
+      border-radius: 0 0 24px 24px;
     }
   }
   #primary_nav {
@@ -74,25 +142,8 @@ const { getUrl, backUrl } = Astro.locals
       gap: 1em;
     }
   }
-  #secondary_nav {
-    background: #fff;
 
-    & .inner {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-  
-      padding: .5em 1em;
-      background: hsla(200, 89%, 85%, 1);
-  
-      & ul {
-        display: flex;
-        display: contents;
-        list-style: none;
-        padding-inline-start: initial;
-      }
-    }
-  }
+  #secondary_nav{ display: none; }
 
   #nav_logo {
     display: inline-block;
@@ -104,6 +155,94 @@ const { getUrl, backUrl } = Astro.locals
   }
 
   #language_picker {
+    background-color: transparent;
+    border: none;
+    margin: -0.5em;
+    padding: 0.5em;
     margin-right: auto;
+  }
+
+  #hamburger-button{
+    background-color: transparent;
+    border: none;
+    padding-inline: 1em;
+    aspect-ratio: 1/1;
+  }
+
+  .desktop-view{ display: none; }
+
+  dialog:modal {
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    border: none;
+    inset: 0;
+    background-color: white;
+    z-index: 1000;
+    font-weight: 550;
+
+    a, span { font-size: 125%; }
+
+    ul{
+      margin-top: 2em;
+      list-style: none;
+      padding: 0;
+      a { text-decoration: none; }
+      li { margin-bottom: 1em; }
+    } 
+
+    #hamburger-button { background-color: hsla(90, 22%, 96%, 1); border-radius: 50%; }
+    #your_account{ width: 100%; padding: .5em; margin-top: 1em;}
+
+    #dialog-language-picker{
+      margin-left: -0.5em;
+      a, span{ 
+        border: none;
+        background-color: transparent;
+        padding: 1em 0.5em;
+        text-decoration: none;
+      }
+    }
+    
+    .contact{ margin-top: 3em; }
+    .contact a { margin-bottom: 1em; }
+
+    .muted{ color: hsla(0, 0%, 50%, 1); }
+}
+
+  @media (min-width: 800px) {
+    #secondary_nav {
+      background: #fff;
+      display: flex;
+
+      & .inner {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+
+        padding: 0.5em 1em;
+        background: hsla(200, 89%, 85%, 1);
+
+        & ul {
+          display: flex;
+          display: contents;
+          list-style-position: inside;
+          padding-inline-start: initial;
+          a {
+            text-decoration: none;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+          li:first-child {
+            list-style-type: none;
+          }
+        }
+      }
+    }
+
+    .desktop-view{ display: initial; }
+    .mobile-view{ display: none; }
   }
 </style>
