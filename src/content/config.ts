@@ -8,7 +8,10 @@ const yieldForecastCollection = defineCollection({
     crops: z.array(z.object({
       code: z.number(),
       avg_yield: z.number(),
-      total_surface: z.number()
+      total_surface: z.number(),
+      name: z.string(),
+      interpretation: z.string(),
+      cite: z.string(),
     })),
   })
 })

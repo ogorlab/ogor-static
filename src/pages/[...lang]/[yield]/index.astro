@@ -17,6 +17,7 @@ export const getStaticPaths = (async() => {
   return paths
 }) satisfies GetStaticPaths;
 
+const { getUrl } = Astro.locals
 const { entries } = Astro.props
 ---
 
@@ -24,7 +25,7 @@ const { entries } = Astro.props
   <ol>
   { entries.map(entry => (
     <li>
-      <a href="#">{ entry.data.forecast_date }</a>
+      <a href={getUrl("yield/forecast/") + entry.data.forecast_date}>{ entry.data.forecast_date }</a>
     </li>
   ))}
   </ol>

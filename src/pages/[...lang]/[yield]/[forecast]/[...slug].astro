@@ -1,5 +1,6 @@
 ---
-import { getLocalizedPaths } from "@/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getLocalizedPaths, getUrl } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
@@ -15,24 +16,415 @@ export const getStaticPaths = (async () => {
   const paths = entries.flatMap(entry => {
     return getLocalizedPaths("yield/forecast", (item) => {
       item.params.slug = entry.id
-      item.props = { entry }
+      item.props = { ...item.props, entry };
       return item
     })
   })
   return paths
 }) satisfies GetStaticPaths;
 
+const entries = await getCollection("forecast")
+const lastForecast = entries[entries.length - 1].id
+
 const { t } = useI18n(Astro.currentLocale)
 const { entry } = Astro.props
+const { getUrl } = Astro.locals
+
+
+function formatNumber(n: number) {
+    return n.toLocaleString(Astro.currentLocale, {
+      maximumFractionDigits: 0,
+    });
+}
 
 ---
-Forecast date: { entry.data.forecast_date } <br>
-Next forecast: { entry.data.next_forecast_date }
+<BaseLayout>
+  <div class="wrapper">
+    <header class="yield-header">
+      <h1 class="yield-title">
+        <span class="yield-1">
+         {t("yield.forecast.ogorForecastFrom", { date: entry.data.forecast_date }) }
+        </span>
+        <span class="yield-2">{t("yield.forecast.regarding")}</span>
+        <span class="yield-3">Wheat, Barley and Rapeseed Production</span>
+      </h1>
+      <p class="yield-4">
+        {t("yield.forecast.byApplyingML")}
+      </p>
+    
+      <div class="separator">
+        <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="8" height="16" fill="#033CBD" />
+          <rect x="16" width="8" height="16" fill="#C80307" />
+          <rect x="8" width="8" height="16" fill="#FEDC00" />
+        </svg>
+      </div>
+    </header>
+    
+    <section>
+      </h2>
+      {
+        entry.data.crops.map((crop) => {
+          return (
+            <article class="crop">
+              <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="media">
+                <img src='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' alt='{`Map for crop ${crop.code}`}' />
+              </a>
+              <h3>{crop.name.toUpperCase()}</h3>
+              <div class="key-metrics" style={{ display: 'flow-root' }}>
+                <div class="key-metric -yield">
+                  <span>{crop.avg_yield} t/ha</span>
+                  <strong>{t("yield.forecast.averageYield")}</strong>
+                </div>
+                <div class="key-metric -surface">
+                  <span>{formatNumber(crop.total_surface)} ha</span>
+                  <strong>{t("yield.forecast.harvestedSurface")}</strong>
+                </div>
+              </div>
 
-<ul>
-{ entry.data.crops.map(crop => (
-  <li>
-    { t("crops:" + crop.code) }: {crop.avg_yield} t/ha
-  </li>
-))}
-</ul>
+              {crop.interpretation && (
+                <blockquote>
+                  <p>{crop.interpretation}</p>
+                  {crop.cite && (
+                    <cite>{crop.cite}</cite>
+                  )}
+                </blockquote>
+              )}
+              <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="download-map-button">
+                <span>{t("yield.forecast.downloadMap")}</span>
+              </a>
+            </article>
+          );
+        })
+      }
+      
+      
+    </section>
+  
+    <section class="forecast-more">
+      <div class="forecast-more-element more-links">
+        <ul>
+          <li><a href={getUrl("yield/forecast/") + lastForecast}>{t("yield.forecast.lastForecast", {date: lastForecast})}</a></li>
+          <li><a href={getUrl("yield/forecast")}>
+            {t("yield.forecast.forecastHistory")}</a></li>
+          <li><a href={getUrl("yield")}>{t("yield.forecast.aboutTheProject")}</a></li>
+        </ul>
+      </div>
+      <div class="forecast-more-element next-forecast">
+        <p>
+          <span style="font-size: 1.5em; line-height: 1">🗓️</span>
+          <br>
+          <span>{t("yield.forecast.nextForecast")}</span>&nbsp;
+          <span style="text-decoration: underline; display: inline-block">{ entry.data.next_forecast_date }</span
+          >.
+        </p>
+      </div>
+
+      <a class="forecast-more-element contact-ogor" href="mailto:contact@ogor.ro">
+        <p set:html={t("yield.forecast.contactOgorTeam")}/>
+      </a>
+    </section>
+  
+  </div>
+</BaseLayout>
+
+<style>
+  .wrapper {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    max-width: var(--container);
+  
+    @media (min-width: 800px) {
+      padding-inline: 2rem;
+    }
+    .crop:last-of-type {
+      &::after {
+        content: "";
+        display: block;
+        border-bottom: 1px solid grey;
+        margin-block: 2rem;
+    }
+  }
+}
+  
+  h2 {
+    margin-block: 1.5rem;
+    font-weight: 600;
+    font-size: inherit;
+  
+    @media (min-width: 800px) {
+      font-size: 1.5rem;
+      font-weight: normal;
+    }
+  }
+  
+  blockquote {
+    margin-bottom: 1em;
+    font-family: "Georgia", serif;
+    margin-left: 0;
+    line-height: 1.5em;
+    color: #2d2d2d;
+  
+    & > p::before {
+      content: "“";
+    }
+    & > p::after {
+      content: "”";
+    }
+
+    @media (min-width: 800px){
+      max-width: 30rem;
+    }
+  }
+  cite {
+    display: list-item;
+    margin-top: 0.25em;
+    margin-left: 1rem;
+    font-size: smaller;
+  }
+  cite::marker {
+    content: "—";
+  }
+  
+  .yield-header {
+    margin-top: 1.5rem;
+    text-align: center;
+  
+    &::after {
+      content: "";
+    }
+  }
+  
+  .yield-1,
+  .yield-2,
+  .yield-3 {
+    display: block;
+    margin-block: 0.25rem;
+    @media (min-width: 800px) {
+      margin-block: 0.5rem;
+    }
+  }
+  
+  .yield-1 {
+    font-weight: 500;
+    font-size: 1rem;
+    @media (min-width: 800px) {
+      font-size: 1em;
+    }
+  }
+  
+  .yield-2,
+  .yield-4 {
+    font-family: "Sorts Mill Goudy", "Georgia";
+    font-style: italic;
+    font-weight: normal;
+    font-size: small;
+  
+    &::before,
+    &::after {
+      content: " - ";
+    }
+    @media (min-width: 800px) {
+      font-size: 1rem;
+    }
+  }
+  
+  .yield-3 {
+    margin-block: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.25;
+    font-stretch: 90%;
+    letter-spacing: 0.03em;
+  
+    @media (min-width: 800px) {
+      font-size: 3rem;
+    }
+  }
+  
+  .separator {
+    margin-block: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1rem;
+    overflow: visible;
+    gap: 1rem;
+  
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      border-top: 1px solid grey;
+      width: 100%;
+    }
+  
+    @media (min-width: 800px) {
+      margin-block: 2rem;
+    }
+  }
+  .separator svg {
+    width: 2em;
+    align-self: center;
+  }
+  
+  .download-map-button {
+    min-width: 7.5em;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 10rem;
+    text-align: center;
+    width: auto;
+    margin-bottom: 2rem;
+    color: white;
+    background: black;
+    font-weight: 600;
+  
+    @media (min-width: 800px) {
+      width: auto;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 2px var(--action), inset 0 0 0 2px var(--paper);
+    }
+  }
+
+  .crop {
+    display: flow-root;
+    isolation: isolate;
+
+
+    & h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin: 0;
+      @media (min-width: 800px) { font-size: 2rem; }
+
+    }
+
+    & hr {
+      display: none;
+      margin-top: 0;
+      border-bottom: 0;
+
+      @media (min-width: 800px) {
+        display: initial;
+      }
+    }
+
+    & .media {
+      cursor: zoom-in;
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 7 / 5;
+      margin-top: -2px;
+      border: 1px solid grey;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+
+      @media (min-width: 800px) {
+        float: right;
+        width: 60%;
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+    & .media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  & .crop h3::before {
+    vertical-align: top;
+    color: hsla(32, 57%, 49%, 1);
+    display: block;
+    height: fit-content;
+  }
+  & .crop:nth-of-type(1) h3::before { content: "⏺"; }
+  & .crop:nth-of-type(2) h3::before { content: "⏺ ⏺"; }
+  & .crop:nth-of-type(3) h3::before { content: "⏺ ⏺ ⏺"; }
+  & .crop:nth-of-type(4) h3::before { content: "⏺ ⏺ ⏺ ⏺"; }
+  & .crop:nth-of-type(5) h3::before { content: "⏺ ⏺ ⏺ ⏺ ⏺"; }
+  & .crop:nth-of-type(6) h3::before { content: "⏺ ⏺ ⏺ ⏺ ⏺ ⏺"; }
+
+  
+  .key-metric {
+    position: relative;
+    margin-block: 1.5rem;
+    padding-left: 0.75rem;
+    padding-right: 1.5rem;
+    font-size: smaller;
+    float: left;
+  
+    & strong {
+      display: block;
+      font-weight: normal;
+    }
+  
+    & span {
+      display: block;
+      font-size: 1.25em;
+      letter-spacing: -0.03em;
+      line-height: 2.5rem;
+    }
+
+  
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      right: auto;
+      width: 0.25rem;
+      border-radius: 16px;
+      background: hsla(56, 26%, 89%, 1);
+    }
+  }
+
+  .forecast-more{
+
+    .forecast-more-element {
+      display: flex;
+      align-items: center;
+      margin-block: 2rem;
+      padding: 1.25rem;
+      line-height: 1.5;
+      border-radius: 2rem;
+      p, ul {
+        margin-block: 0;
+      }
+    }
+
+    @media (min-width: 800px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .next-forecast{
+    background: #b9e5fb;
+  }
+  .more-links{
+    background: hsla(90, 22%, 96%, 1);
+    line-height: 1.5;
+    a{
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .contact-ogor{
+    display: block;
+    text-decoration: none;
+    background: hsla(44, 100%, 89%, 1);
+    color: hsla(213, 92%, 33%, 1);
+    strong{
+      text-decoration: underline;
+    }
+  }
+
+</style>
