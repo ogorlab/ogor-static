@@ -88,6 +88,21 @@ i18next.init({
           "cta_assurance3": "Suport tehnic și agronomic pe tot parcursul sezonului agricol",
           "with_the_support_of": "Cu sprijinul",
           "partners": "Parteneri"
+        },
+        yield: {
+          forecast: {
+            "ogorForecastFrom": "Prognoza OGOR din {{date}}",
+            "regarding": "referitor la",
+            "byApplyingML": "prin aplicarea unor algoritmi de învățare automată pe observațiile satelitare",
+            "averageYield": "Producție medie",
+            "harvestedSurface": "Suprafață recoltată",
+            "downloadMap": "Descarcă harta",
+            "lastForecast": "Ultima prognoză ({{date}})",
+            "forecastHistory": "Istoricul prognoze OGOR",
+            "aboutTheProject": "Despre proiect",
+            "nextForecast": "Urmǎtoarea prognozǎ disponibilǎ pe data de",
+            "contactOgorTeam": "Pentru hărți și statistici la nivel de județ și localitate <strong>contactează echipa de vânzări OGOR →</strong>"
+          }
         }
       },
       urls: {
