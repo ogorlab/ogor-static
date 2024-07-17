@@ -100,6 +100,8 @@ i18next.init({
       crops: {
         101: "Grâu",
         105: "Orz",
+        108: "Porumb",
+        201: "Floarea soarelui",
         202: "Rapițǎ",
       }
     },
@@ -129,6 +131,8 @@ i18next.init({
       crops: {
         101: "Wheat",
         105: "Barley",
+        108: "Maize",
+        201: "Sunflower",
         202: "Rapeseet",
       }
     },
@@ -147,6 +151,8 @@ i18next.init({
       crops: {
         101: "Blé",
         105: "Orge",
+        108: "Maïs", 
+        201: "Tournesol",
         202: "Colza",
       }
     }
@@ -161,25 +167,16 @@ i18next.services.formatter?.add('ha', (value, lng, options) => {
   return value
 })
 
-
-
-
-
-/*
-
-- [ ] link catre o pagina in functie limba...
-- [ ] linkurile href lang
-
-getLocalizedPaths intoarce toate limbile...
-
-
-*/
-
-
 // Review
 export const LOGIN_URL = import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL
 
-type GetLocalizedPathCallback = (item: GetStaticPathsItem) => GetStaticPathsItem;
+type GetLocalizedPathsItem = GetStaticPathsItem & {
+  props: {
+    key: string;
+  }
+}
+
+type GetLocalizedPathCallback<T extends GetLocalizedPathsItem = GetLocalizedPathsItem> = (item: T) => T;
 
 /**
  * @todo make it work with interpolated params...
@@ -199,7 +196,6 @@ export function getUrl(locale: string = defaultLocale, key: string) {
   return url
 }
 
-
 /**
  * @todo use locales defined in config
  * @todo special case for default lang
@@ -218,7 +214,7 @@ export function getUrl(locale: string = defaultLocale, key: string) {
  * ) satisfies GetStaticPaths;
  * ```
  */
-export function getLocalizedPaths(key: string, cb?: GetLocalizedPathCallback) {
+export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalizedPathsItem>(key: string, cb?: GetLocalizedPathCallback<T>) {
   key = key.split("pages/[...lang]/").pop()!
            .replaceAll(/\.astro|\.html|\.md|\.mdx|\.json/g, "")
            .replaceAll(/\[|\]/g, "")

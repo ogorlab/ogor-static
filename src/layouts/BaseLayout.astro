@@ -8,17 +8,6 @@ import config from "astro.config.mjs"
 import { getUrl } from "@/i18n"
 
 const { title, key } = Astro.locals;
-
-// console.log(Astro.props)
-// console.log(Astro.self)
-console.log("BaseLayout", Astro.props)
-console.log("BaseLayout", Astro.params)
-console.log("BaseLayout", key)
-// console.log(Astro.url)
-
-// hreflangs.push(
-// { [lang || defaultLocale]: getUrl(lang, key) }
-    // )
 ---
 
 <!doctype html>
@@ -33,18 +22,21 @@ console.log("BaseLayout", key)
 
 		<slot name="seo">
 		</slot>
+
 		<slot name="hreflangs">
 			{	
+				/**
+				 * @see https://developers.google.com/search/docs/specialty/international/localized-versions#all-method-guidelines 
+				 * @todo hrefs need to be fully qualified URLs; add Astro.site after configuring with env variable
+				 */
 				config.i18n?.locales.map(locale => {
 					const lang = locale as string
 					return <link rel="alternate" hreflang={lang} href={ getUrl(lang, key) } />
 				})
 			}
+			<link rel="alternate" hreflang="x-default" href={ getUrl(undefined, key) } />
 		</slot>
 
-
-
-		<!-- See LanguagePicker -->
 		<!-- <ViewTransitions /> -->
 	</head>
 	<body>

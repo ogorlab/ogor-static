@@ -101,47 +101,47 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 
   
 
-  <section id="testimonials" style="overflow: hidden;">
-    <div class="testimonials-inner">
-      <h2>{ t("home.testimonials_heading") }</h2>
-      <p class="description" set:html={ t("home.testimonials_description") } style="max-width: 65ch"/>
-      <div class="carousel-container">
-        <div class="carousel flex">
-          <div class="card">
-            <blockquote>
-              <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-              <cite>
-                Alin Oprea
-                <br />
-                <span style="color: grey">Ing. agronom jud. IF</span>
-              </cite>
-            </blockquote>
-          </div>
-          <div class="card">
-            <blockquote>
-              <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-              <cite>
-                Alin Oprea
-                <br />
-                <span style="color: grey">Ing. agronom jud. IF</span>
-              </cite>
-            </blockquote>
-          </div>
-          <div class="card">
-            <blockquote>
-              <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-              <cite>
-                Alin Oprea
-                <br />
-                <span style="color: grey">Ing. agronom jud. IF</span>
-              </cite>
-            </blockquote>
-          </div>
-        </div>
-        <div class="buttons-container">
-          <button class="left">←</button>
-          <button class="right">→</button>
-        </div>
+  <section id="testimonials">
+    <h2>{ t("home.testimonials_heading") }</h2>
+    <p class="description" set:html={ t("home.testimonials_description") } style="max-width: 65ch"/>
+    <div class="carousel">
+      <div class="carousel-track">
+        <blockquote class="card">
+          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
+          <cite>
+            Alin Oprea
+            <br />
+            <span style="color: grey">Ing. agronom jud. IF</span>
+          </cite>
+        </blockquote>
+        <blockquote class="card">
+          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
+          <cite>
+            Alin Oprea
+            <br />
+            <span style="color: grey">Ing. agronom jud. IF</span>
+          </cite>
+        </blockquote>
+        <blockquote class="card">
+          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
+          <cite>
+            Alin Oprea
+            <br />
+            <span style="color: grey">Ing. agronom jud. IF</span>
+          </cite>
+        </blockquote>
+        <blockquote class="card">
+          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
+          <cite>
+            Alin Oprea
+            <br />
+            <span style="color: grey">Ing. agronom jud. IF</span>
+          </cite>
+        </blockquote>
+      </div>
+      <div class="carousel-controls">
+        <button class="left">←</button>
+        <button class="right">→</button>
       </div>
     </div>
   </section>
@@ -154,13 +154,13 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     <p>
       <a href="tel:+40754347347" class="btn btn-text rounded">
         <svg viewBox="0 0 48 48" class="icon">
-          <use href="/public/icons.svg#phone" />
+          <use href="/icons.svg#phone" />
         </svg>
         { t("company.phone")}
       </a>
       <a href="mail:contact@ogor.ro" class="btn btn-text rounded">
         <svg viewBox="0 0 48 48" class="icon">
-          <use href="/public/icons.svg#email" />
+          <use href="/icons.svg#email" />
         </svg>
       </a>
     </p>
@@ -198,30 +198,28 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 
 
 <script>
-  const [cards, leftButton, rightButton, carousel] = [
-    document.querySelectorAll('.card'),
-    document.querySelector('.left') as HTMLButtonElement,
-    document.querySelector('.right') as HTMLButtonElement,
-    document.querySelector('.carousel') as HTMLElement
-  ];
-  const gap = 32;
+  const carousel = document.querySelector<HTMLDivElement>('.carousel')!
+  const track = carousel.querySelector<HTMLDivElement>(".carousel-track")!
+  const cards = carousel.querySelectorAll<HTMLQuoteElement>(".card")
+  const [prev, next] = carousel.querySelectorAll<HTMLButtonElement>(".carousel-controls button")
+
   let currentCardIndex = 0;
-  let cardWidth = cards[0].getBoundingClientRect().width;
+  let offset = cards[1].offsetLeft
   let maxCardOffset = 1;
 
   const updateMaxCardOffset = () => {
-    maxCardOffset = window.innerWidth > 800 ? 2 : 1;
-    if (window.innerWidth > 800 && currentCardIndex >= cards.length - 1) {
+    maxCardOffset = window.innerWidth >= 800 ? 2 : 1;
+    if (window.innerWidth >= 800 && currentCardIndex >= cards.length - 1) {
       currentCardIndex = cards.length - 2;
     }
   };
   const updateButtons = () => {
-    leftButton.disabled = currentCardIndex <= 0;
-    rightButton.disabled = currentCardIndex >= cards.length - maxCardOffset;
+    prev.disabled = currentCardIndex <= 0;
+    next.disabled = currentCardIndex >= cards.length - maxCardOffset;
   };
-  const updateCarousel = (direction: string) => {
-    currentCardIndex += direction === 'left' ? -1 : 1;
-    carousel.style.transform = `translateX(${-(cardWidth + gap) * currentCardIndex}px)`;
+  const updateCarousel = (direction: number) => {
+    currentCardIndex += direction
+    track.style.transform = `translateX(${-offset * currentCardIndex}px)`
     updateButtons();
   };
 
@@ -229,15 +227,15 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     updateMaxCardOffset();
     updateButtons();
   };
-  window.addEventListener('resize', () => {
-    cardWidth = cards[0].getBoundingClientRect().width;
-    carousel.style.transform = `translateX(${-(cardWidth + gap) * currentCardIndex}px)`;
+  window.addEventListener('resize', function() {
+    offset = cards[1].offsetLeft;
+    track.style.transform = `translateX(${-offset * currentCardIndex}px)`;
     updateMaxCardOffset();
     updateButtons();
   });
 
-  leftButton?.addEventListener('click', () => currentCardIndex > 0 && updateCarousel('left'));
-  rightButton?.addEventListener('click', () => currentCardIndex < cards.length - maxCardOffset && updateCarousel('right'));
+  prev.addEventListener('click', () => currentCardIndex > 0 && updateCarousel(-1));
+  next.addEventListener('click', () => currentCardIndex < cards.length - maxCardOffset && updateCarousel(1));
 </script>
 
 <style is:inline>
@@ -461,81 +459,90 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 }
 
   #testimonials {
+    padding: 2em var(--bleed) 4em;
+    overflow: hidden;
     background-color: #F6F8F4;
-    padding: 2em 2em 4em 2em;
     line-height: 1.5;
 
-    .carousel-container { position: relative; }
-
-    .carousel {
-      /* Gap must be in px for carousel to work properly */
-      gap: 32px;
-      padding: 2em 0;
-      transition: transform 0.3s ease-in-out;
-      position: relative;
-
-      .card {
-        min-height: 7em;
-        min-width: calc(100% - 3em);
-        background-color: white;
-        padding: 1.5em;
-        border-radius: 8px;
-        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
-
-        blockquote {
-          display: flex; 
-          flex-direction: column;
-          height: 100%; 
-          margin: 0;
-          cite{font-size: 16px}
-        }
-
-        p { margin: 0; flex: 1; max-width: 40ch; margin-bottom: 1em; }
-      }
-    }
-
-    .buttons-container {
-      position: absolute;
-      background-color: white;
-      bottom: -10%;
-      box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.25);
-      border-radius: 8px;
-      overflow: hidden;
-      right: 50%;
-      transform: translateX(50%);
-
-      button {
-        border: none;
-        margin: 0;
-        padding: 0.25em 0.5em;
-        background-color: transparent;
-        transition: all 0.1s;
-
-        &:hover { background-color: #F6F8F4; }
-        &:disabled { background-color: inherit; }
-      }
-    }
-
-    @media (min-width: 800px) {
-      padding: 2em 2em 4em 2em;
-
-      .carousel .card { min-width: calc(50% - 74px); }
-    }
-
-    @media (min-width: 1200px) {
-      padding: 2em var(--bleed) 4em var(--bleed);
-      .testimonials-inner { margin: 0 2em; }
-
-      .carousel .card { min-width: calc(50% - 88px); }
-
-      .buttons-container {
-        display: flex;
-        bottom: 100%;
-        right: 0;
-        transform: translateX(0);
+    & .description {
+      @media (min-width: 800px) {
+        margin-right: 4em;
       }
     }
   }
+  .carousel { position: relative; }
+  .carousel-track {
+    display: flex;
+    margin-block: 2em;
+    gap: 2em;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 10em;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    min-width: 100%;
+
+    @media (min-width: 800px) {
+      min-width: calc((100% - 2em) / 2); 
+    }
+    
+    & p {
+      margin-top: 0;
+      font-size: 125%;
+    }
+    & cite {
+      margin-top: auto;
+      font-size: smaller;
+    }
+  }
+
+  @media (min-width: 800px) {
+    padding: 2em 2em 4em 2em;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 2em var(--bleed) 4em var(--bleed);
+    .container { margin: 0 2em; }
+
+  }
+  .carousel-controls {
+    width: max-content;
+    margin-inline: auto;
+    background: white;
+    box-shadow: 0 .25em .5em 0 rgba(0 0 0 / .25);
+    border-radius: .5em;
+    overflow: hidden;
+
+    & button {
+      border: none;
+      margin: 0;
+      padding: 0.25em 0.5em;
+      background-color: transparent;
+      transition: background-color 0.1s;
+
+      &:hover { background-color: #F6F8F4; }
+      &:disabled { background-color: initial; }
+    }
+
+    @media (min-width: 800px) {
+      & {
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        margin-bottom: 2em;
+      }
+    }
+  }
+
+
 
   #cta {
     --paper: #FFF0C6;

@@ -31,11 +31,14 @@ declare namespace App {
     title: string;
 
     /** Links to translated versions of the page */
-    localizedUrls: LocalizedUrls,
+    localizedUrls: LocalizedUrls;
 
     /** Get localized URLs based on current locale */
-    getUrl: typeof _getUrl.bind,
+    getUrl: typeof _getUrl.bind;
 
-    backUrl: string | undefined,
+    backUrl: string | undefined;
+
+    /** The abstract (non-localized) path of the route. */
+    key: string;
   }
 }

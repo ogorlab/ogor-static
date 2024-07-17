@@ -42,7 +42,8 @@ html {
   --btn-radius: .25em;
 
   --container: 54em;
-  --bleed: calc((100vw - var(--container)) / 2)
+  --bleed: max(2em, calc((100vw - var(--container)) / 2));
+  --gutter: 2em;
 }
 
 html {
@@ -72,6 +73,7 @@ body {
 
 .container {
   margin-inline: auto;
+  max-width: var(--container);
 }
 
 select, textarea, input, button {

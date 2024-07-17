@@ -1,21 +1,22 @@
 ---
 import { getLocalizedPaths } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async() => {
   const entries = await getCollection("forecast")
-  const paths = entries.flatMap(entry => {
+  const paths = entries.flatMap(() => {
     return getLocalizedPaths("yield", (item) => {
       item.props.entries = entries
       return item
     })
   })
-
-  console.log(paths)
   return paths
 }) satisfies GetStaticPaths;
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { entries } = Astro.props
 ---
