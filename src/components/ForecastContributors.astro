@@ -1,0 +1,45 @@
+---
+import { useI18n } from "@/i18n";
+
+const { t } = useI18n(Astro.currentLocale);
+
+---
+
+<section class="forecast-sponsors">
+    <div class="inner">
+        <div class="logos">
+            <img src="/src/images/esa-blue.png" alt="ESA">
+            <img src="/src/images/rosa.png" alt="ROSA" id="rosa">
+            <img src="/src/images/apia.png" alt="APIA">
+            <img src="/src/images/openweather.png" alt="Openweather">
+        </div>
+        <p set:html={t("yield.forecast.ogorForecastProject")} />
+    </div>
+</section>
+
+
+<style>
+    .forecast-sponsors{
+        background: hsla(90, 22%, 96%, 1);
+        padding: 4rem 0;
+    }
+    .inner{
+        margin: auto;
+        line-height: 1.5;
+        max-width: var(--container);
+        padding-inline: 2rem;
+
+        img{
+            vertical-align: middle;
+            margin-right: 2em;
+        }   
+
+        a { color: black; }
+        em{ font-style: normal; text-decoration: underline;}
+        p { max-width: 68ch; }
+        .logos { margin-bottom: 2em; }
+        #rosa { height: 4.5em; }
+
+    }
+</style>
+

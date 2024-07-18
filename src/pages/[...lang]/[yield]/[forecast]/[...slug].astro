@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ForecastContributors from "@/components/ForecastContributors.astro";
 import { getLocalizedPaths, getUrl } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
@@ -124,8 +125,8 @@ function formatNumber(n: number) {
         <p set:html={t("yield.forecast.contactOgorTeam")}/>
       </a>
     </section>
-  
   </div>
+  <ForecastContributors />
 </BaseLayout>
 
 <style>

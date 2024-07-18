@@ -92,6 +92,7 @@ i18next.init({
         yield: {
           forecast: {
             "ogorForecastFrom": "Prognoza OGOR din {{date}}",
+            "ogorForecastProject": " <strong>Prognoza OGOR</strong> este un proiect de cercetare realizat de Field Data Zoom SRL (OGOR), cu sprijinul <em>Agenței Spațiale Europene (ESA)</em> și <em>Agenței Spațiale Române (ROSA)</em>. Datele de validate de la sol sunt furnizate de <em>Agenția de Plăţi şi Intervenție pentru Agricultură (APIA)</em> și datele meteo sunt furnizate de <em>OpenWeather</em>.",
             "regarding": "referitor la",
             "byApplyingML": "prin aplicarea unor algoritmi de învățare automată pe observațiile satelitare",
             "averageYield": "Producție medie",
