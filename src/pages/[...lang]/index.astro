@@ -281,7 +281,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     }
 
     /* Different devices */
-    @media (min-width: 800px) {
+    @media (min-width: 56.25rem) {
       background-color: var(--brand-yellow-5) ;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -299,7 +299,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       }
       ._media1 { img { height: max-content; } }
     }
-    @media (min-width: 1200px) {
+    @media (min-width: 75rem) {
       grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
       grid-template-rows: 1fr 0.5fr 1fr;
       grid-template-areas: 
@@ -390,7 +390,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     }
   }
 
-  @media (min-width: 800px) {
+  @media (min-width: 56.25rem) {
     padding: 0;
     padding-top: 3em;
     display: grid;
@@ -464,8 +464,8 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     background-color: #F6F8F4;
     line-height: 1.5;
 
-    & .description {
-      @media (min-width: 800px) {
+    @media (min-width: 56.25rem) {
+      & .description {
         margin-right: 4em;
       }
     }
@@ -490,7 +490,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     box-sizing: border-box;
     min-width: 100%;
 
-    @media (min-width: 800px) {
+    @media (min-width: 56.25rem) {
       min-width: calc((100% - 2em) / 2); 
     }
     
@@ -613,6 +613,4 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     background-color: hsla(32, 57%, 49%, 0.5);
   }
 }
-
 </style>
-<!-- i could use urls with diacritics that also create pages without -->

@@ -36,30 +36,40 @@ const social = [
     </svg>
   </a>
 
+  <div class="about">
+    <h4>{t("company.tagline")}</h4>
+    <p>{t("company.description")}</p>
+  </div>
+
   <div class="contact">
-    {/* TODO: add a phone format to i18next */}
-    <div>📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
-    <div>✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
-    <span class="inline-block social-media">
+    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#phone" />
+      </svg>
+      <span class="underline">{t("company.phone")}</span>
+    </a>
+    <a href={"mailto:" + t("company.email")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#email" />
+      </svg>
+      <span class="underline">{t("company.email")}</span>
+    </a>
+    <span class="social-media">
       {
         social.map((platform) => (
           <a href={platform.url} title={platform.name} rel="external">
             <svg class="icon" viewBox="0 0 48 48" style="font-size: 200%;">
               <use href={ platform.icon }/>
             </svg>
-            {/* {platform.name} */}
           </a>
         ))
       }
     </span>
   </div>
 
-  <div class="about">
-    <h4>{t("company.tagline")}</h4>
-    <p>{t("company.description")}</p>
-  </div>
   <hr />
-  <ul class="nav">
+
+  <ul class="nav semibold">
     <li><a href={ getUrl("company") }>{ t("nav.company_long") }</a></li>
     <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
     <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
@@ -83,165 +93,96 @@ const social = [
 
 <style>
   footer {
-    grid-template-columns: var(--bleed) 1fr 1fr 1fr var(--bleed);
-    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--gutter);
-    margin: auto;
+    row-gap: 0;
     padding-block: 2rem;
-    background: hsla(200, 89%, 85%, 1);
-
-    @media (min-width: 600px) {
-      display: grid;
-    }
+    padding-inline: var(--bleed);
+    background: #b7e4fb;
 
     & a {
       color: inherit;
     }
-    & li {
-      margin-block: .5em;
+    & ul {
+      padding-inline-start: 1.5rem;
+    }
+    & address {
+      margin-block: 1em;
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: 37.5rem) {
       grid-template-areas: 
-        ". logo  contact contact . "
-        ". about about   .       . "
-        ". nav   legal   address . "
+        "contact contact contact"
+        "about   about   about  "
+        "nav     legal   address"
       ;
     }
-
-    .ogor-logo     { grid-area: logo; }
-    .contact  { grid-area: contact; }
-    .about    { grid-area: about; }
-    .nav      { grid-area: nav; }
-    .legal    { grid-area: legal; }
-    address   { grid-area: address; }
-  }
-
-  @media (min-width: 800px) {
-    .about {
-      & h4 { margin-top: 0; }
-      & p  { margin-bottom: 0; }
-      margin-trim: block;
+    @media (min-width: 56.25rem) {
+      display: grid;
+      grid-template-areas: 
+        "contact contact contact"
+        "about   about   about  "
+        "nav     legal   address"
+      ;
     }
   }
-  .about {
-    min-width: ;
+  
+  .ogor-logo{ grid-area: contact; }
+  .contact  { grid-area: contact; }
+  .about    { grid-area: about; }
+  .nav      { grid-area: nav; }
+  .legal    { grid-area: legal; }
+  address   { grid-area: address; }
+
+  .ogor-logo {
+    display: inline-block;
+    align-self: center;
+    justify-self: flex-start;
+    z-index: 10;
+
+    & svg {
+      display: block;
+      margin-left: -.5em;
+    }
   }
   .contact {
     display: flex;
-    justify-content: flex-end;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1em;
-  }
+    justify-self: flex-end;
+    gap: 1em 1em;
 
-  .social-media {
-    display: contents;
-  }
-  .social-media a {
-    margin: 0;
-  }
-
-
-  .nav {
-    margin: 0;
-    font-weight: 600;
-  }
-
-  .legal {
-    list-style: none;
-    text-align: right;
-    margin: 0;
-    grid-column: 2 / 3;
-    height: 100%;
-    padding: 0;
-  }
-
-  .ogor-details {
-    grid-row: 3;
-    grid-column: 3 / 4;
-  }
-
-  hr {
-    display: none;
-  }
-
-  @media (max-width: 900px) {
-    .ogor-logo {
-      grid-column: 1 / 4;
+    & a {
+      text-decoration: none;
     }
-
+  }
+  @media (max-width: calc(56.25rem - 1px)) {
     .contact {
-      grid-row: 3;
-      grid-column: 1 / 4;
-      justify-content: center;
+      margin-block: 1em;
     }
-
-    .about {
-      grid-row: 2;
-      grid-column: 1 / 4;
-    }
-
-    .legal {
-      grid-row: 5;
-    }
-
-    .ogor-details {
-      grid-row: 5;
-      grid-column: 3 / 4;
-    }
-    hr {
-      display: block;
-      border: none;
-      height: 1px;
-      width: 100%;
-      border-top: 4px dotted #4BBFEE;
-      grid-row: 4;
-      grid-column: 1/4;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .ogor-logo {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .contact {
-      grid-column: 1;
-      grid-row: 3;
-      flex-direction: column;
-      text-align: left;
-      align-items: flex-start;
-      gap: 0;
-    }
-    .contact a {
-      margin-bottom: 1em;
-    }
-
     .social-media {
-      display: flex;
-      gap: 1em;
-    }
-
-    .about {
-      grid-column: 1;
-      grid-row: 2;
-    }
-    .about h4 {
-      margin-top: 0;
-    }
-
-    .legal {
-      text-align: left;
-      list-style: disc;
-    }
-    hr {
-      grid-row: 4;
+      word-spacing: .5em;
     }
   }
-
-  address {
-    margin-block: .25em;
-    line-height: 1.75;
+  @media (min-width: 37.5rem) {
+    .social-media {
+      display: contents;
+    }
+  }
+  hr {
+    border: none;
+    border-top: 4px dotted #4BBFEE;
+  }
+  @media (min-width: 56.25rem) {
+    .legal {
+      list-style: none;
+      text-align: right;
+      padding: 0!important;
+    }
+  }
+  .about {
+    & :where(h2, h3, h4, p) {
+      max-width: 80ch;
+    }
   }
 </style>

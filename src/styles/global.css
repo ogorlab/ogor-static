@@ -42,16 +42,28 @@ html {
   --btn-radius: .25em;
 
   --container: 54em;
-  --bleed: max(2em, calc((100vw - var(--container)) / 2));
-  --gutter: 2em;
+
+  /* Layout */
+  --inner: 70rem;
+  --margins: 1rem;
+  --gutter: 2rem;
+  
+  @media (min-width: 37.5rem) {
+    --margins: 2rem;    
+  }
+  
+  --bleed: max(
+    calc((100vw - var(--inner)) / 2),
+    var(--margins)
+  );
 }
 
 html {
   font-family: "Instrument Sans", system-ui, sans-serif;
-  font-size: 100%;
+  line-height: 150%;
 
-  @media (min-width: 800px)  { font-size: 125%; }
-  @media (min-width: 1200px) { font-size: 150%; }
+  @media (min-width: 56.25rem) { font-size: 125%; }
+  @media (min-width: 75rem)    { font-size: 150%; }
 }
 
 a {
@@ -82,6 +94,11 @@ select, textarea, input, button {
 
 .inline-block {
   display: inline-block;
+}
+
+
+@layer layout {
+
 }
 
 
