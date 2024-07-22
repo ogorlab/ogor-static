@@ -3,6 +3,7 @@ import { getLocalizedPaths } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
+import ForecastContributors from "@/components/ForecastContributors.astro";
 
 export const getStaticPaths = (async() => {
   const entries = await getCollection("forecast")
@@ -23,11 +24,351 @@ const { entries } = Astro.props
 ---
 
 <BaseLayout>
-  <ol>
-  { entries.map(entry => (
-    <li>
-      <a href={getUrl("yield/forecast/") + entry.data.forecast_date}>{ entry.data.forecast_date }</a>
-    </li>
-  ))}
-  </ol>
+  <div class="wrapper">
+    <section class="hero">
+      <div class="inner">
+        <h2>Prognoza OGOR</h2>
+      <div class="_media-hero"> 
+        <img src="/src/images/forecast-hero.png" alt="Ogor yield 2024">
+      </div>
+      <div><p>Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate la 5 dintre culturile cele mai importante: <strong>grâu, orz, porumb, floarea soarelui și rapiță.</strong> 
+      </p>
+      <p>Prognoza este emisă cu <strong>2 luni înainte de recoltă</strong> și este actualizată la fiecare 2 săptămâni.</p> </div>
+      </div>
+    </section>
+    <div class="about-forecast"> 
+      <h4>Prognoza OGOR este disponibilă ca 3 produse distincte:</h4>
+    </div>
+    <section class="map-statistics">
+      <div class="inner">
+        <h3><strong>Hartă și statistici la nivel național,</strong> publicate gratuit pe ogor.ro/productivitate.</h3>
+        <div class="_media">
+          <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
+        </div>
+        <div class="forecast">
+          <p>Ultima prognoză: </p>
+          <a href="">2 iulie 2024 →</a>
+          
+          <table class="last-forecast-table">
+            <tr>
+                <td>Grâu</td>
+                <td>4.99 t/ha</td>
+            </tr>
+            <tr>
+                <td>Orz</td>
+                <td>5.80 t/ha</td>
+            </tr>
+            <tr>
+                <td>Rapiță</td>
+                <td>3.19 t/ha</td>
+            </tr>
+            <tr>
+                <td>Porumb</td>
+                <td>5.25 t/ha</td>
+            </tr>
+            <tr>
+                <td>Floarea&nbsp;soarelui</td>
+                <td>2.30 t/ha</td>
+            </tr>
+          </table>
+        </div>
+        <details>
+          <summary>
+            Istoric prognoze OGOR
+          </summary>
+  
+          <table class="table-container">
+            <thead> 
+              <tr>
+                <th>Culturi de toamna</th>
+                <th>2 Iul</th>
+                <th>19 Iun</th>
+                <th>31 Mai</th>
+                <th>14 Mai</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="/src/images/crops/barley.png" alt="Grâu"> Grâu</td>
+                <td>4.99 t/ha</td>
+                <td>4.99</td>
+                <td>4.75</td>
+                <td>3.57</td>
+                <td></td>
+              </tr>
+              <tr>
+                  <td><img src="/src/images/crops/barley.png" alt="Orz"> Orz</td>
+                  <td>5.80 t/ha</td>
+                  <td>4.99</td>
+                  <td>5.77</td>
+                  <td>3.57</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td><img src="/src/images/crops/barley.png" alt="Rapiță"> Rapiță</td>
+                  <td>3.19 t/ha</td>
+                  <td>4.99</td>
+                  <td>2.75</td>
+                  <td>3.57</td>
+                  <td></td>
+              </tr>
+              <!-- Culturi primavara -->
+              <tr>
+                  <th>Culturi de primavara</th>
+                  <th>2 Iul</th>
+                  <th colspan="5"></th>
+              </tr>
+              <tr>
+                  <td><img src="/src/images/crops/barley.png" alt="Porumb"> Porumb</td>
+                  <td>5.25 t/ha</td>
+                  <td colspan="4"></td>
+              </tr>
+              <tr>
+                  <td><img src="/src/images/crops/barley.png" alt="Floarea soarelui"> Floarea soarelui</td>
+                  <td>2.30 t/ha</td>
+                  <td colspan="4"></td>
+              </tr>
+            </tbody>
+          </table>
+        
+        </details>
+      </div>
+    </section>
+    <section class="locality-map-statistics">
+      <div class="inner">
+        <h3><strong>Hartă și statistici la nivel de județ și localitate,</strong> eliberate în baza unui contract.</h3>
+        <ul>
+          <li>Harta de productivitate</li>
+          <li>Harta culturilor detectate</li>
+          <li>Tabel statistici pentru fiecare cultură:
+            <ul>
+              <li>Producția maximă, medie și minimă la nivelul județului</li>
+              <li>Suprafață cultivată în fiecare localitate</li>
+            </ul>
+          </li>
+        </ul>
+        <a href="www.google.com">Contact vânzări →</a>
+        <div class="_media">
+          <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
+        </div>
+      </div>
+    </section>
+    <section class="farm-map-statistics">
+      <div class="inner">
+        <h3><strong>Statistici pe fermă și prognoză la nivel de parcelă,</strong> accesibile prin opțiune la abonamentul OGOR.</h3>
+        <a href="www.google.com">Opțiuni abonement OGOR →</a>
+        <div class="_media">
+          <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
+        </div>
+      </div>
+    </section>
+  </div>
+  <ForecastContributors />
 </BaseLayout>
+
+
+<style>
+  a { color: hsla(213, 92%, 33%, 1); }
+  ._media-hero img { width: 100%; }
+  ._media-hero { max-width: 32em; }
+  .wrapper { background: hsla(116, 36%, 91%, 1); }
+  .hero { background: hsla(44, 100%, 89%, 1); }
+
+  section {
+    max-width: var(--container);
+    margin: auto;
+    padding: 2em;
+
+    .inner {
+      margin: auto;
+      max-width: var(--container);
+
+      h3 {
+        grid-column: 1;
+        grid-row: 1;
+        line-height: 1.5;
+        font-size: 150%;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 1em;
+
+        strong { font-weight: 550; }
+      }
+
+      a { display: inline-block; margin-bottom: 1em; }
+      p { display: inline-block; }
+
+      .last-forecast-table {
+        border: 1px solid hsla(32, 57%, 49%, 1);
+        border-radius: 0.5rem;
+        width: 100%;
+
+        tr:nth-child(even) td { background: hsla(44, 100%, 89%, 0.3); }
+        td:nth-child(odd) { font-weight: 550; }
+        td:nth-child(even) { text-align: right; }
+        td { padding: 0.25rem 0.5rem; }
+      }
+    }
+
+    ._media {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      border-radius: 8px;
+
+      img {
+        width: 100%;
+        height: auto;
+        border: 4px solid white;
+        border-radius: 1em;
+        box-shadow: 0px 4px 24px 0px hsla(0, 0%, 0%, 0.1);
+      }
+    }
+
+    details {
+      cursor: pointer;
+      padding: 0.75em;
+      margin-top: 0.5em;
+      border-radius: 0.5em;
+      box-sizing: border-box; 
+      border: 1px dotted hsla(32, 57%, 49%, 1);
+
+      &[open] {
+        border: none;
+        padding: 2rem;
+        border-radius: 2em;
+        overflow-x: auto;
+        background: white;
+
+        summary { font-weight: 600; margin-bottom: 1em; font-size: 150%; }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+
+          tr { padding-block: 1.5em; text-wrap: nowrap; }
+          th { font-weight: 600; padding-top: 1em; }
+          th:first-child { text-align: left; }
+          td:first-child { min-width: 12em; font-weight: 600; padding-right: 1em; }
+          td:nth-child(n+2) { min-width: 6em; text-align: center; }
+          td:nth-child(2), th:nth-child(2) { background: hsla(90, 22%, 96%, 1); }
+
+          tr:nth-child(1) td, tr:nth-child(2) td, tr:nth-last-child(2) td {
+            border-bottom: 1px solid hsla(0, 0%, 0%, 0.25);
+          }
+
+          tr:first-child th:nth-child(2) { border-radius: 2em 2em 0 0; }
+          tr:last-child td:nth-child(2) { border-radius: 0 0 2em 2em; }
+          td:last-child { width: 100%; }
+        }
+
+        img { width: 4rem; vertical-align: middle; margin: none; }
+      }
+    }
+  }
+
+  .locality-map-statistics {
+    ul { padding-left: 1.25em; }
+  }
+
+  .farm-map-statistics {
+    ._media { grid-row: 1/3; }
+    .inner h3 {
+      display: inline-block;
+      align-self: end;
+      margin-bottom: 1em;
+    }
+  }
+
+  .about-forecast {
+    padding-inline: 2rem;
+    max-width: var(--container);
+    margin: auto;
+
+    h4 {
+      font-size: 150%;
+      max-width: 35ch;
+      margin-block: 0;
+      margin-top: 4rem;
+      color: hsla(32, 57%, 49%, 1);
+    }
+  }
+
+  @media (min-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    & section { padding-block: 4em; }
+    & section:not(:last-of-type):not(:first-of-type){ border-bottom: 1px solid black;}
+    & section:nth-of-type(2) h3::before { content: "⏺"; }
+    & section:nth-of-type(3) h3::before { content: "⏺ ⏺"; }
+    & section:nth-of-type(4) h3::before { content: "⏺ ⏺ ⏺"; }
+
+    & section h3::before {
+      vertical-align: top;
+      color: hsla(32, 57%, 49%, 1);
+      display: block;
+      height: fit-content;
+    }
+
+    .hero {
+      max-width: none;
+      padding: 0;
+      overflow-x: hidden;
+
+      p { margin-bottom: 0; }
+
+      h2 {
+        align-self: flex-end;
+        margin-bottom: 0;
+        font-size: 200%;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 0.5em;
+      }
+
+      .inner {
+        padding: 2em;
+        ._media-hero {
+          margin-right: calc(-1 * var(--bleed));
+          grid-column: 2;
+          grid-row: 1/3;
+          margin-block: -2em;
+          max-width: none;
+          
+          img {
+            display: block;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1rem;
+
+      h3 { max-width: 25ch; }
+
+      table {
+        grid-column: 1;
+        max-width: 20rem;
+      }
+
+      ._media {
+        grid-column: 2;
+        grid-row: 1/4;
+      }
+    }
+
+    details { max-width: 20rem; }
+    details[open] {
+      grid-column: 1/3;
+      max-width: none;
+    }
+  }
+</style>
