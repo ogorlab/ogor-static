@@ -90,6 +90,24 @@ i18next.init({
           "partners": "Parteneri"
         },
         yield: {
+          "ogorForecast": "Prognoza OGOR",
+          "usingAlgorithms": "Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate la 5 dintre culturile cele mai importante: <strong>grâu, orz, porumb, floarea soarelui și rapiță.</strong>",
+          "forecastIsSent": "Prognoza este emisă cu <strong>2 luni înainte de recoltă</strong> și este actualizată la fiecare 2 săptămâni.",
+          "aboutForecast": "Prognoza OGOR este disponibilă ca 3 produse distincte:",
+          "nationalMapAndStatistics": "<strong>Hartă și statistici la nivel național,</strong> publicate gratuit pe ogor.ro/productivitate.",
+          "lastForecast": "Ultima prognoză:",
+          "forecastHistory": "Istoric prognoze OGOR",
+          "autumnCrops": "Culturi de toamnă",
+          "springCrops": "Culturi de primăvară",
+          "localityMapAndStatistics": "<strong>Hartă și statistici la nivel de județ și localitate,</strong> eliberate în baza unui contract.",
+          "yieldMap": "Hartă de productivitate",
+          "cropMap": "Hartă culturilor detectate",
+          "statisticsTable": "Tabel statistici pentru fiecare cultură:",
+          "countyYield": "Producția maximă, medie și minimă la nivelul județului",
+          "localityCultivatedArea": "Suprafață cultivată în fiecare localitate",
+          "salesContact": "Contact vânzări →",
+          "parcelStatistics": "<strong>Statistici pe fermă și prognoză la nivel de parcelă,</strong> accesibile prin opțiune la abonamentul OGOR.",
+          "subscriptionOptions": "Opțiuni abonament OGOR",
           forecast: {
             "ogorForecastFrom": "Prognoza OGOR din {{date}}",
             "ogorForecastProject": " <strong>Prognoza OGOR</strong> este un proiect de cercetare realizat de Field Data Zoom SRL (OGOR), cu sprijinul <em>Agenței Spațiale Europene (ESA)</em> și <em>Agenței Spațiale Române (ROSA)</em>. Datele de validate de la sol sunt furnizate de <em>Agenția de Plăţi şi Intervenție pentru Agricultură (APIA)</em> și datele meteo sunt furnizate de <em>OpenWeather</em>.",
@@ -104,6 +122,13 @@ i18next.init({
             "nextForecast": "Urmǎtoarea prognozǎ disponibilǎ pe data de",
             "contactOgorTeam": "Pentru hărți și statistici la nivel de județ și localitate <strong>contactează echipa de vânzări OGOR →</strong>"
           }
+        },
+        crop: {
+          "wheat": "Grâu",
+          "barley": "Orz",
+          "rapeseed": "Rapiță",
+          "maize": "Porumb",
+          "sunflower": "Floarea soarelui",
         }
       },
       urls: {

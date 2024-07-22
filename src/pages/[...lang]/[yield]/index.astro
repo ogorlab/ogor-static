@@ -1,7 +1,7 @@
 ---
-import { getLocalizedPaths } from "@/i18n";
+import { getLocalizedPaths, useI18n } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import ForecastContributors from "@/components/ForecastContributors.astro";
 
@@ -16,71 +16,69 @@ export const getStaticPaths = (async() => {
   return paths
 }) satisfies GetStaticPaths;
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
-const { getUrl } = Astro.locals
-const { entries } = Astro.props
+const { t } = useI18n(Astro.currentLocale)
+
 ---
 
 <BaseLayout>
   <div class="wrapper">
     <section class="hero">
       <div class="inner">
-        <h2>Prognoza OGOR</h2>
+        <h2>{t("yield.ogorForecast")}</h2>
       <div class="_media-hero"> 
         <img src="/src/images/forecast-hero.png" alt="Ogor yield 2024">
       </div>
-      <div><p>Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate la 5 dintre culturile cele mai importante: <strong>grâu, orz, porumb, floarea soarelui și rapiță.</strong> 
-      </p>
-      <p>Prognoza este emisă cu <strong>2 luni înainte de recoltă</strong> și este actualizată la fiecare 2 săptămâni.</p> </div>
+      <div><p set:html={t("yield.usingAlgorithms")} />
+      <p set:html={t("yield.forecastIsSent")} /> </div>
       </div>
     </section>
     <div class="about-forecast"> 
-      <h4>Prognoza OGOR este disponibilă ca 3 produse distincte:</h4>
+      <h4>{t("yield.aboutForecast")}</h4>
     </div>
     <section class="map-statistics">
       <div class="inner">
-        <h3><strong>Hartă și statistici la nivel național,</strong> publicate gratuit pe ogor.ro/productivitate.</h3>
+        <h3 set:html={t("yield.nationalMapAndStatistics")} />
         <div class="_media">
           <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
         </div>
         <div class="forecast">
-          <p>Ultima prognoză: </p>
+          <p>{t("yield.lastForecast")}</p>
           <a href="">2 iulie 2024 →</a>
           
           <table class="last-forecast-table">
             <tr>
-                <td>Grâu</td>
+                <td>{t("crop.wheat")}</td>
                 <td>4.99 t/ha</td>
             </tr>
             <tr>
-                <td>Orz</td>
+                <td>{t("crop.barley")}</td>
                 <td>5.80 t/ha</td>
             </tr>
             <tr>
-                <td>Rapiță</td>
+                <td>{t("crop.rapeseed")}</td>
                 <td>3.19 t/ha</td>
             </tr>
             <tr>
-                <td>Porumb</td>
+                <td>{t("crop.maize")}</td>
                 <td>5.25 t/ha</td>
             </tr>
             <tr>
-                <td>Floarea&nbsp;soarelui</td>
+                <td>{t("crop.sunflower")}</td>
                 <td>2.30 t/ha</td>
             </tr>
           </table>
         </div>
         <details>
           <summary>
-            Istoric prognoze OGOR
+            {t("yield.forecastHistory")}
           </summary>
   
           <table class="table-container">
             <thead> 
               <tr>
-                <th>Culturi de toamna</th>
+                <th>{t("yield.autumnCrops")}</th>
                 <th>2 Iul</th>
                 <th>19 Iun</th>
                 <th>31 Mai</th>
@@ -90,7 +88,7 @@ const { entries } = Astro.props
             </thead>
             <tbody>
               <tr>
-                <td><img src="/src/images/crops/barley.png" alt="Grâu"> Grâu</td>
+                <td><img src="/src/images/crops/barley.png" alt={t("crop.wheat")}> {t("crop.wheat")}</td>
                 <td>4.99 t/ha</td>
                 <td>4.99</td>
                 <td>4.75</td>
@@ -98,7 +96,7 @@ const { entries } = Astro.props
                 <td></td>
               </tr>
               <tr>
-                  <td><img src="/src/images/crops/barley.png" alt="Orz"> Orz</td>
+                  <td><img src="/src/images/crops/barley.png" alt={t("crop.barley")}> {t("crop.barley")}</td>
                   <td>5.80 t/ha</td>
                   <td>4.99</td>
                   <td>5.77</td>
@@ -106,7 +104,7 @@ const { entries } = Astro.props
                   <td></td>
               </tr>
               <tr>
-                  <td><img src="/src/images/crops/barley.png" alt="Rapiță"> Rapiță</td>
+                  <td><img src="/src/images/crops/barley.png" alt={t("crop.rapeseed")}>{t("crop.rapeseed")}</td>
                   <td>3.19 t/ha</td>
                   <td>4.99</td>
                   <td>2.75</td>
@@ -115,17 +113,17 @@ const { entries } = Astro.props
               </tr>
               <!-- Culturi primavara -->
               <tr>
-                  <th>Culturi de primavara</th>
+                  <th>{t("yield.springCrops")}</th>
                   <th>2 Iul</th>
                   <th colspan="5"></th>
               </tr>
               <tr>
-                  <td><img src="/src/images/crops/barley.png" alt="Porumb"> Porumb</td>
+                  <td><img src="/src/images/crops/barley.png" alt={t("crop.maize")}> {t("crop.maize")}</td>
                   <td>5.25 t/ha</td>
                   <td colspan="4"></td>
               </tr>
               <tr>
-                  <td><img src="/src/images/crops/barley.png" alt="Floarea soarelui"> Floarea soarelui</td>
+                  <td><img src="/src/images/crops/barley.png" alt={t("crop.sunflower")}>{t("crop.sunflower")}</td>
                   <td>2.30 t/ha</td>
                   <td colspan="4"></td>
               </tr>
@@ -137,18 +135,18 @@ const { entries } = Astro.props
     </section>
     <section class="locality-map-statistics">
       <div class="inner">
-        <h3><strong>Hartă și statistici la nivel de județ și localitate,</strong> eliberate în baza unui contract.</h3>
+        <h3 set:html={t("yield.localityMapAndStatistics")} />
         <ul>
-          <li>Harta de productivitate</li>
-          <li>Harta culturilor detectate</li>
-          <li>Tabel statistici pentru fiecare cultură:
+          <li>{t("yield.yieldMap")}</li>
+          <li>{t("yield.cropMap")}</li>
+          <li>{t("yield.statisticsTable")}
             <ul>
-              <li>Producția maximă, medie și minimă la nivelul județului</li>
-              <li>Suprafață cultivată în fiecare localitate</li>
+              <li>{t("yield.countyYield")}</li>
+              <li>{t("yield.localityCultivatedArea")}</li>
             </ul>
           </li>
         </ul>
-        <a href="www.google.com">Contact vânzări →</a>
+        <a href="www.google.com">{t("yield.salesContact")}</a>
         <div class="_media">
           <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
         </div>
@@ -156,8 +154,8 @@ const { entries } = Astro.props
     </section>
     <section class="farm-map-statistics">
       <div class="inner">
-        <h3><strong>Statistici pe fermă și prognoză la nivel de parcelă,</strong> accesibile prin opțiune la abonamentul OGOR.</h3>
-        <a href="www.google.com">Opțiuni abonement OGOR →</a>
+        <h3 set:html={t("yield.parcelStatistics")} />
+        <a href="www.google.com">{t("yield.subscriptionOptions")}</a>
         <div class="_media">
           <img src="/src/images/ogor-yield-2024.png" alt="Ogor yield 2024">
         </div>
