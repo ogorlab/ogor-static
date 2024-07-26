@@ -1,4 +1,7 @@
 @charset "UTF-8";
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Instrument Sans";
   font-weight: 400 900;
@@ -36,7 +39,6 @@ html {
 
   --brand-yellow-6: #FFF0C6;
   --brand-yellow-5: #FFE79F;
-  --brand-orange: #C58336;
   
   /* Sizing */
   --btn-radius: .25em;
@@ -56,18 +58,23 @@ html {
     calc((100vw - var(--inner)) / 2),
     var(--margins)
   );
+  --neg-bleed: calc( var(--bleed) * -1 );
 }
 
 html {
   font-family: "Instrument Sans", system-ui, sans-serif;
-  line-height: 150%;
+  line-height: 1.5;
 
-  @media (min-width: 56.25rem) { font-size: 125%; }
-  @media (min-width: 75rem)    { font-size: 150%; }
+  @media (min-width: 56.25rem) { font-size: 116.66%; }
+  @media (min-width: 75rem)    { font-size: 133.33%; }
 }
 
 a {
   color: inherit;
+}
+
+.muted {
+  color: var(--muted);
 }
 
 body {
@@ -76,6 +83,7 @@ body {
 
 #viewport {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -98,7 +106,43 @@ select, textarea, input, button {
 
 
 @layer layout {
+  .area-header { grid-area: header; }
+  .area-media  { grid-area: media;  }
+  .area-body   { grid-area: body;   }
 
+  .area-media :where(img, picture, svg, video) {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .layout-media {
+    padding-inline: var(--bleed);
+    
+    @media (min-width: 37.5rem) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      /* grid-template-rows: 1fr 1fr; */
+      grid-template-areas:
+        "header media"
+        "body   media"
+      ;
+      gap: var(--gutter);
+      row-gap: 1em;
+
+      /* Move media to the left */
+      &:where(.--left) {
+        grid-template-areas:9
+          "media header"
+          "media body"
+        ;
+      }
+  
+      /* Snap media to the edge of the viewport */
+      & .area-media:where(.--bleed) {
+        margin-right: var(--neg-bleed);
+      }
+    }
+  }
 }
 
 
@@ -239,7 +283,8 @@ button,
 
 
 /* Icons */
-.icon {
+.icon,
+.emoji {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -254,3 +299,39 @@ button,
 .emoji {
   vertical-align: middle;
 }
+
+
+
+/* Funky lists */
+/* This doesn't work unfortunately. */
+@counter-style bullet-counter {
+  system: additive;
+  additive-symbols: "⏺"
+}
+
+.li-bullet-1::before,
+.li-bullet-2::before,
+.li-bullet-3::before,
+.li-bullet-4::before,
+.li-bullet-5::before {
+  display: block;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  color: var(--li-color, inherit);
+  letter-spacing: .125em;
+  line-height: 1;
+  overflow: visible;
+}
+.li-bullet-1::before { content: "⏺"; }
+.li-bullet-2::before { content: "⏺⏺"; }
+.li-bullet-3::before { content: "⏺⏺⏺"; }
+.li-bullet-4::before { content: "⏺⏺⏺⏺"; }
+.li-bullet-5::before { content: "⏺⏺⏺⏺⏺"; }
+
+[data-marker] {
+  list-style: none;
+}
+[data-marker] li::marker {
+  content: "→ ";
+}
+

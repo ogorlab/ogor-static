@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content"
+import { z, defineCollection, getCollection } from "astro:content"
 
 const yieldForecastCollection = defineCollection({
   type: "data",
@@ -9,9 +9,10 @@ const yieldForecastCollection = defineCollection({
       code: z.number(),
       avg_yield: z.number(),
       total_surface: z.number(),
-      name: z.string(),
-      interpretation: z.string(),
-      cite: z.string(),
+      interpretation: z.record(z.string({}), z.object({
+        text: z.string(),
+        cite: z.string()
+      }))
     })),
   })
 })
@@ -29,4 +30,12 @@ export const collections = {
   updates: updatesCollection,
 }
 
-// Organize yield by year, date / maybe in the future crop
+export async function getLatestForecast() {
+  const collection = await getCollection("forecast")
+  
+  return collection.reduce((latest, current) => {
+    const latestDate = new Date(latest.data.forecast_date)
+    const currentDate = new Date(current.data.forecast_date)
+    return currentDate > latestDate ? current : latest;
+  })
+}

@@ -4,92 +4,104 @@ import config from "astro.config.mjs"
 import { getUrl as _getUrl } from "@/i18n"
 
 const { t } = useI18n(Astro.currentLocale)
-const { getUrl, key, backUrl } = Astro.locals
+const { getUrl, key } = Astro.locals
+
+const locales = config.i18n?.locales as unknown as string[]
 ---
 
-<nav id="secondary_nav">
-  <div class="inner">
-    <select id="language_picker" onchange="window.location.href = document.querySelector(`link[hreflang=${this.value}]`).href">
-      { config.i18n?.locales.map((locale) => (
-        <option value={ locale } selected={ locale === Astro.currentLocale }>
-          { locale.toUpperCase() }
-        </option>
-      )) }
-    </select>
+<nav id="secondary_nav" class="flex tp-max:hidden">
+  <select id="language_picker" onchange="window.location.href = document.querySelector(`link[hreflang=${this.value}]`).href">
+    { locales.map((locale) => (
+      <option value={ locale } selected={ locale === Astro.currentLocale }>
+        { locale.toUpperCase() }
+      </option>
+    )) }
+  </select>
 
-    <ul>
-      <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
-      <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
-      <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
-      <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
-    </ul>
-  </div>
+  <ul>
+    <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
+    <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+    <li class={key === "yield" ? "is-active" : ""}><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
+    <!-- <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li> -->
+  </ul>
 </nav>
 
 <nav id="primary_nav">
-  <div class="inner">
-    <a href={ getUrl("/") } id="nav_logo">
-      <svg viewBox="0 0 960 384" height="64" >
-        <use href="/logos/ogor.svg#logo" width="384" />
-        <use href="/logos/ogor.svg#logotype" x="320" y="64" />
-      </svg>
-    </a>
-    
-    <div class="desktop-view">📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
-    <div class="desktop-view">✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
-    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
-      { t("your_account") }
-    </a>
-    <button open-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-open.svg" alt=""></button>
-  </div>
+  <a href={ getUrl("/") } id="nav_logo">
+    <svg viewBox="0 0 960 384" height="64" >
+      <use href="/logos/ogor.svg#logo" width="384" />
+      <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+    </svg>
+  </a>
 
-  <dialog data-dialog id="mobile-menu" class="mobile-view">
-    <nav class="menu-nav">
-      <div class="flex items-center">
-        <a href={ getUrl("/") } id="nav_logo">
-          <svg viewBox="0 0 960 384" height="64" >
-            <use href="/logos/ogor.svg#logo" width="384" />
-            <use href="/logos/ogor.svg#logotype" x="320" y="64" />
-          </svg>
-        </a>
-        <button close-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-close.svg" alt=""></button>
-      </div>
-    </nav>
-    <a id="your_account" href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
-      { t("your_account") } →
+  <span class="tp-max:hidden">
+    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#phone" />
+      </svg>
+      <span class="underline">{t("company.phone")}</span>
     </a>
-    <ul>
-      <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
-      <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
-      <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
-      <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
-    </ul>
-    <div class="contact">
-      <div>📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
-      <div>✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
-    </div>
-    <p id="dialog-language-picker">
-      {config.i18n?.locales.map((locale) => (
-        locale === Astro.currentLocale ? (
-          <span class='muted'>{locale.toUpperCase()}</span>
-        ) : (
-          <a href={_getUrl(locale as string, key)}>
-            {locale.toUpperCase()}
-          </a>
-        )
-      ))}      
-    </p>
-    
-  </dialog>
+    &ensp;
+    <a href={"mailto:" + t("company.email")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#email" />
+      </svg>
+      <span class="underline">{t("company.email")}</span>
+    </a>
+  </span>
+
+  <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+    { t("your_account") }
+  </a>
+  <button open-dialog-button id="hamburger-button" class="tl:hidden" ><img src="/src/images/icons/hamburger-open.svg" alt=""></button>
+
 </nav>
+
+<dialog data-dialog id="mobile-menu">
+  <nav class="menu-nav">
+    <div class="flex items-center">
+      <a href={ getUrl("/") } id="nav_logo">
+        <svg viewBox="0 0 960 384" height="64" >
+          <use href="/logos/ogor.svg#logo" width="384" />
+          <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+        </svg>
+      </a>
+      <button close-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-close.svg" alt=""></button>
+    </div>
+  </nav>
+  <a id="your_account" href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+    { t("your_account") } →
+  </a>
+  <ul>
+    <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
+    <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+    <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
+    <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li>
+  </ul>
+  <div class="contact">
+    <div>📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
+    <div>✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
+  </div>
+  <p id="dialog-language-picker">
+    { locales.map((locale) => (
+      locale === Astro.currentLocale ? (
+        <span class='muted'>{locale.toUpperCase()}</span>
+      ) : (
+        <a href={_getUrl(locale, key)}>
+          {(locale as string).toUpperCase()}
+        </a>
+      )
+    ))}      
+  </p>
+</dialog>
 
 
 
 <script>
-  const openDialogButton = document.querySelector("[open-dialog-button]");
-  const closeDialogButton = document.querySelector("[close-dialog-button]");
-  const mobileMenu = document.querySelector("[data-dialog]");
-  const body = document.querySelector("body");
+  const openDialogButton = document.querySelector("[open-dialog-button]")!;
+  const closeDialogButton = document.querySelector("[close-dialog-button]")!;
+  const mobileMenu = document.querySelector<HTMLDialogElement>("[data-dialog]")!;
+  const body = document.querySelector("body")!;
 
   closeDialogButton.addEventListener("click", () => {
     closeMenu();
@@ -112,45 +124,65 @@ const { getUrl, key, backUrl } = Astro.locals
   }
 </script>
   
-<style is:inline>
-
+<style is:global>
   #primary_nav,
   #secondary_nav {
     & a:not(.btn) {
       color: inherit;
     }
-
-    & .inner {
-      padding: 0 1em;
-      max-width: var(--container);
-      width: 100%;
-      margin-inline: auto;
-      box-sizing: border-box;
-      border-radius: 0 0 24px 24px;
-    }
   }
   #primary_nav {
+    @apply t:gap-4 m:py-2 py-4;
+
     position: sticky;
     top: 0;
     z-index: 100;
+
+    padding-inline: var(--bleed);
+    display: flex;
+    align-items: center;
+
     background: #fff;
-    
-    & .inner {
-      padding: .5em 1em;
-      display: flex;
-      align-items: center;
-      gap: 1em;
-    }
   }
 
-  #secondary_nav{ display: none; }
+  #secondary_nav {
+    align-items: center;
+    gap: 1em;
+    margin-inline: var(--bleed);
+    padding-block: .5em;
+    padding-inline: 1em;
+    border-bottom-left-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+
+    background: #F6F8F4;
+
+    & ul {
+      display: flex;
+      display: contents;
+      list-style-position: inside;
+      padding-inline-start: initial;
+  
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      li:first-child {
+        list-style-type: none;
+      }
+    }
+  }
 
   #nav_logo {
     display: inline-block;
     margin-right: auto;
     
     & :where(img, svg) {
+      margin: -6.5%;
       display: block;
+      height: 3.5em;
+      width: auto;
     }
   }
 
@@ -207,42 +239,5 @@ const { getUrl, key, backUrl } = Astro.locals
     
     .contact{ margin-top: 3em; }
     .contact a { margin-bottom: 1em; }
-
-    .muted{ color: hsla(0, 0%, 50%, 1); }
-}
-
-  @media (min-width: 800px) {
-    #secondary_nav {
-      background: #fff;
-      display: flex;
-
-      & .inner {
-        display: flex;
-        align-items: center;
-        gap: 1em;
-
-        padding: 0.5em 1em;
-        background: hsla(200, 89%, 85%, 1);
-
-        & ul {
-          display: flex;
-          display: contents;
-          list-style-position: inside;
-          padding-inline-start: initial;
-          a {
-            text-decoration: none;
-          }
-          a:hover {
-            text-decoration: underline;
-          }
-          li:first-child {
-            list-style-type: none;
-          }
-        }
-      }
-    }
-
-    .desktop-view{ display: initial; }
-    .mobile-view{ display: none; }
   }
 </style>

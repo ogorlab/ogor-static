@@ -2,10 +2,7 @@
 import { useI18n } from "@/i18n";
 
 const { t } = useI18n(Astro.currentLocale);
-
-const { getUrl, backUrl } = Astro.locals
-
-// console.log(getUrl("updates"))
+const { getUrl } = Astro.locals
 
 const social = [
   {
@@ -17,13 +14,11 @@ const social = [
     name: "YouTube",
     url: "https://www.youtube.com/channel/UCyJXrLqqYUTwTaEC2FtKUDg",
     icon: "/icons.svg#youtube",
-    // icon: "",
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/company/ogor/",
     icon: "/icons.svg#linkedin",
-    // icon: "",
   },
 ];
 ---
@@ -54,7 +49,7 @@ const social = [
       </svg>
       <span class="underline">{t("company.email")}</span>
     </a>
-    <span class="social-media">
+    <span class="social-media t:contents">
       {
         social.map((platform) => (
           <a href={platform.url} title={platform.name} rel="external">
@@ -69,11 +64,11 @@ const social = [
 
   <hr />
 
-  <ul class="nav semibold">
+  <ul class="nav font-semibold">
     <li><a href={ getUrl("company") }>{ t("nav.company_long") }</a></li>
     <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
-    <li><a href={ getUrl("updates") }>{ t("nav.updates") }</a></li>
-    <li><a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>Creează cont OGOR&nbsp;→</a></li>
+    <!-- <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li> -->
+    <li><a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>{t("create_account_ogor")} →</a></li>
   </ul>
 
   <ul class="legal">
@@ -90,8 +85,7 @@ const social = [
   </address>
 </footer>
 
-
-<style>
+<style is:global>
   footer {
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--gutter);
@@ -99,6 +93,15 @@ const social = [
     padding-block: 2rem;
     padding-inline: var(--bleed);
     background: #b7e4fb;
+
+    @media screen(tl) {
+      display: grid;
+      grid-template-areas: 
+        "contact contact contact"
+        "about   about   about  "
+        "nav     legal   address"
+      ;
+    }
 
     & a {
       color: inherit;
@@ -108,22 +111,6 @@ const social = [
     }
     & address {
       margin-block: 1em;
-    }
-
-    @media (min-width: 37.5rem) {
-      grid-template-areas: 
-        "contact contact contact"
-        "about   about   about  "
-        "nav     legal   address"
-      ;
-    }
-    @media (min-width: 56.25rem) {
-      display: grid;
-      grid-template-areas: 
-        "contact contact contact"
-        "about   about   about  "
-        "nav     legal   address"
-      ;
     }
   }
   
@@ -150,39 +137,30 @@ const social = [
     flex-wrap: wrap;
     align-items: center;
     justify-self: flex-end;
-    gap: 1em 1em;
-
-    & a {
-      text-decoration: none;
-    }
+    gap: 1em;
   }
-  @media (max-width: calc(56.25rem - 1px)) {
+  .social-media {
+    word-spacing: .5em;
+  }
+  @media screen(tp-max) {
     .contact {
       margin-block: 1em;
     }
-    .social-media {
-      word-spacing: .5em;
-    }
   }
-  @media (min-width: 37.5rem) {
-    .social-media {
-      display: contents;
+  @media screen(tl) {
+    .legal {
+      list-style: none;
+      text-align: right;
+      padding: 0;
     }
   }
   hr {
     border: none;
-    border-top: 4px dotted #4BBFEE;
-  }
-  @media (min-width: 56.25rem) {
-    .legal {
-      list-style: none;
-      text-align: right;
-      padding: 0!important;
-    }
+    border-top: .25rem dotted #4BBFEE;
   }
   .about {
     & :where(h2, h3, h4, p) {
-      max-width: 80ch;
+      max-width: 72ch;
     }
   }
 </style>

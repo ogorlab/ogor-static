@@ -16,90 +16,83 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       <h1 style="max-width: 30ch;">{ t("home.hero_heading") }</h1>
       <p  style="max-width: 50ch;" set:html={ t("home.hero_description") } class="reading-width-description"/>
     </div>
-    <div class="_cta">
-      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="flex justify-center items-center" style="height: 100%;">
-        <span class="underline">{ t("home.hero_cta") }</span> →
-      </a>
-    </div>
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta text-center content-center text-white">
+      <span class="underline">{ t("home.hero_cta") }</span> →
+    </a>
     <div class="_media1 flex justify-center items-center">
-      <img src="/src/images/app-showcase.png" alt="Ogor app showcase">
+      <img src="/images/kv_devices.png" alt="Ogor app showcase">
     </div>
   </section>
 
   <section id="features" class="features">
-    <h2>{ t("home.why_ogor") }</h2>
-  
-    <section class="feature-1">
-      <div class="feature-content flex justify-center flex-column">
-        <h3>{ t("home.feature1_heading") }</h3>
+    <h2 class="text-rust text-center">{ t("home.why_ogor") }</h2>
+    <section class="feature-1 pt-0 text-center pb-8 tl:pb-0">
+      <div class="feature-content">
+        <h3 class="li-bullet-1">{ t("home.feature1_heading") }</h3>
         <p>{ t("home.feature1_description") }</p>
       </div>
-  
       <div class="_media">
         <img src="https://placehold.co/900x400" alt="feature">
       </div>
     </section>
   
-    <section class="feature-2">
-      <div class="feature-content flex justify-center flex-column">
-        <h3>{ t("home.feature2_heading") }</h3>
+    <section class="feature-2 py-8 tl:pt-16 tl:pb-0">
+      <div class="feature-content">
+        <h3 class="li-bullet-2">{ t("home.feature2_heading") }</h3>
         <p>{ t("home.feature2_description") }</p>
       </div>
-  
       <div class="_media">
         <img src="https://placehold.co/512" alt="feature">
       </div>
     </section>
   
-    <section class="context">
-      <p set:html={ t("home.context") }/>
-    </section>
+    <div class="py-2 t:py-6 bg-[#fff0c74d] text-center mx-[var(--neg-bleed)]">
+      <p set:html={ t("home.context") } class="max-w-[55ch] mx-auto"/>
+    </div>
 
-    <section class="feature-3">
-      <div class="feature-content flex justify-center flex-column">
-        <h3>{ t("home.feature3_heading") }</h3>
+    <section class="feature-3 py-8 tl:pt-16 tl:pb-0">
+      <div class="feature-content">
+        <h3 class="li-bullet-3">{ t("home.feature3_heading") }</h3>
         <p>{ t("home.feature3_description") }</p>
       </div>
-  
       <div class="_media">
         <img src="https://placehold.co/512" alt="feature">
       </div>
     </section>
   
-    <section class="feature-4">
-      <div class="feature-content flex justify-center flex-column">
-        <h3>{ t("home.feature4_heading") }</h3>
+    <section class="feature-4 py-8 tl:pt-16 tl:pb-0">
+      <div class="feature-content">
+        <h3 class="li-bullet-4">{ t("home.feature4_heading") }</h3>
         <p>{ t("home.feature4_description") }</p>
       </div>
-  
       <div class="_media">
         <img src="https://placehold.co/512" alt="feature">
       </div>
     </section>
-  
-    <section class="plus">
-      <p>Plus:</p>
-  
+    <section class="plus t:grid gap-[var(--gutter)] mt-8 border-b-0 text-larger" style="grid-template-columns: 1fr 1fr;">
+      <p class="m-0 font-bold text-rust col-span-full">Plus:</p>
       {[
         { name: t("accumulated_precipitation"), icon: "/src/images/icons/precipitatii.png" },
-        { name: t("weather_forecast"), icon: "/src/images/icons/prognoza.png"},
+        { name: t("weather_forecast"), 
+          icon: "/src/images/icons/prognoza.png",
+          description: "Pe următoarele 7 zile; <strong>din 3 în 3 ore pentru ziua curentă!</strong> Date furnizate de Meteo Romania."
+        },
         { name: t("water_capacity"), icon: "/src/images/icons/rezerva.png" },
         { name: t("crop_rotation"), icon: "/src/images/icons/rotatia.png" },
         { name: t("soil_map"), icon: "/src/images/icons/harta_solurilor.png" },
         { name: t("vra"), icon: "/src/images/icons/VRA.png" },
         { name: t("soil_analysis"), icon: "/src/images/icons/analize.png" }
       ].map((f) => (
-        <details>
-          <summary class="flex items-center">
-            <img src={f.icon} alt="312" />
-            <p class="flex items-center" set:html={ f.name }/>
+        <details class="open:col-span-full">
+          <summary class="flex items-center gap-[1em]">
+            <img src={f.icon} class="size-[3em] rounded-lg" style="box-shadow: 0 .25em .5em 0 rgb(0, 0, 0, 0.15)"/>
+            <h4 set:html={ f.name } class="m-0"/>
           </summary>
+          <p class="ml-[4em] text-balance" set:html={f.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui repellat eaque, quo quaerat quidem ratione aliquam! Expedita eligendi sit commodi illum? Voluptatum nemo debitis rerum laborum dolore non nisi quo.</p>
         </details>
       ))}
     </section>
   </section>
-
-  
 
   <section id="testimonials">
     <h2>{ t("home.testimonials_heading") }</h2>
@@ -147,11 +140,11 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
   </section>
 
   <section id="cta">
-    <p>
+    <p class="max-w-[40em] mx-auto">
       <strong>{ t("home.got_questions") }</strong>
       { t("home.here_to_help") }
     </p>
-    <p>
+    <p class="max-w-[40em] mx-auto mt-8">
       <a href="tel:+40754347347" class="btn btn-text rounded">
         <svg viewBox="0 0 48 48" class="icon">
           <use href="/icons.svg#phone" />
@@ -164,7 +157,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
         </svg>
       </a>
     </p>
-    <p>
+    <p class="max-w-[40em] mx-auto">
       <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
         <svg class="icon">
           <use href="/logos/ogor.svg#logo" />
@@ -238,9 +231,39 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
   next.addEventListener('click', () => currentCardIndex < cards.length - maxCardOffset && updateCarousel(1));
 </script>
 
-<style is:inline>
+<style>
   #hero {
     background-color: var(--brand-yellow-6);
+    img { width: 100%; }
+
+    ._body {
+      padding: var(--margins);
+      line-height: 1.5;
+      background: var(--brand-yellow-6);
+      color: var(--action-color);
+    }
+
+    ._media1 {
+      background-color: #F6F8F4;
+      padding: var(--margins);
+
+      img { 
+        height: 240px;
+        object-fit: contain;
+      }
+    }
+    ._media2 {
+      img { object-fit: cover; height: 100%; }
+    }
+
+    ._cta {
+      background-color: #C58336;
+      width: fit-content;
+      padding: 1rem var(--margins);
+      &:hover {
+        background-color: #b57225;
+      }
+    }
 
     /* Layout */
     ._body   { grid-area: body; }
@@ -248,223 +271,122 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     ._media2 { grid-area: media2;}
     ._cta    { grid-area: cta; }
 
-    img { width: 100%; }
-
-    ._body {
-      padding: 2em;
-      line-height: 1.5;
-      background: var(--brand-yellow-6);
-      color: var(--action-color);
-    }
-    
-    ._media1 {
-      max-width: 90em;
-      margin-left: auto;
-      background-color: #F6F8F4;
-      padding: 2em;
-      img { 
-        height: 240px;
-        object-fit: contain;
-      }
-    }
-    ._media2 {
-       max-width: 90em;
-       img { object-fit: cover; height: 100%; }
-    }
-
-    ._cta {
-      background-color: var(--brand-orange);
-      width: fit-content;
-      margin-left: 24px;
-      padding: 16px 24px;
-      a{color: white;}
-    }
 
     /* Different devices */
-    @media (min-width: 56.25rem) {
-      background-color: var(--brand-yellow-5) ;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr auto;
-      grid-template-areas: 
-        "body   body"
-        "media1 media2"
-        "cta cta"
-      ;
-      ._cta {
-        width: 100%;
-        margin-left: 0;
-        min-height: 8em;
-        box-sizing: border-box;
+    @media screen(t) {
+      & {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr auto auto;
+        grid-template-areas: 
+          "body   body"
+          "media1 media2"
+          "cta cta"
+        ;
+        background-color: var(--brand-yellow-5);
+        
+        ._cta {
+          width: 100%;
+          margin-left: 0;
+          min-height: 8em;
+          box-sizing: border-box;
+        }
       }
-      ._media1 { img { height: max-content; } }
     }
-    @media (min-width: 75rem) {
-      grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
-      grid-template-rows: 1fr 0.5fr 1fr;
-      grid-template-areas: 
-        ". body   media2 media2"
-        "media1 media1 media2 media2"
-        "media1 media1 cta    ."
-      ;
-      min-height: 20em;
+    @media screen(d) {
+      & {
+        grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
+        grid-template-rows: 1fr auto auto;
+        grid-template-areas: 
+          ".      body   media2 media2"
+          "media1 media1 media2 media2"
+          "media1 media1 cta    ."
+        ;
+        min-height: 20em;
+      }
     }
-
-    ._body   { grid-area: body; }
-    ._media1 { grid-area: media1; }
-    ._media2 { grid-area: media2; }
-    ._cta    { grid-area: cta; }
   }
 
-
-  
   #features {
-  background-color: #CCE6CA;
-  padding-top: 2em;
-  line-height: 1.5;
-  
-  h2 { padding: 0 2rem; }
-  img { width: 100%; display: block; max-width: 16em; }
+    --li-color: hsla(32, 57%, 49%, 1);
+    background-color: #CCE6CA;
+    padding-inline: var(--bleed);
+    padding-block: 2em;
 
-  & section {
-    padding: 2em;
-    grid-template-columns: subgrid;
-    counter-increment: features;
-    border-bottom: 1px solid black;
-    p { margin-top: 0; }
-  }
-
-  & section h3::before {
-    color: brown;
-    display: block;
-    margin-bottom: 1em;
-  }
-  
-  & section h3::before, h2 { color: #C58336; }
-  
-  .feature-1 { padding-top: 0; }
-
-  .context {
-      padding: 2em;
-      text-align: center;
-      background-color: hsla(44, 100%, 89%, 0.3);
-      p {
-        max-width: 55ch;
-        grid-column: 1/5;
-        margin: auto;
+    & ._media img {
+      display: block;
+      width: 100%;
+      max-width: 16em;
+    }
+    & > section {
+      border-bottom: 1px solid black;
+      &:last-child {
+        border-bottom: 0;
       }
     }
-  
-  .plus {
-    font-size: 125%;
-    font-weight: 700;
-    border-bottom: 0;
-    img{ width: fit-content; }
-    p { color: #B36E1F; }
 
-    details {
-        margin-bottom: 1.5em;
-        height: 3em;
-        img {
-          height: 3em;
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
-          border-radius: 4px;
-        }
-
-        summary {
-          gap: 1em;
-          height: 100%;
-          font-weight: 550;
-          p {
-            color: black;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            border-bottom: 3px dotted black;
-          }
-        }
-    }
-    
-    details:last-of-type summary p {
-        border: none;
+    &::after {
+      content: "";
+      grid-column: 2/-1;
+      height: 2rem;
+      margin-bottom: -4rem;
+      background-color: hsla(32, 57%, 49%, 0.5);
     }
   }
 
-  @media (min-width: 56.25rem) {
-    padding: 0;
-    padding-top: 3em;
-    display: grid;
-    grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
+  @media screen(t) {
+    #features {
+      h3 { font-size: 150%; }
 
-    h2 {
-      text-align: center;
-      grid-column: 2 / 4;
-      max-width: 60ch;
-      margin: auto;
-    }
+      & > section {
+        display: grid;
+        grid-template-rows: 1fr;
+        column-gap: 2em;
+        
+        img { max-width: 100%; }
+        h3 { margin-top: 0; }
+        p { max-width: 60ch; }
 
-    h3 { font-size: 150%; }
-
-    & section {
-      padding-top: 4em;
-      padding-bottom: 0;
-      display: grid;
-      grid-template-rows: 1fr;
-      grid-column: 1/5;
-      column-gap: 2em;
-      border-bottom: 1px solid black;
+        .feature-content { 
+          grid-column: 1;
+        }
+        ._media {
+          grid-row: 1 span 2;
+        }
+      }
       
-      img { max-width: 100%; }
-      h3 { margin-top: 0; }
-      p { max-width: 60ch; }
+      .introduction { grid-column: 1 / -1; }
 
-      .feature-content { grid-column: 2/3; padding: 2em 0; }
-      ._media { grid-row: 1/3; display: flex; align-items: center; }
+      .feature-1 {
+        text-align: center;
+        .feature-content { grid-column: 1; p { margin: auto; } }
+        ._media { grid-column: 2; grid-row: 2; }
+      }
+
+      .feature-2 { ._media { grid-column: 2; } }
+      .feature-3 { ._media { grid-column: 1; } .feature-content { grid-column: 2; } }
+      .feature-4 { ._media { grid-column: 2; } }
     }
-    
-    .introduction { grid-column: 2/4; }
-
-    .feature-1 {
-      padding-top: 0;
-      text-align: center;
-      .feature-content { grid-column: 2/4; p { margin: auto; } }
-      ._media { grid-column: 2/4; grid-row: 2/3; }
-    }
-
-    .feature-2 { ._media { grid-column: 3; } }
-    .feature-3 { ._media { grid-column: 2; } .feature-content { grid-column: 3; } }
-    .feature-4 { ._media { grid-column: 3; } }
-
-    .plus {
-      grid-column: 2/4;
-      grid-template-columns: subgrid;
-      padding-bottom: 0;
-
-      p { grid-column: 1/-1; margin-bottom: 1em; }
-      details:nth-last-of-type(2) summary p { border: none; }
-
-    }
-
-    & section:nth-of-type(1) h3::before { content: "⏺"; }
-    & section:nth-of-type(2) h3::before { content: "⏺ ⏺"; }
-    & section:nth-of-type(4) h3::before { content: "⏺ ⏺ ⏺"; }
-    & section:nth-of-type(5) h3::before { content: "⏺ ⏺ ⏺ ⏺"; }
-    
-    & section h3::before {
-      margin-bottom: 1rem;
-      content: counter(features);
-    }
-
   }
-}
+
+    
+  
+  .plus details:not(:nth-last-child(1), :nth-last-child(2))::after {
+    content: "";
+    border-top: thick dotted;
+    display: block;
+    margin-left: 4em;
+    position: relative;
+    top: .9em;
+  }
+
 
   #testimonials {
     padding: 2em var(--bleed) 4em;
     overflow: hidden;
     background-color: #F6F8F4;
-    line-height: 1.5;
 
-    @media (min-width: 56.25rem) {
+    @media screen(tl) {
       & .description {
         margin-right: 4em;
       }
@@ -473,7 +395,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
   .carousel { position: relative; }
   .carousel-track {
     display: flex;
-    margin-block: 2em;
+    margin-top: 2em;
     gap: 2em;
     transition: transform 0.3s ease-in-out;
     position: relative;
@@ -486,36 +408,28 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     background-color: white;
     padding: 1.5em;
     border-radius: 8px;
-    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 .25rem 1rem 0 rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     min-width: 100%;
 
-    @media (min-width: 56.25rem) {
+    @media screen(t) {
       min-width: calc((100% - 2em) / 2); 
     }
-    
+
     & p {
       margin-top: 0;
-      font-size: 125%;
+      font-size: larger;
     }
     & cite {
       margin-top: auto;
       font-size: smaller;
     }
   }
-
-  @media (min-width: 800px) {
-    padding: 2em 2em 4em 2em;
-  }
-
-  @media (min-width: 1200px) {
-    padding: 2em var(--bleed) 4em var(--bleed);
-    .container { margin: 0 2em; }
-
-  }
   .carousel-controls {
     width: max-content;
     margin-inline: auto;
+    margin-top: 2em;
+    margin-bottom: -2em;
     background: white;
     box-shadow: 0 .25em .5em 0 rgba(0 0 0 / .25);
     border-radius: .5em;
@@ -532,28 +446,22 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       &:disabled { background-color: initial; }
     }
 
-    @media (min-width: 800px) {
+    @media screen(tl) {
       & {
         position: absolute;
         bottom: 100%;
         right: 0;
+        margin-top: 0;
         margin-bottom: 2em;
       }
     }
   }
-
-
 
   #cta {
     --paper: #FFF0C6;
     padding: 2em;
     text-align: center;
     background: #FFF0C6;
-
-    & p {
-      margin-inline: auto;
-      max-width: 40em;
-    }
 
     .btn-text {
       --bg: var(--action-bg);
@@ -596,21 +504,12 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       min-width: fit-content;
       vertical-align: top;
     }
-    img {
+    & img {
       vertical-align: middle;
     }
-    strong {
+    & strong {
       display: inline-block;
       margin-bottom: 1em;
     }
   }
-
-  @media (min-width: 800px) {
-  .features::after {
-    content: "";
-    grid-column: 3/-1;
-    height: 2rem;
-    background-color: hsla(32, 57%, 49%, 0.5);
-  }
-}
 </style>

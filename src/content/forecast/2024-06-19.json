@@ -1,0 +1,63 @@
+{
+  "forecast_date": "2024-06-19",
+  "next_forecast_date": "2024-07-02",
+  "crops": [
+    {
+      "code": 101,
+      "avg_yield": 4.87,
+      "total_surface": 2192587.32,
+      "interpretation": {
+        "ro": {
+          "text": "Grâul de toamnă a avut o evoluție favorabilă în zonele cu precipitații și modestă în multe zone afectate de seceta pedologică și temperaturile ridicate din toamna 2023 și începutul lui 2024. Totuși, culturile au recuperat considerabil în luna aprilie în cele mai multe dintre zonele agricole, astfel încât, se așteaptă ca producțiile să fie acceptabile, dar nu la nivelul cheltuielilor care s-au efectuat în ferme.",
+          "cite": "Georgeta Dicu, Manager departament de cercetare și dezvoltare la Procera Genetics SRL"
+        },
+        "en": {
+          "text": "Autumn wheat experienced favorable development in areas with rainfall and modest growth in many regions affected by soil drought and high temperatures in the autumn of 2023 and early 2024. However, the crops have significantly recovered in April in most agricultural areas, so the yields are expected to be acceptable, but not sufficient to cover the expenses incurred by the farms.",
+          "cite": "Georgeta Dicu, Research and Development Department manager at Procera Genetics SRL"
+        },
+        "fr": {
+          "text": "Le blé d'automne a connu un développement favorable dans les zones bénéficiant de précipitations et une croissance modeste dans de nombreuses régions touchées par la sécheresse des sols et les températures élevées de l'automne 2023 et du début de l'année 2024. Cependant, les cultures ont considérablement récupéré en avril dans la plupart des zones agricoles, de sorte que les rendements devraient être acceptables, mais insuffisants pour couvrir les dépenses engagées par les exploitations agricoles.",
+          "cite": "Georgeta Dicu, Directrice du département de recherche et développement chez Procera Genetics SRL"
+        }
+      }
+    },
+    {
+      "code": 105,
+      "avg_yield": 6.42,
+      "total_surface": 547885.54,
+      "interpretation": {
+        "ro": {
+          "text": "La orz, situația deficitului de apă din sol încă de la semănat, coroborat cu temperaturile ridicate din toamnă care au favorizat atac de dăunători și boli, în principal al virusului piticirii, vor contribui la obținerea unor producții modeste în zonele cele mai expuse din sudul, sud-estul și estul țării. Precipitațiile din luna aprilie și începutul lunii mai au contribuit la redresarea culturilor de orz, astfel încât producțiile o să fie rezonabile.",
+          "cite": "Georgeta Dicu, Manager departament de cercetare și dezvoltare la Procera Genetics SRL"
+        },
+        "en": {
+          "text": "For barley, the soil moisture deficit since sowing, combined with high autumn temperatures that favored pest and disease attacks, particularly dwarf virus, will contribute to modest yields in the most exposed areas of the south, southeast, and east of the country. The rains in April and early May have helped the barley crops recover, so the yields are expected to be reasonable.",
+          "cite": "Georgeta Dicu, Research and Development Department manager at Procera Genetics SRL"
+        },
+        "fr": {
+          "text": "Pour l'orge, le déficit d'humidité du sol depuis les semis, combiné aux températures élevées de l'automne qui ont favorisé les attaques de ravageurs et de maladies, en particulier le virus du nanisme, contribuera à des rendements modestes dans les zones les plus exposées du sud, du sud-est et de l'est du pays. Les précipitations d'avril et du début de mai ont aidé les cultures d'orge à se redresser, de sorte que les rendements devraient être raisonnables.",
+          "cite": "Georgeta Dicu, Directrice du département de recherche et développement chez Procera Genetics SRL"
+        }
+      }
+    },
+    {
+      "code": 202,
+      "avg_yield": 3.39,
+      "total_surface": 445053.57,
+      "interpretation": {
+        "ro": {
+          "text": "La rapiță, deficitul de apa din sol încă de la semănat, care, în multe regiuni s-a accentuat pe parcursul perioadei de vegetație, a condus la o răsărire neuniformă, densitate mică de plante pe m2, înflorire și maturizare neuniformă. Toate acestea au contribuit la reducerea șanselor unor culturi de succes, care să asigure fermierilor producții de peste 3,5 t/ha, producții care ar fi fost mai apropiate de cheltuielile pe care le-au efectuat.",
+          "cite": "Georgeta Dicu, Manager departament de cercetare și dezvoltare la Procera Genetics SRL"
+        },
+        "en": {
+          "text": "For rapeseed, the soil moisture deficit since sowing, which has intensified in many regions during the growing season, has led to uneven emergence, low plant density per square meter, and uneven flowering and maturation. All these factors have reduced the chances of successful crops that would provide farmers with yields of over 3.5 tons per hectare, yields that would have been closer to covering the expenses they incurred.",
+          "cite": "Georgeta Dicu, Research and Development Department manager at Procera Genetics SRL"
+        },
+        "fr": {
+          "text": "Pour le colza, le déficit en eau du sol depuis les semis, qui s'est intensifié dans de nombreuses régions au cours de la période de végétation, a conduit à une émergence inégale, une faible densité de plantes par mètre carré, ainsi qu'à une floraison et une maturation inégales. Tous ces facteurs ont réduit les chances de cultures réussies qui auraient permis aux agriculteurs d'obtenir des rendements de plus de 3,5 tonnes par hectare, des rendements qui auraient été plus proches de couvrir les dépenses qu'ils ont engagées.",
+          "cite": "Georgeta Dicu, Directrice du département de recherche et développement chez Procera Genetics SRL"
+        }
+      }
+    }
+  ]
+}

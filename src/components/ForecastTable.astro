@@ -1,0 +1,181 @@
+---
+import { useI18n } from "@/i18n"
+import { getCollection } from "astro:content"
+
+const forecasts = (await getCollection("forecast")).slice().reverse()
+
+const { t } = useI18n(Astro.currentLocale)
+const { getUrl } = Astro.locals
+
+const id = t("#history", { ns: "urls" })
+
+const dates: Array<Date> = []
+const crops: Record<any, number[]> = {}
+
+forecasts.forEach((f, index) => {
+  const date = new Date(f.data.forecast_date)
+  dates.push(date)
+  f.data.crops.forEach(crop => {
+    crops[crop.code] ||= []
+    crops[crop.code][index] = crop.avg_yield
+  })
+})
+---
+<details id={id.replace("#", "")}>
+  <summary>
+    {t("yield.forecastHistory")}
+  </summary>
+
+  <table class="table-container">
+    <tr class="group">
+      <th class="text-left" colspan="2">{t("yield.springCrops")}</th>
+      { dates.map((date, index) => (
+        <th class:list={[index === 0 && "latest_forecast", "min-w-24"]}>
+          { date.toLocaleDateString(Astro.currentLocale, { day: "numeric", month: "short" }) }
+        </th> 
+      ))}
+    </tr>
+    { [108, 201].map((crop_code, crop_index) => (
+      <tr class={crop_index >= 1 ? "separator" : ""}>
+        <th style="width: min-content!important;" class="pr-4">
+          <div class="w-12">
+            <img src={`/images/crop_thumbnail_${crop_code}.png`} />
+          </div>
+        </th>
+        <th class="text-left pr-4">
+          {t(crop_code, { ns: "crops" })}
+        </th>
+        { dates.map((date, index) => {
+          const avg_yield = crops[crop_code][index]?.toLocaleString(Astro.currentLocale, { maximumFractionDigits: 1 })
+          return (avg_yield) ? (
+            <td class={ index === 0 ? "latest_forecast" : ""}>
+              <a href={getUrl(`/yield/forecast/${ date.toISOString().split("T")[0] }`) + "#" + t(crop_code, { ns: "crops" })}>
+                { avg_yield }{ index === 0 && " t/ha"}
+              </a>
+            </td>
+          ) : (
+            <td>{avg_yield}</td>
+          )
+        })}
+      </tr>
+    ))}
+
+    <tr class="group">
+      <th class="h-12 text-left" colspan="2">{t("yield.autumnCrops")}</th>
+      { dates.map((date, index) => (
+        <th class={index === 0 ? "latest_forecast" : ""}>
+          { date.toLocaleDateString(Astro.currentLocale, { day: "numeric", month: "short" }) }
+        </th> 
+      ))}
+    </tr>
+    { [101, 105, 202].map((crop_code, crop_index) => (
+      <tr class={crop_index >= 1 ? "separator" : ""}>
+        <th style="width: min-content!important;" class="pr-4">
+          <div class="w-12">
+            <img src={`/images/crop_thumbnail_${crop_code}.png`} />
+          </div>
+        </th>
+        <th class="text-left">
+          {t(crop_code, { ns: "crops" })}
+        </th>
+        { dates.map((date, index) => {
+          const avg_yield = crops[crop_code][index]?.toLocaleString(Astro.currentLocale, { maximumFractionDigits: 1 })
+          return (avg_yield) ? (
+            <td class={ index === 0 ? "latest_forecast" : ""}>
+              <a href={getUrl(`/yield/forecast/${ date.toISOString().split("T")[0] }`) + "#" + t(crop_code, { ns: "crops" })}>
+                { avg_yield }{ index === 0 && " t/ha"}
+              </a>
+            </td>
+          ) : (
+            <td>{avg_yield}</td>
+          )
+        })}
+      </tr>
+    ))}
+  </table>
+</details>
+
+<script is:inline data-id={id}>
+{ const hash = document.currentScript.dataset["id"]
+  if (location.hash === hash) {
+    document.querySelector(hash).open = true
+  }
+}
+</script>
+
+<style>
+details {
+  position: relative;
+  scroll-padding-top: 7rem;
+  
+  border-radius: 0.5em;
+  box-sizing: border-box; 
+  border: thin dotted hsla(32, 57%, 49%, 1);
+  
+  & summary {
+    cursor: pointer;
+    padding: 0.75em;
+  }
+
+}
+details[open] {
+  border: none;
+  grid-column: 1/3;
+  padding: 1.5rem;
+  border-radius: 1em;
+  overflow-x: auto;
+  background: white;
+
+  summary {
+    margin: -1.5rem;
+    margin-bottom: initial;
+    padding: 1.5rem;
+    font-weight: 600; 
+    font-size: 150%;
+  }
+}
+table {
+  --cell-padding: .5em;
+  --neg-cell-padding: -.5em;
+
+  border-collapse: collapse;
+  text-align: center;
+
+  & .group th { 
+    font-weight: 600;
+    vertical-align: bottom;
+  }
+
+  & img {
+    position: sticky;
+    display: block;
+    width: 150%;
+    height: auto;
+    margin: -25%;
+  }
+  & a {
+    display: inline-block;
+    margin: var(--neg-cell-padding);
+    padding: var(--cell-padding);
+  }
+  & a:not(:hover) {
+    text-decoration: none;
+    color: inherit
+  }
+
+  & :where(th, td) {
+    padding-block: var(--cell-padding, .5em);
+  }
+}
+
+.separator :where(th, td):not(:first-child) {
+  border-top: thin solid hsl(0 0% 0% / .25)
+}
+
+.latest_forecast { 
+  background: hsla(90, 22%, 96%, 1);
+
+  tr:first-child & { border-radius: 1em 1em 0 0; }
+  tr:last-child  & { border-radius: 0 0 1em 1em; }
+}
+</style>

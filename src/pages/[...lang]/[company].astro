@@ -1,15 +1,56 @@
 ---
-import { getLocalizedPaths } from "@/i18n";
+import { getLocalizedPaths, useI18n } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 
 export const getStaticPaths = (() => getLocalizedPaths("company")) satisfies GetStaticPaths;
----
 
+const { t } = useI18n(Astro.currentLocale)
+const { getUrl } = Astro.locals
+---
 <BaseLayout>
-  <div class="container">
-    <section>
-      Company
-    </section>
-  </div>
+  <header>
+    <h1>{ t("company.tagline") }</h1>
+    <p class="max-w-[72ch]">{ t("company.description") }</p>
+  </header>
+  <section id={ t("urls:#products").substring(1) }>
+    <h2>{ t("products_title_company") }</h2>
+    <div class="grid gap-4 grid-cols-4 gap-8">
+      <article>
+        <div class="bg-[#F6F8F4] rounded-2xl">
+          <img class="w-full aspect-square object-contain" src="/images/kv_devices.png" alt="Platforma OGOR">
+        </div>
+        <div class="flex items-center gap-2 my-[1em]">
+          <img class="size-12 shadow-md rounded-lg" src="" alt="Logo OGOR">
+          <h4 class="m-0">
+            <a href="#" style="all: inherit;">OGOR</a>
+          </h4>
+        </div>
+        <p>Platforma care stă la baza produselor noastre.</p>
+        <span class="inline-block p-2 bg-slate-300 text-left">
+          <strong>€150/an</strong>
+        </span>
+      </article>
+
+      <article>
+        <div class="bg-[#F6F8F4] rounded-2xl">
+          <img class="w-full aspect-square object-contain" src="/images/kv_devices.png" alt="Platforma OGOR">
+        </div>
+        <div class="flex items-center gap-2 my-[1em]">
+          <img class="size-12 shadow-md rounded-lg" src="" alt="Logo OGOR">
+          <h4 class="m-0">Prognoza OGOR</h4>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sapiente alias aspernatur, soluta expedita.</p>
+
+        <p>€150/an</p>
+      </article>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  header,
+  section {
+    padding-inline: var(--bleed);
+  }
+</style>

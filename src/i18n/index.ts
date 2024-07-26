@@ -1,21 +1,17 @@
 import type { GetStaticPathsItem, GetStaticPathsResult } from "astro";
 import i18next, { t } from "i18next"
-
-// TODO HERE
+import type { TOptions } from "i18next"
 import config from "astro.config.mjs"
 import { toCodes } from "astro:i18n";
 
+export type Locale = "ro" | "en" | "fr"
+
 const locales = toCodes( config.i18n!.locales ) as Locale[]
 const defaultLocale = config.i18n!.defaultLocale as Locale
-
 const prefixDefaultLocale = (
   typeof config.i18n!.routing === "object" && 
   config.i18n!.routing.prefixDefaultLocale
 )
-
-type Locale = "ro" | "en" | "fr"
-
-
 
 /**
  * @todo move namespaces in external files
@@ -24,9 +20,15 @@ type Locale = "ro" | "en" | "fr"
 i18next.init({
   lng: "ro",
   fallbackLng: "ro",
+  fallbackNS: "common",
   resources: {
     ro: {
+      common: {
+        "yield": "working"
+      },
       translation: {
+        and: "și",
+
         your_account: "Contul tău",
         create_account: "Creează cont",
         create_account_ogor: "Creează cont OGOR",
@@ -38,6 +40,9 @@ i18next.init({
         "soil_map": "Harta solurilor și a texturilor",
         "vra": "Aplicare variabilă (VRA)",
         "soil_analysis": "Analize de sol",
+
+        products: "Produse",
+        products_title_company: "Produsele noastre",
 
         nav: {
           company: "Compania",
@@ -63,6 +68,7 @@ i18next.init({
           "privacy": "Politica de confidențialitate",
           "cookie": "Politica de cookie"
         },
+
         // Maybe have a separate namespace...
         home: {
           "hero_heading": "Suita de instrumente digitale pentru agricultură decisivă",
@@ -89,13 +95,14 @@ i18next.init({
           "with_the_support_of": "Cu sprijinul",
           "partners": "Parteneri"
         },
+        yield_title: "Producția de {{crops}}",
         yield: {
           "ogorForecast": "Prognoza OGOR",
           "usingAlgorithms": "Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate la 5 dintre culturile cele mai importante: <strong>grâu, orz, porumb, floarea soarelui și rapiță.</strong>",
           "forecastIsSent": "Prognoza este emisă cu <strong>2 luni înainte de recoltă</strong> și este actualizată la fiecare 2 săptămâni.",
-          "aboutForecast": "Prognoza OGOR este disponibilă ca 3 produse distincte:",
+          "aboutForecast": "Prognoza OGOR este disponibilă ca 3 produse distincte:",
           "nationalMapAndStatistics": "<strong>Hartă și statistici la nivel național,</strong> publicate gratuit pe ogor.ro/productivitate.",
-          "lastForecast": "Ultima prognoză:",
+          "lastForecast": "Ultima prognoză",
           "forecastHistory": "Istoric prognoze OGOR",
           "autumnCrops": "Culturi de toamnă",
           "springCrops": "Culturi de primăvară",
@@ -119,17 +126,10 @@ i18next.init({
             "lastForecast": "Ultima prognoză ({{date}})",
             "forecastHistory": "Istoricul prognoze OGOR",
             "aboutTheProject": "Despre proiect",
-            "nextForecast": "Urmǎtoarea prognozǎ disponibilǎ pe data de",
+            "nextForecast": "Urmǎtoarea prognozǎ disponibilǎ pe data de <em>{{date}}</em>.",
             "contactOgorTeam": "Pentru hărți și statistici la nivel de județ și localitate <strong>contactează echipa de vânzări OGOR →</strong>"
           }
         },
-        crop: {
-          "wheat": "Grâu",
-          "barley": "Orz",
-          "rapeseed": "Rapiță",
-          "maize": "Porumb",
-          "sunflower": "Floarea soarelui",
-        }
       },
       urls: {
         company: "compania",
@@ -137,6 +137,8 @@ i18next.init({
         yield: "productie",
         forecast: "prognoza",
         legal: "legal",
+        "#products": "#produse",
+        "#history": "#istoric"
       },
       crops: {
         101: "Grâu",
@@ -148,19 +150,24 @@ i18next.init({
     },
     en: {
       translation: {
+        and: "and",
+        your_account: "Your account",
+        create_account: "Create account",
+        create_account_ogor: "Create OGOR account",
         company: {
+          tagline: "IT for Agricultură",
+          description: "Founded in 2019, our company specializes in processing satellite data for agriculture. We collaborate with farmers, agronomists, and researchers to provide accessible remote crop monitoring and precision agriculture solutions.",
           address: "67 Gheorghe Missail Street, 011542 Sector 1, BUCHAREST, ROMANIA",
         },
-
         nav: {
-          company: "Compania",
-          company_long: "Prezentarea companiei",
-          products: "Produse",
-          products_long: "Produsele noastre",
-          forecast: "Prognoza",
-          forecast_long: "Prognoza OGOR",
-          updates: "Noutăți",
-          updates_long: "Ultimele noutăți",
+          company: "Company",
+          company_long: "Company presentation",
+          products: "Products",
+          products_long: "Our products",
+          forecast: "Forecast",
+          forecast_long: "OGOR Yield",
+          updates: "Updates",
+          updates_long: "Latest updates",
         },
       },
       urls: {
@@ -168,6 +175,8 @@ i18next.init({
         updates: "updates",
         yield: "yield",
         forecast: "forecast",
+        "#history": "#history",
+        "#products": "#products"
       },
       crops: {
         101: "Wheat",
@@ -179,6 +188,7 @@ i18next.init({
     },
     fr: {
       translation: {
+        and: "et",
         company: {
           address: "Rue Gheorghe Missail 67, 011542 Secteur 1, Bucarest, Roumanie"
         }
@@ -188,6 +198,7 @@ i18next.init({
         updates: "nouveautes", // nouveautés
         yield: "rendement",
         forecast: "prevision",
+        "#history": "#historique"
       },
       crops: {
         101: "Blé",
@@ -208,9 +219,6 @@ i18next.services.formatter?.add('ha', (value, lng, options) => {
   return value
 })
 
-// Review
-export const LOGIN_URL = import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL
-
 type GetLocalizedPathsItem = GetStaticPathsItem & {
   props: {
     key: string;
@@ -222,7 +230,7 @@ type GetLocalizedPathCallback<T extends GetLocalizedPathsItem = GetLocalizedPath
 /**
  * @todo make it work with interpolated params...
  */
-export function getUrl(locale: string = defaultLocale, key: string) {
+export function getUrl(locale: string = defaultLocale, key: string, hash?: string) {
   const params = key.split("/")
 
   let url = params.map(param => t(param, { lng: locale, ns: "urls" })).join("/")
@@ -233,13 +241,15 @@ export function getUrl(locale: string = defaultLocale, key: string) {
   if (prefixDefaultLocale || locale !== defaultLocale) {
     url = "/" + locale + url
   }
+  if (hash) {
+    url += t(hash, { lng: locale, ns: "urls" })
+  }
 
   return url
 }
 
 /**
- * @todo use locales defined in config
- * @todo special case for default lang
+ * @todo I would like to infer type, but I need to be able to extend GetStaticPathsItem first
  * 
  * @example
  * ```
@@ -259,10 +269,14 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
   key = key.split("pages/[...lang]/").pop()!
            .replaceAll(/\.astro|\.html|\.md|\.mdx|\.json/g, "")
            .replaceAll(/\[|\]/g, "")
-  const params = key.split("/")
+  const params = key && key !== "/" ? key.split("/") : []
   const paths: GetStaticPathsResult = []
 
-  for (let lang of [undefined, "en", "fr"]) {
+  for (let lang of locales) {
+    if (!prefixDefaultLocale && lang === defaultLocale) {
+      // @ts-ignore
+      lang = undefined
+    }
     const entries = params.map(param => [param, t(param, { lng: lang, ns: "urls" })])
     entries.push(["lang", lang as string])
 
@@ -271,7 +285,7 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
       props: { key }
     }
 
-    cb?.call(null, path)
+    cb?.call(null, path as T)
     paths.push(path)
   }
 
@@ -279,8 +293,6 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
 }
 
 /**
- * @todo declare locales
- * 
  * @example
  * ```astro
  * ---
@@ -289,10 +301,11 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
  * { t("your_translation_key") }
  * ```
  */
-export function useI18n(lang: string = "ro") {
+export function useI18n(lang: string = defaultLocale) {
   return {
-    t: function() {
-      return t(arguments[0], { lng: lang, ...arguments[1] })
+    t: function(key: string | number, options?: TOptions) {
+      // @ts-ignore - key works just fine with number
+      return t(key, { lng: lang, ...options })
     }
   }
 }

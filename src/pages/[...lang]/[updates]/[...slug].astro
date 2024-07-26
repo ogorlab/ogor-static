@@ -15,7 +15,7 @@ import astroConfig from "astro.config.mjs";
 export const getStaticPaths = (async () => {
   const entries = await getCollection("updates")
   const paths = entries.map(entry => {
-    let lang = entry.id.split("/")[0]
+    let lang: string | undefined = entry.id.split("/")[0]
     if (lang === astroConfig.i18n?.defaultLocale) {
       lang = undefined
     }
