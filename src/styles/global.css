@@ -39,7 +39,7 @@ html {
 
   --brand-yellow-6: #FFF0C6;
   --brand-yellow-5: #FFE79F;
-  
+
   /* Sizing */
   --btn-radius: .25em;
 
@@ -65,47 +65,189 @@ html {
   font-family: "Instrument Sans", system-ui, sans-serif;
   line-height: 1.5;
 
-  @media (min-width: 56.25rem) { font-size: 116.66%; }
-  @media (min-width: 75rem)    { font-size: 133.33%; }
+  @media screen(tl) { font-size: 116.66%; }
+  @media screen(d)  { font-size: 133.33%; }
 }
 
-a {
-  color: inherit;
+@layer reset {
+  body {
+    margin: 0;
+  }
+  select, textarea, input, button {
+    font: inherit;
+  }
+
+  /* Links */
+  a {
+    color: var(--action);
+  }
+  .link {
+    color: var(--action);
+    text-decoration: underline;
+    
+    &:hover {
+      color: var(--action);
+    }
+
+    &:where(button, input[type="submit"]) {
+      appearance: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: initial;
+    }
+  }
 }
 
-.muted {
-  color: var(--muted);
+@layer components {
+  /* Buttons */
+  button,
+  [type="submit"]:where(input) {
+    cursor: pointer;
+    font: inherit;
+    line-height: inherit;
+    
+    [inert] &,
+    &[disabled],
+    &:disabled {
+      cursor: not-allowed;  
+    }
+  }
+  
+  .btn {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    
+    border-radius: var(--btn-radius);
+    border: none solid var(--border);
+    padding: .5em;
+  
+    -webkit-appearance: none;
+    appearance: none;
+    user-select: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    line-height: inherit;
+    color: var(--color);
+    text-align: center;
+    text-decoration: none!important;
+    background: var(--bg);
+    box-shadow: var(--shadow);
+  
+    transition-property: background-color, color, box-shadow;
+    transition-duration: 100ms;
+    transition-timing-function: ease-in;
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.pressed {
+      z-index: 10;
+    }
+  
+    &:hover,
+    &:focus {
+      outline: none;
+      box-shadow: 
+              0 0 0 2px var(--action),
+        inset 0 0 0 2px var(--paper);
+    }
+  
+    &:hover {
+      --bg: var(--bg-alt);
+      --bg: var(--action-bg);
+    }
+    &:active {
+      --bg: var(--action-bg-alt);
+      --border: var(--action);
+    }
+    &:focus {
+      --bg: var(--action-bg);
+      --border: var(--action);
+    }
+    &.pressed {
+      --bg: var(--action);
+      --color: #fff;
+    }
+  
+    [inert] &,
+    &[disabled],
+    &:disabled {
+      cursor: not-allowed;
+      box-shadow: none!important;
+      background-image: none!important;
+      
+      --color: var(--disabled);
+      --border: transparent;
+      --bg: var(--bg-alt);
+    }
+  }
+  .btn-text {
+    --color: var(--action);
+    --border: transparent;
+    --bg: transparent;
+  
+    &:hover {
+      --bg: var(--action-bg);
+    }
+    &:active {
+      --bg: var(--action-bg-alt);
+    }
+    [inert] &,
+    &[disabled],
+    &:disabled {
+      --color: var(--action-muted);
+      --bg: transparent;
+    }
+  }
+  .btn-black {
+    --color: #fff;
+    --bg: black!important;
+  }
+
+  /* Icons */
+  .icon,
+  .emoji {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    font-size: 150%;
+    line-height: 1;
+    vertical-align: -0.25em;
+    
+    & use {
+      fill: currentColor;
+    }
+  }
+  .emoji {
+    vertical-align: middle;
+  }
 }
 
-body {
-  margin: 0;
+@layer utilities {
+  .text-muted {
+    color: var(--muted);
+  }  
 }
-
-#viewport {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-}
-#content {
-  flex-grow: 1;
-}
-
-.container {
-  margin-inline: auto;
-  max-width: var(--container);
-}
-
-select, textarea, input, button {
-  font: inherit;
-}
-
-.inline-block {
-  display: inline-block;
-}
-
 
 @layer layout {
+  #viewport {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  #content {
+    flex-grow: 1;
+  }
+  
+  .container {
+    margin-inline: auto;
+    max-width: var(--container);
+  }
+
   .area-header { grid-area: header; }
   .area-media  { grid-area: media;  }
   .area-body   { grid-area: body;   }
@@ -131,7 +273,7 @@ select, textarea, input, button {
 
       /* Move media to the left */
       &:where(.--left) {
-        grid-template-areas:9
+        grid-template-areas:
           "media header"
           "media body"
         ;
@@ -144,163 +286,6 @@ select, textarea, input, button {
     }
   }
 }
-
-
-/* Links */
-a {
-  color: var(--action);
-}
-.link {
-  color: var(--action);
-  text-decoration: underline;
-  
-  &:hover {
-    color: var(--action);
-  }
-
-  &:where(button, input[type="submit"]) {
-    appearance: none;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: initial;
-  }
-}
-
-/* Buttons */
-button,
-[type="submit"]:where(input) {
-  cursor: pointer;
-  font: inherit;
-  line-height: inherit;
-  
-  [inert] &,
-  &[disabled],
-  &:disabled {
-    cursor: not-allowed;  
-  }
-}
-
-.btn {
-  position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  
-  border-radius: var(--btn-radius);
-  border: none solid var(--border);
-  padding: .5em;
-
-  -webkit-appearance: none;
-  appearance: none;
-  user-select: none;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 600;
-  line-height: inherit;
-  color: var(--color);
-  text-align: center;
-  text-decoration: none!important;
-  background: var(--bg);
-  box-shadow: var(--shadow);
-
-  transition-property: background-color, color, box-shadow;
-  transition-duration: 100ms;
-  transition-timing-function: ease-in;
-  
-  &:hover,
-  &:focus,
-  &:active,
-  &.pressed {
-    z-index: 10;
-  }
-
-
-  &:hover,
-  &:focus {
-    outline: none;
-    box-shadow: 
-            0 0 0 2px var(--action),
-      inset 0 0 0 2px var(--paper);
-  }
-
-  &:hover {
-    --bg: var(--bg-alt);
-    --bg: var(--action-bg);
-  }
-  &:active {
-    --bg: var(--action-bg-alt);
-    --border: var(--action);
-  }
-  &:focus {
-    --bg: var(--action-bg);
-    --border: var(--action);
-  }
-  &.pressed {
-    --bg: var(--action);
-    --color: #fff;
-  }
-
-  [inert] &,
-  &[disabled],
-  &:disabled {
-    cursor: not-allowed;
-    box-shadow: none!important;
-    background-image: none!important;
-    
-    --color: var(--disabled);
-    --border: transparent;
-    --bg: var(--bg-alt);
-  }
-}
-.btn-text {
-  --color: var(--action);
-  --border: transparent;
-  --bg: transparent;
-
-  &:hover {
-    --bg: var(--action-bg);
-  }
-  &:active {
-    --bg: var(--action-bg-alt);
-  }
-  [inert] &,
-  &[disabled],
-  &:disabled {
-    --color: var(--action-muted);
-    --bg: transparent;
-  }
-}
-
-
-.btn-black {
-  --color: #fff;
-  --bg: black!important;
-}
-
-.rounded {
-  border-radius: 100em;
-}
-
-
-/* Icons */
-.icon,
-.emoji {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  font-size: 150%;
-  line-height: 1;
-  vertical-align: -0.25em;
-  
-  & use {
-    fill: currentColor;
-  }
-}
-.emoji {
-  vertical-align: middle;
-}
-
-
 
 /* Funky lists */
 /* This doesn't work unfortunately. */

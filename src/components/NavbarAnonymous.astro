@@ -18,7 +18,7 @@ const locales = config.i18n?.locales as unknown as string[]
     )) }
   </select>
 
-  <ul>
+  <ul class="ps-0 flex gap-4">
     <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
     <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
     <li class={key === "yield" ? "is-active" : ""}><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
@@ -27,8 +27,8 @@ const locales = config.i18n?.locales as unknown as string[]
 </nav>
 
 <nav id="primary_nav">
-  <a href={ getUrl("/") } id="nav_logo">
-    <svg viewBox="0 0 960 384" height="64" >
+  <a href={ getUrl("/") } class="mr-auto">
+    <svg viewBox="0 0 960 384" class="block h-[3.5em] m-[-6.5%]">
       <use href="/logos/ogor.svg#logo" width="384" />
       <use href="/logos/ogor.svg#logotype" x="320" y="64" />
     </svg>
@@ -50,87 +50,90 @@ const locales = config.i18n?.locales as unknown as string[]
     </a>
   </span>
 
-  <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+  <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
     { t("your_account") }
   </a>
-  <button open-dialog-button id="hamburger-button" class="tl:hidden" ><img src="/src/images/icons/hamburger-open.svg" alt=""></button>
-
+  <button class="tl:hidden p-[.5em] border-0 rounded-[.25em] bg-transparent" onclick="showMenu()" >
+    <svg viewBox="0 0 48 48" class="icon">
+      <use href="/public/icons.svg#menu" />
+    </svg>
+  </button>
 </nav>
 
-<dialog data-dialog id="mobile-menu">
-  <nav class="menu-nav">
-    <div class="flex items-center">
-      <a href={ getUrl("/") } id="nav_logo">
-        <svg viewBox="0 0 960 384" height="64" >
-          <use href="/logos/ogor.svg#logo" width="384" />
-          <use href="/logos/ogor.svg#logotype" x="320" y="64" />
-        </svg>
-      </a>
-      <button close-dialog-button id="hamburger-button" class="mobile-view" ><img src="/src/images/icons/hamburger-close.svg" alt=""></button>
-    </div>
-  </nav>
-  <a id="your_account" href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
-    { t("your_account") } →
-  </a>
-  <ul>
-    <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
-    <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
-    <li><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
-    <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li>
-  </ul>
-  <div class="contact">
-    <div>📞 <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="inline-block">{t("company.phone")}</a></div>
-    <div>✉️ <a href={"mailto:" + t("company.email")} class="inline-block">{t("company.email")}</a></div>
+<dialog id="mobile-menu">
+  <div class="flex items-center">
+    <a href={ getUrl("/") } class="mr-auto">
+      <svg viewBox="0 0 960 384" class="block h-[3em] m-[-6.5%]">
+        <use href="/logos/ogor.svg#logo" width="384" />
+        <use href="/logos/ogor.svg#logotype" x="320" y="64" />
+      </svg>
+    </a>
+    <button class="p-[.5em] border-0 bg-[#f5f7f3] rounded-full" onclick="closeMenu()">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/public/icons.svg#close" />
+      </svg>
+    </button>
   </div>
-  <p id="dialog-language-picker">
+
+  <p class="mb-[2em]">
+    <a id="your_account" href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+      { t("your_account") } →
+    </a>
+  </p>
+  <ul class="list-none ps-0">
+    <li class="my-[1em]"><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li>
+  </ul>
+  <div class="flex flex-wrap gap-4 my-[2em]">
+    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#phone" />
+      </svg>
+      <span class="underline">{t("company.phone")}</span>
+    </a>
+    <a href={"mailto:" + t("company.email")} class="no-wrap">
+      <svg viewBox="0 0 48 48" class="icon">
+        <use href="/icons.svg#email" />
+      </svg>
+      <span class="underline">{t("company.email")}</span>
+    </a>
+  </div>
+
+  <p class="text-[smaller] font-normal flex flex-wrap gap-[1em]">
     { locales.map((locale) => (
       locale === Astro.currentLocale ? (
-        <span class='muted'>{locale.toUpperCase()}</span>
+        <span class="text-muted">{t(locale)}</span>
       ) : (
-        <a href={_getUrl(locale, key)}>
-          {(locale as string).toUpperCase()}
-        </a>
+        <a href={_getUrl(locale, key)}>{t(locale)}</a>
       )
     ))}      
   </p>
 </dialog>
-
-
-
-<script>
-  const openDialogButton = document.querySelector("[open-dialog-button]")!;
-  const closeDialogButton = document.querySelector("[close-dialog-button]")!;
-  const mobileMenu = document.querySelector<HTMLDialogElement>("[data-dialog]")!;
-  const body = document.querySelector("body")!;
-
-  closeDialogButton.addEventListener("click", () => {
-    closeMenu();
-  });
-
-  openDialogButton.addEventListener("click", () => {
-    openMenu();
-  });
-
-  mobileMenu.addEventListener("close", () => {
-    body.style.overflow = "auto";
-  });
-
-  function openMenu(){
-    body.style.overflow = "hidden";
-    mobileMenu!.showModal();
+<script is:inline>
+  function showMenu(){
+    document.body.style.overflow = "hidden";
+    document.querySelector("#mobile-menu").showModal();
   }
   function closeMenu(){
-    mobileMenu!.close();
+    document.body.style.overflow = null;
+    document.querySelector("#mobile-menu").close();
   }
 </script>
   
 <style is:global>
-  #primary_nav,
-  #secondary_nav {
-    & a:not(.btn) {
-      color: inherit;
-    }
+  @layer reset {
+    #primary_nav,
+    #secondary_nav,
+    dialog {
+      & a {
+        color: inherit;
+        text-decoration: none;
+      }
+    } 
   }
+
   #primary_nav {
     @apply t:gap-4 m:py-2 py-4;
 
@@ -153,57 +156,21 @@ const locales = config.i18n?.locales as unknown as string[]
     padding-inline: 1em;
     border-bottom-left-radius: 1.25rem;
     border-bottom-right-radius: 1.25rem;
-
-    background: #F6F8F4;
+    background: #F6F8F4; 
 
     & ul {
       display: flex;
-      display: contents;
+      margin: 0;
+      margin-left: auto;
       list-style-position: inside;
       padding-inline-start: initial;
-  
-      a {
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      li:first-child {
-        list-style-type: none;
-      }
+    }
+    & li:first-child {
+      list-style-type: none;
     }
   }
 
-  #nav_logo {
-    display: inline-block;
-    margin-right: auto;
-    
-    & :where(img, svg) {
-      margin: -6.5%;
-      display: block;
-      height: 3.5em;
-      width: auto;
-    }
-  }
-
-  #language_picker {
-    background-color: transparent;
-    border: none;
-    margin: -0.5em;
-    padding: 0.5em;
-    margin-right: auto;
-  }
-
-  #hamburger-button{
-    background-color: transparent;
-    border: none;
-    padding-inline: 1em;
-    aspect-ratio: 1/1;
-  }
-
-  .desktop-view{ display: none; }
-
-  dialog:modal {
+  dialog {
     width: auto;
     height: auto;
     max-width: none;
@@ -212,32 +179,17 @@ const locales = config.i18n?.locales as unknown as string[]
     inset: 0;
     background-color: white;
     z-index: 1000;
-    font-weight: 550;
+    font-weight: 500;
+    font-size: 133.33%;
+    font-stretch: 95%;
 
-    a, span { font-size: 125%; }
-
-    ul{
-      margin-top: 2em;
-      list-style: none;
-      padding: 0;
-      a { text-decoration: none; }
-      li { margin-bottom: 1em; }
-    } 
-
-    #hamburger-button { background-color: hsla(90, 22%, 96%, 1); border-radius: 50%; }
     #your_account{ width: 100%; padding: .5em; margin-top: 1em;}
+  }
 
-    #dialog-language-picker{
-      margin-left: -0.5em;
-      a, span{ 
-        border: none;
-        background-color: transparent;
-        padding: 1em 0.5em;
-        text-decoration: none;
-      }
-    }
-    
-    .contact{ margin-top: 3em; }
-    .contact a { margin-bottom: 1em; }
+  #language_picker {
+    padding: .5em;
+    margin: -.5em;
+    border: 0;
+    background: transparent;
   }
 </style>

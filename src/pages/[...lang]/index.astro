@@ -2,10 +2,19 @@
 import { getLocalizedPaths, useI18n } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
-
-const { t } = useI18n(Astro.currentLocale)
+import { getLatestForecast } from "@/content/config";
+import { screens } from "@/../tailwind.config.mjs"
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
+
+const { t } = useI18n(Astro.currentLocale)
+const { getUrl } = Astro.locals
+const latestForecast = await getLatestForecast()
+const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
+  day: "numeric", month: "long", year: "numeric"
+})
+
+const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
 ---
 <BaseLayout>
   <section id="hero">
@@ -13,63 +22,85 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       <img src="/src/images/on-field.jpeg" alt="Ogor on field" style="transform: scaleX(-1);">
     </div>
     <div class="_body" >
-      <h1 style="max-width: 30ch;">{ t("home.hero_heading") }</h1>
-      <p  style="max-width: 50ch;" set:html={ t("home.hero_description") } class="reading-width-description"/>
+      <h1 class="max-w-[45rem] mt-0 text-[200%]">{ t("home.hero_heading") }</h1>
+      <p  class="max-w-[45rem] text-[larger]" set:html={ t("home.hero_description") } />
     </div>
-    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta text-center content-center text-white">
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta text-center content-center inline-block text-white">
       <span class="underline">{ t("home.hero_cta") }</span> →
     </a>
-    <div class="_media1 flex justify-center items-center">
+    <div class="_media1 flex justify-center items-center m:hidden">
       <img src="/images/kv_devices.png" alt="Ogor app showcase">
     </div>
   </section>
 
   <section id="features" class="features">
     <h2 class="text-rust text-center">{ t("home.why_ogor") }</h2>
-    <section class="feature-1 pt-0 text-center pb-8 tl:pb-0">
-      <div class="feature-content">
-        <h3 class="li-bullet-1">{ t("home.feature1_heading") }</h3>
-        <p>{ t("home.feature1_description") }</p>
-      </div>
-      <div class="_media">
-        <img src="https://placehold.co/900x400" alt="feature">
-      </div>
-    </section>
-  
-    <section class="feature-2 py-8 tl:pt-16 tl:pb-0">
-      <div class="feature-content">
-        <h3 class="li-bullet-2">{ t("home.feature2_heading") }</h3>
-        <p>{ t("home.feature2_description") }</p>
-      </div>
-      <div class="_media">
-        <img src="https://placehold.co/512" alt="feature">
+
+    <section class="main-feature">
+      <h3 class="li-bullet-1">{ t("home.feature1_heading") }</h3>
+      <p class="mx-auto mb-12 max-w-[72ch]">{ t("home.feature1_description") }</p>
+
+      <div class="media mx-auto">
+        <picture>
+          <source media={screens['m'].raw} srcset="/images/screenshot_farm_view_mobile.png">
+          <img src="/images/screenshot_farm_view_desktop.png" alt="feature" 
+              class="block w-full mx-auto m:max-w-[16rem] m:rounded-t-md t:max-w-[60rem t:rounded-t-2xl shadow-screenshot"
+              style="image-rendering: pixelated; clip-path: xywh(-25% -25% 150% 125%);"
+          />
+        </picture>
+
       </div>
     </section>
   
-    <div class="py-2 t:py-6 bg-[#fff0c74d] text-center mx-[var(--neg-bleed)]">
+    <div id="context" class="px-[var(--margins)] py-2 t:py-6 bg-[#fff0c74d] text-center mx-[var(--neg-bleed)]">
       <p set:html={ t("home.context") } class="max-w-[55ch] mx-auto"/>
     </div>
 
-    <section class="feature-3 py-8 tl:pt-16 tl:pb-0">
-      <div class="feature-content">
-        <h3 class="li-bullet-3">{ t("home.feature3_heading") }</h3>
-        <p>{ t("home.feature3_description") }</p>
+    <section class="feature feature-left">
+      <div class="area-body">
+        <h3 class="li-bullet-2 mt-0">{ t("home.feature2_heading") }</h3>
+        <p class="mb-[2em]">{ t("home.feature2_description") }</p>
       </div>
-      <div class="_media">
-        <img src="https://placehold.co/512" alt="feature">
+      <div class="area-media t:aspect-square content-center relative">
+        <img src="/images/flooding.png" class="border-[.25rem] border-white" alt="feature">
+        <!-- <img src="/images/patrick_isolated.png" alt="Patrick Valmary"
+             class="m:w-[12em] w-[50%] absolute left-[-15%] bottom-0"
+        /> -->
       </div>
+    </section>
+
+    <section class="feature">
+      <div class="area-body">
+        <h3 class="li-bullet-3 mt-0">{ t("home.feature4_heading") }</h3>
+        <p class="mb-[2em]">{ t("home.feature4_description") }</p>
+      </div>
+      <div class="area-media t:aspect-square content-center">
+        <img src="/images/pests.png" class="rounded-[1.5em]" alt="feature">
+      </div>
+    </section>
+
+    <section class="feature feature-left">
+      <div class="area-body">
+        <h3 class="li-bullet-4 mt-0">{ t("home.feature3_heading") }</h3>
+        <p class="mb-[2em]">{ t("home.feature3_description") }</p>
+        <ul>
+          <li>
+            <a href={getUrl(`/yield/forecast/${latestForecast.id}`)} class="text-[inherit]">
+              {t("yield.forecast.ogorForecastFrom", { date: latestForecastDate })}
+            </a>
+          </li>
+          <li>
+            <a href=""></a>
+          </li>
+        </ul>
+      </div>
+      <a href={getUrl("/yield")} class="area-media t:aspect-square content-center">
+        <img src={latestForecastPreview} class="border-[.25em] border-solid border-white rounded-md shadow-map-preview" alt="feature">
+      </a>
     </section>
   
-    <section class="feature-4 py-8 tl:pt-16 tl:pb-0">
-      <div class="feature-content">
-        <h3 class="li-bullet-4">{ t("home.feature4_heading") }</h3>
-        <p>{ t("home.feature4_description") }</p>
-      </div>
-      <div class="_media">
-        <img src="https://placehold.co/512" alt="feature">
-      </div>
-    </section>
-    <section class="plus t:grid gap-[var(--gutter)] mt-8 border-b-0 text-larger" style="grid-template-columns: 1fr 1fr;">
+    
+    <section class="plus grid m:mb-4 t:grid-cols-2  gap-[var(--gutter)] mt-8 border-b-0 text-larger">
       <p class="m-0 font-bold text-rust col-span-full">Plus:</p>
       {[
         { name: t("accumulated_precipitation"), icon: "/src/images/icons/precipitatii.png" },
@@ -88,16 +119,16 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
             <img src={f.icon} class="size-[3em] rounded-lg" style="box-shadow: 0 .25em .5em 0 rgb(0, 0, 0, 0.15)"/>
             <h4 set:html={ f.name } class="m-0"/>
           </summary>
-          <p class="ml-[4em] text-balance" set:html={f.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui repellat eaque, quo quaerat quidem ratione aliquam! Expedita eligendi sit commodi illum? Voluptatum nemo debitis rerum laborum dolore non nisi quo.</p>
+          <p class="ml-[4em] text-balance" set:html={f.description} />
         </details>
       ))}
     </section>
   </section>
 
-  <section id="testimonials">
+  <section id="testimonials" class="px-[var(--bleed)] pt-8 pb-16  overflow-hidden bg-[#f6f8f4]">
     <h2>{ t("home.testimonials_heading") }</h2>
-    <p class="description" set:html={ t("home.testimonials_description") } style="max-width: 65ch"/>
-    <div class="carousel">
+    <p class="max-w-[72ch] t:mr-[5em]" set:html={ t("home.testimonials_description") } />
+    <div class="carousel" data-breakpoint={screens['t']}>
       <div class="carousel-track">
         <blockquote class="card">
           <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
@@ -132,7 +163,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
           </cite>
         </blockquote>
       </div>
-      <div class="carousel-controls">
+      <div class="carousel-controls text-[larger] tl-max:mt-[2em] w-max mx-auto tl:mb-[2em] tl:absolute bottom-full right-0 bg-white shadow-lg overflow-hidden rounded-lg">
         <button class="left">←</button>
         <button class="right">→</button>
       </div>
@@ -145,20 +176,20 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       { t("home.here_to_help") }
     </p>
     <p class="max-w-[40em] mx-auto mt-8">
-      <a href="tel:+40754347347" class="btn btn-text rounded">
+      <a href="tel:+40754347347" class="btn btn-text rounded-full">
         <svg viewBox="0 0 48 48" class="icon">
           <use href="/icons.svg#phone" />
         </svg>
         { t("company.phone")}
       </a>
-      <a href="mail:contact@ogor.ro" class="btn btn-text rounded">
+      <a href="mail:contact@ogor.ro" class="btn btn-text rounded-full">
         <svg viewBox="0 0 48 48" class="icon">
           <use href="/icons.svg#email" />
         </svg>
       </a>
     </p>
     <p class="max-w-[40em] mx-auto">
-      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+      <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
         <svg class="icon">
           <use href="/logos/ogor.svg#logo" />
         </svg>
@@ -193,19 +224,32 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 <script>
   const carousel = document.querySelector<HTMLDivElement>('.carousel')!
   const track = carousel.querySelector<HTMLDivElement>(".carousel-track")!
-  const cards = carousel.querySelectorAll<HTMLQuoteElement>(".card")
+  const cards = carousel.querySelectorAll<HTMLQuoteElement>(".card")!
   const [prev, next] = carousel.querySelectorAll<HTMLButtonElement>(".carousel-controls button")
+  const breakpoint = carousel.dataset["breakpoint"]
+
+  if (typeof breakpoint !== "string") {
+    console.warn("Missing breakpoint for testimonials carousel.")
+  }
+
+  const mql = window.matchMedia(`(min-width: ${breakpoint})`)
 
   let currentCardIndex = 0;
   let offset = cards[1].offsetLeft
-  let maxCardOffset = 1;
+  let maxCardOffset = mql.matches ? 2 : 1;
 
-  const updateMaxCardOffset = () => {
-    maxCardOffset = window.innerWidth >= 800 ? 2 : 1;
-    if (window.innerWidth >= 800 && currentCardIndex >= cards.length - 1) {
-      currentCardIndex = cards.length - 2;
+  mql.onchange = function(event) {
+    console.log('change')
+    if (event.matches) {
+      maxCardOffset = 2
+      if (currentCardIndex > cards.length - maxCardOffset) {
+        currentCardIndex = cards.length - maxCardOffset
+      }
+    } else {
+      maxCardOffset = 1
     }
-  };
+    updateButtons();
+  }
   const updateButtons = () => {
     prev.disabled = currentCardIndex <= 0;
     next.disabled = currentCardIndex >= cards.length - maxCardOffset;
@@ -215,25 +259,21 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     track.style.transform = `translateX(${-offset * currentCardIndex}px)`
     updateButtons();
   };
-
-  window.onload = () => {
-    updateMaxCardOffset();
-    updateButtons();
-  };
   window.addEventListener('resize', function() {
     offset = cards[1].offsetLeft;
     track.style.transform = `translateX(${-offset * currentCardIndex}px)`;
-    updateMaxCardOffset();
-    updateButtons();
   });
 
   prev.addEventListener('click', () => currentCardIndex > 0 && updateCarousel(-1));
   next.addEventListener('click', () => currentCardIndex < cards.length - maxCardOffset && updateCarousel(1));
+
+  updateButtons();
 </script>
 
 <style>
   #hero {
     background-color: var(--brand-yellow-6);
+
     img { width: 100%; }
 
     ._body {
@@ -309,69 +349,83 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 
   #features {
     --li-color: hsla(32, 57%, 49%, 1);
-    background-color: #CCE6CA;
+
+    position: relative;
     padding-inline: var(--bleed);
     padding-block: 2em;
+    background-color: #CCE6CA;
 
-    & ._media img {
-      display: block;
-      width: 100%;
-      max-width: 16em;
+    & h3 {
+      font-size: 150%;
     }
-    & > section {
-      border-bottom: 1px solid black;
-      &:last-child {
-        border-bottom: 0;
+
+    @media screen(t) {
+      & h3 {
+        margin-top: 0;
+        font-size: 150%;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: calc((100% - var(--gutter)) / 2);
+        height: 1rem;
+        background: theme(colors.rust);
       }
     }
+  }
 
+  .main-feature {
+    text-align: center;
+  }
+  .feature {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "body media";
+    gap: var(--gutter);
+    padding-top: 2em;
+    padding-bottom: 2em;
+
+    &:where(.feature-left) {
+      grid-template-areas: "media body";
+    }
+
+    @media screen(t) {
+      display: grid;
+      padding-bottom: initial;
+    }
+  }
+  .main-feature,
+  .feature,
+  #context {
+    position: relative;
     &::after {
       content: "";
-      grid-column: 2/-1;
-      height: 2rem;
-      margin-bottom: -4rem;
-      background-color: hsla(32, 57%, 49%, 0.5);
+      position: absolute;
+      inset: auto var(--neg-bleed) 0;
+      border-bottom: solid #c6d1b7;
+    }
+  }
+  #context::after {
+    inset-inline: 0;
+  }
+
+  .area-body {
+    align-self: center;
+  }
+  .area-media {
+    display: block;
+    width: 100%;
+    max-width: 32em;
+    align-self: flex-end;
+
+    & img {
+      display: block;
+      box-sizing: border-box;
     }
   }
 
-  @media screen(t) {
-    #features {
-      h3 { font-size: 150%; }
-
-      & > section {
-        display: grid;
-        grid-template-rows: 1fr;
-        column-gap: 2em;
-        
-        img { max-width: 100%; }
-        h3 { margin-top: 0; }
-        p { max-width: 60ch; }
-
-        .feature-content { 
-          grid-column: 1;
-        }
-        ._media {
-          grid-row: 1 span 2;
-        }
-      }
-      
-      .introduction { grid-column: 1 / -1; }
-
-      .feature-1 {
-        text-align: center;
-        .feature-content { grid-column: 1; p { margin: auto; } }
-        ._media { grid-column: 2; grid-row: 2; }
-      }
-
-      .feature-2 { ._media { grid-column: 2; } }
-      .feature-3 { ._media { grid-column: 1; } .feature-content { grid-column: 2; } }
-      .feature-4 { ._media { grid-column: 2; } }
-    }
-  }
-
-    
-  
-  .plus details:not(:nth-last-child(1), :nth-last-child(2))::after {
+  .plus details::after {
     content: "";
     border-top: thick dotted;
     display: block;
@@ -379,24 +433,16 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     position: relative;
     top: .9em;
   }
-
-
-  #testimonials {
-    padding: 2em var(--bleed) 4em;
-    overflow: hidden;
-    background-color: #F6F8F4;
-
-    @media screen(tl) {
-      & .description {
-        margin-right: 4em;
-      }
-    }
+  .plus details:last-child::after { content: none; }
+  @media screen(t) {
+    .plus details:nth-last-child(2)::after { content: none; }
   }
+
   .carousel { position: relative; }
   .carousel-track {
     display: flex;
     margin-top: 2em;
-    gap: 2em;
+    gap: var(--gutter);
     transition: transform 0.3s ease-in-out;
     position: relative;
   }
@@ -413,7 +459,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     min-width: 100%;
 
     @media screen(t) {
-      min-width: calc((100% - 2em) / 2); 
+      min-width: calc((100% - var(--gutter)) / 2); 
     }
 
     & p {
@@ -426,15 +472,6 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
     }
   }
   .carousel-controls {
-    width: max-content;
-    margin-inline: auto;
-    margin-top: 2em;
-    margin-bottom: -2em;
-    background: white;
-    box-shadow: 0 .25em .5em 0 rgba(0 0 0 / .25);
-    border-radius: .5em;
-    overflow: hidden;
-
     & button {
       border: none;
       margin: 0;
@@ -444,16 +481,6 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
 
       &:hover { background-color: #F6F8F4; }
       &:disabled { background-color: initial; }
-    }
-
-    @media screen(tl) {
-      & {
-        position: absolute;
-        bottom: 100%;
-        right: 0;
-        margin-top: 0;
-        margin-bottom: 2em;
-      }
     }
   }
 

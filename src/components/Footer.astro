@@ -86,6 +86,14 @@ const social = [
 </footer>
 
 <style is:global>
+  @layer reset {
+    footer a {
+      color: inherit;
+    }
+    .contact a {
+      text-decoration: none;
+    }
+  }
   footer {
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--gutter);
@@ -101,10 +109,6 @@ const social = [
         "about   about   about  "
         "nav     legal   address"
       ;
-    }
-
-    & a {
-      color: inherit;
     }
     & ul {
       padding-inline-start: 1.5rem;

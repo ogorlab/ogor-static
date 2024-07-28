@@ -24,7 +24,10 @@ i18next.init({
   resources: {
     ro: {
       common: {
-        "yield": "working"
+        "yield": "working",
+        "ro": "Română",
+        "en": "English",
+        "fr": "Français"
       },
       translation: {
         and: "și",
