@@ -257,6 +257,11 @@ i18next.init({
           "terms": "Terms and conditions",
           "privacy": "Privacy policy",
           "cookie": "Cookie policy",
+          "generaltos_terms": "Terms and Conditions of Use",
+          "tos_terms": "Contractual Terms and Conditions",
+          "marketing_terms": "Marketing Policy",
+          "cookie_terms": "$t(legal.cookie)",
+          "privacy_terms": "$t(legal.privacy)",
         },
         "meta": {
           "title": "Digital suite for decisive agriculture",
