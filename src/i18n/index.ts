@@ -356,7 +356,7 @@ i18next.init({
   }
 })
 
-i18next.services.formatter?.add('ha', (value, lng, options) => {
+i18next.services.formatter?.add('ha', (value, lng) => {
   value = value.toLocaleString(lng, {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
