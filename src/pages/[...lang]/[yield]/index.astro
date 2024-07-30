@@ -6,17 +6,18 @@ import { getCollection } from "astro:content";
 import ForecastContributors from "@/components/ForecastContributors.astro";
 import ForecastTable from "@/components/ForecastTable.astro"
 import { getLatestForecast } from "@/content/config"
+import { t as _t} from "i18next"
 
 export const getStaticPaths = (async() => {
   const forecasts = await getCollection("forecast")
-  return getLocalizedPaths("yield", (item) => {
+  return getLocalizedPaths("yield", (item, lng) => {
     item.props.forecasts = forecasts
+    item.props.title = _t("yield.ogorForecast", { lng })
+    item.props.description = _t("yield.usingAlgorithms", { lng })
+    item.props.og_image = "/og_image_yield.png"
     return item
   })
 }) satisfies GetStaticPaths;
-
-type Props = InferGetStaticPropsType<typeof getStaticPaths>
-
 
 const { t } = useI18n(Astro.currentLocale)
 const { forecasts } = Astro.props
@@ -29,11 +30,11 @@ const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocal
 const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}.png` // "ogor_yield_101_20240702.png"
 ---
 
-<BaseLayout>
+<BaseLayout {...Astro.props}>
   <header class="hero no-separator">
     <h2 class="self-end tl:mb-0">{t("yield.ogorForecast")}</h2>
     <div class="_media-hero"> 
-      <img src="/src/images/forecast-hero.png" alt="Harvesting truck">
+      <img src="/images/harvesting.png" alt="">
     </div>
     <div>
       <p set:html={t("yield.usingAlgorithms")} />
@@ -48,7 +49,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
   <section id="national-yield-map" class="layout-media no-separator">
     <h3 class="area-header li-bullet-1 mt-0 tl:mb-0" set:html={t("yield.nationalMapAndStatistics")} />
     <a href={getUrl(`/yield/forecast/${latestForecast.id}`)} class="area-media block">
-      <img src={latestForecastPreview} alt="OGOR Yield map at county level">
+      <img src={latestForecastPreview} alt="">
     </a>
     <div class="area-body">
       <p class="tl:mt-0">
@@ -87,7 +88,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       </p>
     </div>
     <div class="area-media">
-      <img class="w-full max-w-lg" src="/images/ksp_yield_county.png" alt="OGOR Yield map at county level">
+      <img class="w-full max-w-lg" src="/images/ksp_yield_county.png" alt="">
     </div>
   </section>
   <section class="layout-media tp-only:block">
@@ -98,7 +99,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       <a href={getUrl("/company", "#products")}>{t("yield.subscriptionOptions")} →</a>
     </p>
     <div class="area-media">
-      <img class="w-full max-w-lg" src="/images/ksp_yield_farm.png" alt="OGOR Yield at farm level">
+      <img class="w-full max-w-lg" src="/images/ksp_yield_farm.png" alt="">
     </div>
   </section>
   <ForecastContributors />

@@ -229,7 +229,10 @@ html {
 @layer utilities {
   .text-muted {
     color: var(--muted);
-  }  
+  }
+  .stretch-95 {
+    font-stretch: 95%;
+  }
 }
 
 @layer layout {

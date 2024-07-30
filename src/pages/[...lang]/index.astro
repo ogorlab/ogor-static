@@ -4,22 +4,25 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
 import { getLatestForecast } from "@/content/config";
 import { screens } from "@/../tailwind.config.mjs"
+import { getCollection } from "astro:content";
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
 const latestForecast = await getLatestForecast()
-const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
+const latestForecastLocaleDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
   day: "numeric", month: "long", year: "numeric"
 })
 
 const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
+
+const testimonials = (await getCollection("testimonials", (entry) => entry.slug.startsWith(Astro.currentLocale || "ro")))
 ---
 <BaseLayout>
   <section id="hero">
     <div class="_media2">
-      <img src="/src/images/on-field.jpeg" alt="Ogor on field" style="transform: scaleX(-1);">
+      <img src="/images/kv_main.png" alt={t("alt:kv_main")}>
     </div>
     <div class="_body" >
       <h1 class="max-w-[45rem] mt-0 text-[200%]">{ t("home.hero_heading") }</h1>
@@ -29,7 +32,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       <span class="underline">{ t("home.hero_cta") }</span> →
     </a>
     <div class="_media1 flex justify-center items-center m:hidden">
-      <img src="/images/kv_devices.png" alt="Ogor app showcase">
+      <img src="/images/kv_devices.png" alt={t("alt:kv_devices")}>
     </div>
   </section>
 
@@ -43,7 +46,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       <div class="media mx-auto">
         <picture>
           <source media={screens['m'].raw} srcset="/images/screenshot_farm_view_mobile.png">
-          <img src="/images/screenshot_farm_view_desktop.png" alt="feature" 
+          <img src="/images/screenshot_farm_view_desktop.png" alt={t("alt:screenshot_farm_view")} 
               class="block w-full mx-auto m:max-w-[16rem] m:rounded-t-md t:max-w-[60rem t:rounded-t-2xl shadow-screenshot"
               style="image-rendering: pixelated; clip-path: xywh(-25% -25% 150% 125%);"
           />
@@ -62,7 +65,9 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
         <p class="mb-[2em]">{ t("home.feature2_description") }</p>
       </div>
       <div class="area-media t:aspect-square content-center relative">
-        <img src="/images/flooding.png" class="border-[.25rem] border-white" alt="feature">
+        <img src="/images/flooding.png" alt={t("alt:flooding")} 
+             class="border-[.25rem] border-white"
+        />
         <!-- <img src="/images/patrick_isolated.png" alt="Patrick Valmary"
              class="m:w-[12em] w-[50%] absolute left-[-15%] bottom-0"
         /> -->
@@ -71,55 +76,57 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
 
     <section class="feature">
       <div class="area-body">
-        <h3 class="li-bullet-3 mt-0">{ t("home.feature4_heading") }</h3>
+        <img src="/images/team_avatars.png" alt="" class="block h-[3em]">
+        <h3 class="mt-[1em]">{ t("home.feature4_heading") }</h3>
         <p class="mb-[2em]">{ t("home.feature4_description") }</p>
       </div>
       <div class="area-media t:aspect-square content-center">
-        <img src="/images/pests.png" class="rounded-[1.5em]" alt="feature">
+        <img src="/images/pests.png" alt={t("alt:pests")} class="rounded-[1.5em]" />
       </div>
     </section>
 
     <section class="feature feature-left">
       <div class="area-body">
         <h3 class="li-bullet-4 mt-0">{ t("home.feature3_heading") }</h3>
-        <p class="mb-[2em]">{ t("home.feature3_description") }</p>
-        <ul>
-          <li>
+        <p>{ t("home.feature3_description") }</p>
+        <ul class="mb-[2em]">
+          <li class="my-[.5em]">
             <a href={getUrl(`/yield/forecast/${latestForecast.id}`)} class="text-[inherit]">
-              {t("yield.forecast.ogorForecastFrom", { date: latestForecastDate })}
+              {t("yield_forecast.ogorForecastFrom", { date: latestForecastLocaleDate })} →
             </a>
           </li>
           <li>
-            <a href=""></a>
+            <a href={getUrl("/yield")} class="text-[inherit]">
+              {t("yield_forecast.aboutTheProject")}
+            </a>
           </li>
         </ul>
       </div>
       <a href={getUrl("/yield")} class="area-media t:aspect-square content-center">
-        <img src={latestForecastPreview} class="border-[.25em] border-solid border-white rounded-md shadow-map-preview" alt="feature">
+        <img src={latestForecastPreview} alt={t("alt:forecast_country", { date: latestForecastLocaleDate })} 
+             class="border-[.25em] border-solid border-white rounded-md shadow-map-preview" 
+        />
       </a>
     </section>
   
     
-    <section class="plus grid m:mb-4 t:grid-cols-2  gap-[var(--gutter)] mt-8 border-b-0 text-larger">
+    <section class="plus grid mb-8 t:grid-cols-2  gap-[var(--gutter)] mt-8 border-b-0 text-larger">
       <p class="m-0 font-bold text-rust col-span-full">Plus:</p>
       {[
-        { name: t("accumulated_precipitation"), icon: "/src/images/icons/precipitatii.png" },
-        { name: t("weather_forecast"), 
-          icon: "/src/images/icons/prognoza.png",
-          description: "Pe următoarele 7 zile; <strong>din 3 în 3 ore pentru ziua curentă!</strong> Date furnizate de Meteo Romania."
-        },
-        { name: t("water_capacity"), icon: "/src/images/icons/rezerva.png" },
-        { name: t("crop_rotation"), icon: "/src/images/icons/rotatia.png" },
-        { name: t("soil_map"), icon: "/src/images/icons/harta_solurilor.png" },
-        { name: t("vra"), icon: "/src/images/icons/VRA.png" },
-        { name: t("soil_analysis"), icon: "/src/images/icons/analize.png" }
+        { name: "accumulated_precipitation", icon: "/images/icon_precipitation.png", },
+        { name: "weather_forecast", icon: "/images/icon_weather_forecast.png", },
+        { name: "water_capacity", icon: "/images/icon_water_capacity.png", },
+        { name: "crop_rotation", icon: "/images/icon_crop_rotation.png", },
+        { name: "soil_map", icon: "/images/icon_soil_map.png", },
+        { name: "vra", icon: "/images/icon_vra.png", href: "https://ogor.farm/vra"},
+        { name: "soil_analysis", icon: "/images/icon_soil_analysis.png", }
       ].map((f) => (
         <details class="open:col-span-full">
           <summary class="flex items-center gap-[1em]">
-            <img src={f.icon} class="size-[3em] rounded-lg" style="box-shadow: 0 .25em .5em 0 rgb(0, 0, 0, 0.15)"/>
-            <h4 set:html={ f.name } class="m-0"/>
+            <img src={f.icon} alt="" class="size-[3em] rounded-lg shadow-md"/>
+            <h4 set:html={ t(f.name) } class="m-0"/>
           </summary>
-          <p class="ml-[4em] text-balance" set:html={f.description} />
+          <p class="ml-[4em] text-balance" set:html={ t(f.name, { context: "home", href: f.href })} />
         </details>
       ))}
     </section>
@@ -130,38 +137,20 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     <p class="max-w-[72ch] t:mr-[5em]" set:html={ t("home.testimonials_description") } />
     <div class="carousel" data-breakpoint={screens['t']}>
       <div class="carousel-track">
-        <blockquote class="card">
-          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-          <cite>
-            Alin Oprea
-            <br />
-            <span style="color: grey">Ing. agronom jud. IF</span>
-          </cite>
-        </blockquote>
-        <blockquote class="card">
-          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-          <cite>
-            Alin Oprea
-            <br />
-            <span style="color: grey">Ing. agronom jud. IF</span>
-          </cite>
-        </blockquote>
-        <blockquote class="card">
-          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-          <cite>
-            Alin Oprea
-            <br />
-            <span style="color: grey">Ing. agronom jud. IF</span>
-          </cite>
-        </blockquote>
-        <blockquote class="card">
-          <p>"Agricultura de precizie înseamnă în primul rând să știi ce este acolo, în câmp!"</p>
-          <cite>
-            Alin Oprea
-            <br />
-            <span style="color: grey">Ing. agronom jud. IF</span>
-          </cite>
-        </blockquote>
+        { testimonials.map(async (testimonial) => {
+          const { Content } = await testimonial.render()
+          return (
+            <blockquote class="card">
+              <div class="quote-wrapper">
+                <Content />
+              </div>
+              <cite>
+                {testimonial.data.name} <br />
+                <span style="color: grey">{testimonial.data.from}</span>
+              </cite>
+            </blockquote>
+          )
+        })}
       </div>
       <div class="carousel-controls text-[larger] tl-max:mt-[2em] w-max mx-auto tl:mb-[2em] tl:absolute bottom-full right-0 bg-white shadow-lg overflow-hidden rounded-lg">
         <button class="left">←</button>
@@ -175,7 +164,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       <strong>{ t("home.got_questions") }</strong>
       { t("home.here_to_help") }
     </p>
-    <p class="max-w-[40em] mx-auto mt-8">
+    <p class="max-w-[40em] mx-auto mt-8 text-[larger]">
       <a href="tel:+40754347347" class="btn btn-text rounded-full">
         <svg viewBox="0 0 48 48" class="icon">
           <use href="/icons.svg#phone" />
@@ -188,7 +177,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
         </svg>
       </a>
     </p>
-    <p class="max-w-[40em] mx-auto">
+    <p class="max-w-[40em] mx-auto text-[larger]">
       <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
         <svg class="icon">
           <use href="/logos/ogor.svg#logo" />
@@ -209,13 +198,13 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     <p>
       <strong>{ t("home.with_the_support_of") }:</strong>
       <br>
-      <img src="/src/images/esa.png" alt="ESA" style="height: 3em; margin-right: 1em"/>
-      <img src="/src/images/rosa.png" alt="ROSA" style="height: 5em"/>
+      <img src="/logos/esa.png" alt="Logo ESA" style="height: 3em; margin-right: 1em"/>
+      <img src="/logos/rosa.png" alt="Logo ROSA" style="height: 5em"/>
     </p>
     <p>
       <strong>{ t('home.partners') }:</strong>
       <br>
-      <img src="/src/images/Alcedo.svg" alt="Alcedo" style="height: 4em; margin-top: .5em">
+      <img src="/logos/Alcedo.svg" alt="Logo Alcedo" style="height: 4em; margin-top: .5em">
     </p>
   </section>
 </BaseLayout>
@@ -270,6 +259,24 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
   updateButtons();
 </script>
 
+
+<style is:inline>
+  .plus a {
+    color: initial;
+  }
+  .quote-wrapper p:first-child:before {
+    content: open-quote;
+    display: inline-block;
+    margin-left: -1ch;
+    width: 1ch;
+    text-align: right;
+  }
+  mark {
+    background-color: #ffe284;
+    /* background: linear-gradient(to right, #FFD85D, #FFF0C6, #FFD85D); */
+  }
+  .quote-wrapper p:last-child::after { content: close-quote; }
+</style>
 <style>
   #hero {
     background-color: var(--brand-yellow-6);
@@ -360,10 +367,6 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     }
 
     @media screen(t) {
-      & h3 {
-        margin-top: 0;
-        font-size: 150%;
-      }
       &::after {
         content: "";
         position: absolute;
@@ -425,6 +428,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     }
   }
 
+
   .plus details::after {
     content: "";
     border-top: thick dotted;
@@ -435,7 +439,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
   }
   .plus details:last-child::after { content: none; }
   @media screen(t) {
-    .plus details:nth-last-child(2)::after { content: none; }
+    .plus details:nth-last-child(2):not([open])::after { content: none; }
   }
 
   .carousel { position: relative; }

@@ -29,9 +29,8 @@ declare namespace App {
 
     /** Displayed title */
     title: string;
-
-    /** Links to translated versions of the page */
-    localizedUrls: LocalizedUrls;
+    og_image?: string;
+    description: "string";
 
     /** Get localized URLs based on current locale */
     getUrl: typeof _getUrl.bind;

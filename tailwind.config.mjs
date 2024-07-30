@@ -30,6 +30,7 @@ export default {
 			boxShadow: {
 				'screenshot': '0 1em 2em 0 hsla(0 0% 0% / .25)',
 				'map-preview': '0 .25rem 1.5rem 0 rgba(0, 0, 0, 0.10)',
+				'md': '0 .25em .5em 0 rgb(0, 0, 0, 0.15)',
 			},
 			fontSize: {
 				'larger': 'larger'

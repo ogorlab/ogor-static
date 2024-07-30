@@ -6,17 +6,42 @@ import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { useI18n } from "@/i18n";
+import { t as _t } from "i18next"
 
 interface Props {
-  entry: CollectionEntry<"forecast">
+  entry: CollectionEntry<"forecast">;
+  title: string;
+  title_long: string;
 }
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("forecast")
   const paths = entries.flatMap(entry => {
-    return getLocalizedPaths("yield/forecast", (item) => {
+    return getLocalizedPaths("yield/forecast", (item, lng) => {
+      const date = new Date(entry.data.forecast_date)
+      const localeDate = date.toLocaleDateString(lng, {
+        day: "numeric", month: "long", year: "numeric"
+      })
+      const crop_code = entry.data.crops[0].code
+      const forecastCrops = entry.data.crops.map(crop => crop.code)
+      const title = _t("yield_title", { lng, crops: forecastCrops.slice(0, -1)
+        // @ts-ignore it accepts numbers as keys, but doen't know it
+        .map(c => _t(c, { lng, ns: "crops" }))
+        .join(", ")
+        .concat(
+          " " + _t("and", { lng }) + " " +
+          // @ts-ignore
+          _t(forecastCrops[forecastCrops.length - 1], { lng, ns: "crops" })
+        )
+      })
+
       item.params.slug = entry.id
-      item.props = { ...item.props, entry };
+      item.props.entry = entry;
+      item.props.title = _t("yield_forecast.ogorForecastFrom", { lng, date: localeDate })
+      item.props.title_long = title
+      item.props.description = title
+      item.props.og_image = `/yield/maps/ogor_yield_${crop_code}_${entry.id.replaceAll("-", "")}_preview.png`
+
       return item
     })
   })
@@ -35,15 +60,6 @@ const lastForecastLocaleDate = (new Date(lastForecast)).toLocaleDateString(Astro
 const forecastLocaleDate = (new Date(entry.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
   day: "numeric", month: "long", year: "numeric"
 })
-const forecastCrops = entry.data.crops.map(crop => crop.code)
-const title = t("yield_title", { crops: forecastCrops.slice(0, -1)
-  .map(c => t(c, { ns: "crops" }))
-  .join(", ")
-  .concat(
-    " " + t("and") + " " +
-    t(forecastCrops[forecastCrops.length - 1], { ns: "crops" })
-  )
-})
 function formatNumber(n: number) {
   return n.toLocaleString(Astro.currentLocale, {
     maximumFractionDigits: 0,
@@ -52,17 +68,17 @@ function formatNumber(n: number) {
 
 
 ---
-<BaseLayout>
+<BaseLayout {...Astro.props}>
   <header class="yield-header">
     <h1 class="yield-title">
       <span class="yield-1">
-        {t("yield.forecast.ogorForecastFrom", { date: forecastLocaleDate })}
+        {t("yield_forecast.ogorForecastFrom", { date: forecastLocaleDate })}
       </span>
-      <span class="yield-2">{t("yield.forecast.regarding")}</span>
-      <span class="yield-3">{ title }</span>
+      <span class="yield-2">{t("yield_forecast.regarding")}</span>
+      <span class="yield-3">{ Astro.props.title_long }</span>
     </h1>
     <p class="yield-4">
-      {t("yield.forecast.byApplyingML")}
+      {t("yield_forecast.byApplyingML")}
     </p>
   
     <div class="separator">
@@ -79,18 +95,19 @@ function formatNumber(n: number) {
       entry.data.crops.map((crop, index) => {
         return (
           <article class="crop">
-            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="media">
-              <img src={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}_preview.png`} />
+            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="media"
+               data-umami-event="Download Yield Map" data-umami-event-crop={crop.code}>
+              <img src={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}_preview.png`} alt="" />
             </a>
             <h2 class={ "li-bullet-" + (index + 1) }>{t(crop.code, { ns: "crops"}).toUpperCase()}</h2>
             
             <div class="key-metric">
               <span>{crop.avg_yield} t/ha</span>
-              <strong>{t("yield.forecast.averageYield")}</strong>
+              <strong>{t("yield_forecast.averageYield")}</strong>
             </div>
             <div class="key-metric">
               <span>{formatNumber(crop.total_surface)} ha</span>
-              <strong>{t("yield.forecast.harvestedSurface")}</strong>
+              <strong>{t("yield_forecast.harvestedSurface")}</strong>
             </div>
 
             {crop.interpretation && (
@@ -99,8 +116,9 @@ function formatNumber(n: number) {
                 <cite>{crop.interpretation[Astro.currentLocale!].cite}</cite>
               </blockquote>
             )}
-            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="download-map-button" download>
-              <span>{t("yield.forecast.downloadMap")}</span>
+            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="download-map-button" download
+               data-umami-event="Download Yield Map" data-umami-event-crop={crop.code}>
+              <span>{t("yield_forecast.downloadMap")}</span>
             </a>
           </article>
           <hr/>
@@ -113,15 +131,15 @@ function formatNumber(n: number) {
       <ul class="pl-4" data-marker="x">
         <li>
           <a href={getUrl(`/yield/forecast/${lastForecast}`)} class="hover:underline">
-            {t("yield.forecast.lastForecast", {date: lastForecastLocaleDate})}
+            {t("yield_forecast.lastForecast", {date: lastForecastLocaleDate})}
           </a>
         </li>
         <li>
           <a href={getUrl("yield") + t("#history", { ns: "urls" })}>
-            {t("yield.forecast.forecastHistory")}
+            {t("yield_forecast.history")}
           </a>
         </li>
-        <li><a href={getUrl("yield")}>{t("yield.forecast.aboutTheProject")}</a></li>
+        <li><a href={getUrl("yield")}>{t("yield_forecast.aboutTheProject")}</a></li>
       </ul>
     </nav>
 
@@ -129,7 +147,7 @@ function formatNumber(n: number) {
       <p>
         <span class="emoji">🗓️</span>
         <span class="inline-block" set:html={
-          t("yield.forecast.nextForecast", { date: 
+          t("yield_forecast.nextForecast", { date: 
             (new Date(entry.data.next_forecast_date)).toLocaleDateString(Astro.currentLocale, {
               day: "numeric", month: "long", year: "numeric"
             }),
@@ -139,7 +157,7 @@ function formatNumber(n: number) {
     </div>
 
     <a class="forecast-more-element contact-ogor" href="mailto:contact@ogor.ro">
-      <p set:html={t("yield.forecast.contactOgorTeam")}/>
+      <p set:html={t("yield_forecast.contactOgorTeam")}/>
     </a>
   </section>
   <ForecastContributors />

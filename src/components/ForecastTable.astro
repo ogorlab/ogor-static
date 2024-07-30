@@ -23,12 +23,12 @@ forecasts.forEach((f, index) => {
 ---
 <details id={id.replace("#", "")}>
   <summary>
-    {t("yield.forecastHistory")}
+    {t("yield_forecast.history")}
   </summary>
 
   <table class="table-container">
     <tr class="group">
-      <th class="text-left" colspan="2">{t("yield.springCrops")}</th>
+      <th class="text-left" colspan="2">{t("spring_crops")}</th>
       { dates.map((date, index) => (
         <th class:list={[index === 0 && "latest_forecast", "min-w-24"]}>
           { date.toLocaleDateString(Astro.currentLocale, { day: "numeric", month: "short" }) }
@@ -61,7 +61,7 @@ forecasts.forEach((f, index) => {
     ))}
 
     <tr class="group">
-      <th class="h-12 text-left" colspan="2">{t("yield.autumnCrops")}</th>
+      <th class="h-12 text-left" colspan="2">{t("autumn_crops")}</th>
       { dates.map((date, index) => (
         <th class={index === 0 ? "latest_forecast" : ""}>
           { date.toLocaleDateString(Astro.currentLocale, { day: "numeric", month: "short" }) }

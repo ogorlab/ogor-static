@@ -25,9 +25,18 @@ const updatesCollection = defineCollection({
   })
 })
 
+const testimonialsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: z.string(),
+    from: z.string()
+  })
+})
+
 export const collections = {
   forecast: yieldForecastCollection,
   updates: updatesCollection,
+  testimonials: testimonialsCollection
 }
 
 export async function getLatestForecast() {
