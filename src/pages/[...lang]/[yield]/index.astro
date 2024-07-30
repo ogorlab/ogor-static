@@ -51,7 +51,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     <a href={getUrl(`/yield/forecast/${latestForecast.id}`)} class="area-media block">
       <img src={latestForecastPreview} alt="">
     </a>
-    <div class="area-body">
+    <div class="area-body m:mb-[1em]">
       <p class="tl:mt-0">
         {t("yield.lastForecast")}: <a href={getUrl(`/yield/forecast/${latestForecast.id}`)}>{latestForecastDate} →</a>
       </p>

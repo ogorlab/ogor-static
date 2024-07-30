@@ -8,6 +8,6 @@ const { t } = useI18n(Astro.currentLocale)
 export const getStaticPaths = (() => getLocalizedPaths("updates")) satisfies GetStaticPaths;
 ---
 
-<BaseLayout>
+<BaseLayout {...Astro.props}>
   { t("updates") }
 </BaseLayout>

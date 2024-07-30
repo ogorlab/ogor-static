@@ -28,7 +28,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.slug.
       <h1 class="max-w-[45rem] mt-0 text-[200%]">{ t("home.hero_heading") }</h1>
       <p  class="max-w-[45rem] text-[larger]" set:html={ t("home.hero_description") } />
     </div>
-    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta text-center content-center inline-block text-white">
+    <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta _cta-link block text-center content-center text-white">
       <span class="underline">{ t("home.hero_cta") }</span> →
     </a>
     <div class="_media1 flex justify-center items-center m:hidden">
@@ -81,7 +81,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.slug.
         <p class="mb-[2em]">{ t("home.feature4_description") }</p>
       </div>
       <div class="area-media t:aspect-square content-center">
-        <img src="/images/pests.png" alt={t("alt:pests")} class="rounded-[1.5em]" />
+        <img src="/images/pests.png" alt={t("alt:pests")} class="rounded-[1.5em] shadow-lg" />
       </div>
     </section>
 
@@ -228,7 +228,6 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.slug.
   let maxCardOffset = mql.matches ? 2 : 1;
 
   mql.onchange = function(event) {
-    console.log('change')
     if (event.matches) {
       maxCardOffset = 2
       if (currentCardIndex > cards.length - maxCardOffset) {
@@ -351,6 +350,32 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.slug.
         ;
         min-height: 20em;
       }
+    }
+  }
+
+  @keyframes shine {
+    from {
+      background-position-x: 0%;
+    }
+    to {
+      background-position-x: 100%;
+    }
+  }
+  #hero ._cta-link {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0 -25em;
+      background-image: linear-gradient(-60deg, transparent 20%, transparent 40%, #ffffff88 42%, transparent 60%);
+      background-position: 0% center;
+      background-size: 25em 100%;
+      background-repeat: no-repeat;
+      animation: shine 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      animation-fill-mode: backwards;
     }
   }
 

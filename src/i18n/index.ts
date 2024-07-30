@@ -30,6 +30,10 @@ i18next.init({
 
         "and": "și",
         "year": "an",
+        "date": "Data",
+        "document": "Document",
+        "availability": "Valabilitate",
+        "link": "Link",
         "map": "hartă",
         "starting_from": "Începând de la",
 
@@ -85,9 +89,16 @@ i18next.init({
           "email": "contact@ogor.ro",
         },
         "legal": {
+          "title": "Legal",
+          "history": "Versiuni anterioare",
           "terms": "Termeni și condiții",
           "privacy": "Politica de confidențialitate",
-          "cookie": "Politica de cookie"
+          "cookie": "Politica de cookie",
+          "generaltos_terms": "Termeni și condiții de utilizare",
+          "tos_terms": "Termeni și condiții contractuale",
+          "marketing_terms": "Politica de marketing",
+          "cookie_terms": "$t(legal.cookie)",
+          "privacy_terms": "$t(legal.privacy)",
         },
         "meta": {
           "title": "Instrumente digitale pentru agricultură decisivă",
@@ -141,7 +152,7 @@ i18next.init({
           "ogorForecastFrom": "Prognoza OGOR din {{date}}",
           "ogorForecastProject": " <strong>Prognoza OGOR</strong> este un proiect de cercetare realizat de Field Data Zoom SRL (OGOR), cu sprijinul <em>Agenței Spațiale Europene (ESA)</em> și <em>Agenței Spațiale Române (ROSA)</em>. Datele de validate de la sol sunt furnizate de <em>Agenția de Plăţi şi Intervenție pentru Agricultură (APIA)</em> și datele meteo sunt furnizate de <em>OpenWeather</em>.",
           "regarding": "referitor la",
-          "byApplyingML": "realizatǎ aplicând algoritmii proprii de învǎțare automatǎ pe observații satelitare",
+          "byApplyingML": "realizatǎ aplicând algoritmii proprii de învǎțare automatǎ pe observații satelitare și date meteorologice",
           "averageYield": "Producție medie",
           "harvestedSurface": "Suprafață recoltată",
           "downloadMap": "Descarcă harta",
@@ -163,7 +174,10 @@ i18next.init({
         "forecast": "prognoza",
         "legal": "legal",
         "#products": "#produse",
-        "#history": "#istoric"
+        "#history": "#istoric",
+        "#generaltos_terms": "#termeni",
+        "#privacy_terms": "#confidentialitate",
+        "#cookie_terms": "#cookie",
       },
       "alt": {
         "kv_main": "Fermier în câmp",
@@ -185,6 +199,10 @@ i18next.init({
       "common": {
         "and": "and",
         "year": "year",
+        "date": "Date",
+        "document": "Document",
+        "availability": "Availability",
+        "link": "Link",
         "map": "map",
         "starting_from": "Starting from",
         "autumn_crops": "Autumn crops",
@@ -234,9 +252,11 @@ i18next.init({
           "address": "67 Gheorghe Missail Street, 011542 Sector 1, BUCHAREST, ROMANIA",
         },
         "legal": {
+          "title": "Legal",
+          "history": "Previous versions",
           "terms": "Terms and conditions",
           "privacy": "Privacy policy",
-          "cookie": "Cookie policy"
+          "cookie": "Cookie policy",
         },
         "meta": {
           "title": "Digital suite for decisive agriculture",
@@ -290,7 +310,7 @@ i18next.init({
           "ogorForecastFrom": "OGOR Forecast from {{date}}",
           "ogorForecastProject": "<strong>OGOR Yield</strong> is a research project conducted by Field Data Zoom SRL (OGOR), with the support of the <em>European Space Agency (ESA)</em> and the <em>Romanian Space Agency (ROSA)</em>. Ground-validated data is provided by the <em>Agency for Payments and Intervention in Agriculture (APIA)</em> and weather data is provided by <em>OpenWeather</em>.",
           "regarding": "regarding",
-          "byApplyingML": "produced by applying proprietary machine learning algorithms on satellite observations",
+          "byApplyingML": "by applying proprietary machine learning algorithms on satellite observations on meteorological data",
           "averageYield": "Average Yield",
           "harvestedSurface": "Harvested Surface",
           "downloadMap": "Download Map",
@@ -311,7 +331,10 @@ i18next.init({
         "yield": "yield",
         "forecast": "forecast",
         "#history": "#history",
-        "#products": "#products"
+        "#products": "#products",
+        "#generaltos_terms": "#terms",
+        "#privacy_terms": "#privacy",
+        "#cookie_terms": "#cookie",
       },
       "alt": {
         "kv_main": "Farmer in the field",

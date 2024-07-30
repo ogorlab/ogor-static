@@ -33,7 +33,7 @@ declare namespace App {
     description: "string";
 
     /** Get localized URLs based on current locale */
-    getUrl: typeof _getUrl.bind;
+    getUrl: (key: string, hash?: string) => string;
 
     backUrl: string | undefined;
 

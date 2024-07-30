@@ -66,16 +66,16 @@ const social = [
 
   <ul class="nav font-semibold">
     <li><a href={ getUrl("company") }>{ t("nav.company_long") }</a></li>
-    <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+    <li><a href={ getUrl("company", "#products") }>{ t("nav.products_long") }</a></li>
     <!-- <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li> -->
     <li><a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL }>{t("create_account_ogor")} →</a></li>
   </ul>
 
   <ul class="legal">
     <li><a href="https://anpc.ro/" rel="external nofollow">ANPC</a></li>
-    <li><a href={ getUrl("legal") + "#terms" }>{t("legal.terms")}</a></li>
-    <li><a href={ getUrl("legal") + "#privacy" }>{t("legal.privacy")}</a></li>
-    <li><a href={ getUrl("legal") + "#cookie" }>{t("legal.cookie")}</a></li>
+    <li><a href={ getUrl("legal", "#generaltos_terms") }>{t("legal.terms")}</a></li>
+    <li><a href={ getUrl("legal", "#privacy_terms" )}>{t("legal.privacy")}</a></li>
+    <li><a href={ getUrl("legal", "#cookie_terms" )}>{t("legal.cookie")}</a></li>
   </ul>
 
   <address>

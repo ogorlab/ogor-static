@@ -1,0 +1,189 @@
+---
+import { getLocalizedPaths, useI18n } from "@/i18n";
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro"
+
+export const getStaticPaths = (() => getLocalizedPaths("legal")) satisfies GetStaticPaths;
+
+const endpoint = import.meta.env.PUBLIC_OGOR_BE_HOST + "/api/v1/legal"
+const data = await fetch(endpoint, {
+    headers: {
+      "Accept-Language": Astro.currentLocale || "ro"
+    }
+  }).then(response => response.json())
+
+const table = {}
+for (let type in data) {
+  data[type].forEach(function(doc, index) {
+    doc.type = type
+    doc.file_url = import.meta.env.PUBLIC_OGOR_BE_HOST + doc.file_url
+    doc.validity = [new Date(doc.start_date)]
+
+    if (index >= 1) {
+      // 1 day before the subsequent version came into effect
+      const subsequent_doc_start_date = data[type][index - 1].validity[0]
+
+      const end_date = new Date(subsequent_doc_start_date)
+      end_date.setDate(subsequent_doc_start_date.getDate() - 1)
+      doc.validity[1] = end_date
+    }
+
+    if (doc.validity[1]) {
+      table[doc.start_date] ||= []
+      table[doc.start_date].push(doc)
+    }
+  })
+}
+const dates = Object.keys(table).sort((a, b) => (new Date(b)) - (new Date(a)))
+
+const { t } = useI18n(Astro.currentLocale)
+---
+
+<BaseLayout {...Astro.props}>
+
+  <header>
+    <h1>{t("legal.title")}</h1>
+  </header>
+
+  <section id="documents" class="mb-[3em]">
+
+    { Object.keys(data).map(type => {
+      const doc = data[type][0]
+      return (
+        <article id={ t("urls:#" + type).substring(1) } 
+          class="p-4 bg-[#eceeea] hover:bg-[var(--action-bg-alt)] target:outline-[.125em] target:outline-dashed target:outline-offset-[.25em] target:outline-[var(--action-muted)]"
+          style="scroll-margin-top: 9em;"
+        >
+          <svg viewBox="0 0 48 48" class="size-[4em] float-right ml-4">
+            <use href="/icons.svg#pdf" />
+          </svg>
+          <h4 class="m-0 font-semibold">{t("legal." + doc.type)}</h4>
+          <p class="mt-1 italic text-muted">
+            { doc.validity[0].toLocaleDateString(Astro.currentLocale, {
+              day: "numeric", month: "long", year: "numeric"
+            })}
+          </p>
+          <a href={doc.file_url} download class="mt-auto font-medium no-underline">{t("Download")}</a>
+        </article>
+      )
+    })}
+  </section>
+
+  { dates.length > 0 && (
+    <section>
+      <h2>{t("legal.history")}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{t("date")}</th>
+            <th>{t("document")}</th>
+            <th>{t("availability")}</th>
+            <th>{t("link")}</th>
+          </tr>
+        </thead>
+
+        { dates.map((date, index) => (
+          <tbody>
+          { table[date].map((doc, index) => (
+            <tr>
+              { index === 0 && 
+                <td rowspan={table[date].length}>
+                  {doc.validity[0].toLocaleDateString(Astro.currentLocale, {
+                    day: "numeric", month: "short", year: "numeric"
+                  })}
+                </td>
+              }
+              <td>{t("legal." + doc.type)}</td>
+              <td>
+                {doc.validity.map(d => d?.toLocaleDateString(Astro.currentLocale, {
+                  day: "numeric", month: "long", year: "numeric"
+                })).join(" – ")}
+              </td>
+              <td>
+                <a href={doc.file_url}>{t("download")}</a>
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        ))}
+      </table>
+    </section>
+  )}
+</BaseLayout>
+
+<style is:inline>
+  #content {
+    margin-inline: var(--bleed);
+    margin-bottom: 4em;
+  }
+</style>
+<style>
+  #documents {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1em;
+
+    & article {
+      position: relative;
+    }
+    & a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+
+  @media screen(m) {
+    table, tbody, tr, th, td {
+      display: block;
+      text-align: left;
+    }
+    table thead { display: none; }
+
+    table tr {
+      position: relative;
+      padding: .5em;
+      border-top: solid lightgrey;
+
+      &:active {
+        background: var(--action-bg-alt);
+      }
+    }
+    
+    td:has(a) {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      text-indent: -9999px;
+    }
+
+    td[rowspan] {
+      display: none;
+    }
+  }
+  @media screen(t) {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+  
+      & th,
+      & td {
+        padding: .5em;
+        text-align: left;
+  
+        &:last-child {
+          text-align: right;
+        }
+      }
+  
+      & thead th {
+        border-bottom: medium solid lightgray;
+      }
+  
+      & tbody :where(th, td) {
+        border-top: solid lightgray;
+      }
+    }
+  }
+</style>

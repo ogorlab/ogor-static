@@ -81,10 +81,10 @@ const locales = config.i18n?.locales as unknown as string[]
     </a>
   </p>
   <ul class="list-none ps-0">
-    <li class="my-[1em]"><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
-    <li class="my-[1em]"><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
-    <li class="my-[1em]"><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
-    <li class="my-[1em]"><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("/company") }>{ t("nav.company") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("/company", "#products")}>{ t("nav.products_long") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("/yield") }>{ t("nav.forecast_long") }</a></li>
+    <li class="my-[1em]"><a href={ getUrl("/updates") }>{ t("nav.updates_long") }</a></li>
   </ul>
   <div class="flex flex-wrap gap-4 my-[2em]">
     <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">

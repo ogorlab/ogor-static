@@ -1,3 +1,8 @@
+## Environment variables
+
+* `PUBLIC_OGOR_APP_HOST` contains protocol, domain and port (if applicable) and is used to build the URLs to ogor-frontend app.
+
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
