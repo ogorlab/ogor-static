@@ -8,12 +8,12 @@ export const getStaticPaths = (() => getLocalizedPaths("company")) satisfies Get
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
 ---
-<BaseLayout>
+<BaseLayout {...Astro.props}>
   <header class="py-[2em] bg-[#B9E5FB]">
     <h1 class="">{ t("company.tagline") }</h1>
     <p class="max-w-[72ch]">{ t("company.description") }</p>
   </header>
-  <section id={t("urls:#products").substring(1)} class="t:my-[4em]">
+  <section id={t("urls:#products").substring(1)} class="t:my-[4em]" style="scroll-margin-top: 6em;">
     <h2>{ t("products_title_company") }</h2>
     <div class="t:grid t:grid-cols-2 tl:grid-cols-4 gap-8">
       <article class="min-h-[20em] flex flex-col gap-4">

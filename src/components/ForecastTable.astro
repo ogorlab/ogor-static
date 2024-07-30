@@ -7,8 +7,7 @@ const forecasts = (await getCollection("forecast")).slice().reverse()
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
 
-const id = t("#history", { ns: "urls" })
-
+const id = t("urls:#history")
 const dates: Array<Date> = []
 const crops: Record<any, number[]> = {}
 
@@ -21,8 +20,8 @@ forecasts.forEach((f, index) => {
   })
 })
 ---
-<details id={id.replace("#", "")}>
-  <summary>
+<details style="scroll-padding-top: 6em;">
+  <summary id={id.substring(1)} style="scroll-margin-top: 6em">
     {t("yield_forecast.history")}
   </summary>
 
@@ -95,20 +94,10 @@ forecasts.forEach((f, index) => {
   </table>
 </details>
 
-<script is:inline data-id={id}>
-{ const hash = document.currentScript.dataset["id"]
-  if (location.hash === hash) {
-    document.querySelector(hash).open = true
-  }
-}
-</script>
-
 <style>
 details {
   position: relative;
-  scroll-padding-top: 7rem;
-  
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   box-sizing: border-box; 
   border: thin dotted hsla(32, 57%, 49%, 1);
   
@@ -116,22 +105,27 @@ details {
     cursor: pointer;
     padding: 0.75em;
   }
-
 }
 details[open] {
   border: none;
   grid-column: 1/3;
   padding: 1.5rem;
-  border-radius: 1em;
+  border-radius: 1rem;
   overflow-x: auto;
   background: white;
 
   summary {
     margin: -1.5rem;
-    margin-bottom: initial;
+    margin-bottom: 1rem;
     padding: 1.5rem;
     font-weight: 600; 
     font-size: 150%;
+  }
+  summary:focus-visible {
+    outline-offset: -.125rem;
+    outline: .125rem dashed;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
   }
 }
 table {
