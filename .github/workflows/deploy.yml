@@ -21,7 +21,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-
+        with:
+          path: ${{ github.workspace }}/ogor-static
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -30,7 +31,7 @@ jobs:
 
       - name: Build
         run: |
-          cd ogor-static
+          cd ${{ github.workspace }}/ogor-static
           npm i
           npm run build
 
