@@ -5,36 +5,55 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 
 export const getStaticPaths = (() => getLocalizedPaths("legal")) satisfies GetStaticPaths;
 
-const endpoint = import.meta.env.PUBLIC_OGOR_BE_HOST + "/api/v1/legal"
-const data = await fetch(endpoint, {
-    headers: {
-      "Accept-Language": Astro.currentLocale || "ro"
-    }
-  }).then(response => response.json())
+const lang = Astro.currentLocale || "ro"
 
-const table = {}
-for (let type in data) {
-  data[type].forEach(function(doc, index) {
-    doc.type = type
-    doc.file_url = import.meta.env.PUBLIC_OGOR_BE_HOST + doc.file_url
-    doc.validity = [new Date(doc.start_date)]
-
-    if (index >= 1) {
-      // 1 day before the subsequent version came into effect
-      const subsequent_doc_start_date = data[type][index - 1].validity[0]
-
-      const end_date = new Date(subsequent_doc_start_date)
-      end_date.setDate(subsequent_doc_start_date.getDate() - 1)
-      doc.validity[1] = end_date
-    }
-
-    if (doc.validity[1]) {
-      table[doc.start_date] ||= []
-      table[doc.start_date].push(doc)
-    }
-  })
+type LegalType = "generaltos_terms" | "tos_terms" | "privacy_terms" | "marketing_terms" | "cookie_terms"
+type LegalDoc = {
+  /** yyyy-mm-dd */
+  start_date: string
+  file_url: string
+  summary: string
 }
-const dates = Object.keys(table).sort((a, b) => (new Date(b)) - (new Date(a)))
+type LegalHistory = {
+  [key: string]: Array<LegalDoc & {
+    type: LegalType
+    end_date: string
+  }>
+}
+
+async function fetchLegal() {
+  const endpoint = import.meta.env.PUBLIC_OGOR_BE_HOST + "/api/v1/legal"
+  const requestInit: RequestInit = {
+    headers: {
+      "Accept-Language": lang
+    }
+  }
+  const response = await fetch(endpoint, requestInit)
+  const data = await response.json() as Partial<Record<LegalType, LegalDoc[]>>
+
+  return data
+}
+
+const data = await fetchLegal()
+const latest: Partial<Record<LegalType, LegalDoc>> = {}
+const history: LegalHistory = {}
+
+Object.entries(data).forEach(([type, docs]) => {
+  latest[type as LegalType] = docs[0]
+
+  for (let i = 1; i < docs.length; i++) {
+    const doc = docs[i]
+    const start_date = doc.start_date
+    history[start_date] ??= []
+    history[start_date].push({
+      ...doc,
+      type: type as LegalType,
+      end_date: docs[i - 1]?.start_date,
+    })
+  }
+})
+
+const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
 
 const { t } = useI18n(Astro.currentLocale)
 ---
@@ -47,9 +66,7 @@ const { t } = useI18n(Astro.currentLocale)
 
   <section id="documents" class="mb-[3em]">
 
-    { Object.keys(data).map(type => {
-      const doc = data[type][0]
-      return (
+    { Object.entries(latest).map(([type, doc]) => (
         <article id={ t("urls:#" + type).substring(1) } 
           class="p-4 bg-[#eceeea] hover:bg-[var(--action-bg-alt)] target:outline-[.125em] target:outline-dashed target:outline-offset-[.25em] target:outline-[var(--action-muted)]"
           style="scroll-margin-top: 9em;"
@@ -57,16 +74,14 @@ const { t } = useI18n(Astro.currentLocale)
           <svg viewBox="0 0 48 48" class="size-[4em] float-right ml-4">
             <use href="/icons.svg#pdf" />
           </svg>
-          <h4 class="m-0 font-semibold">{t("legal." + doc.type)}</h4>
+          <h4 class="m-0 font-semibold">{t("legal." + type)}</h4>
           <p class="mt-1 italic text-muted">
-            { doc.validity[0].toLocaleDateString(Astro.currentLocale, {
-              day: "numeric", month: "long", year: "numeric"
-            })}
+            {t("date", { date: new Date(doc.start_date) })}
           </p>
           <a href={doc.file_url} download class="mt-auto font-medium no-underline">{t("Download")}</a>
         </article>
       )
-    })}
+    )}
   </section>
 
   { dates.length > 0 && (
@@ -75,29 +90,25 @@ const { t } = useI18n(Astro.currentLocale)
       <table>
         <thead>
           <tr>
-            <th>{t("date")}</th>
+            <th>{t("Date")}</th>
             <th>{t("document")}</th>
             <th>{t("availability")}</th>
             <th>{t("link")}</th>
           </tr>
         </thead>
 
-        { dates.map((date, index) => (
+        { dates.map((date) => (
           <tbody>
-          { table[date].map((doc, index) => (
+          { history[date].map((doc, index) => (
             <tr>
               { index === 0 && 
-                <td rowspan={table[date].length}>
-                  {doc.validity[0].toLocaleDateString(Astro.currentLocale, {
-                    day: "numeric", month: "short", year: "numeric"
-                  })}
+                <td rowspan={history[date].length}>
+                  {t("dateMedium", { date: new Date(doc.start_date) })}
                 </td>
               }
               <td>{t("legal." + doc.type)}</td>
               <td>
-                {doc.validity.map(d => d?.toLocaleDateString(Astro.currentLocale, {
-                  day: "numeric", month: "long", year: "numeric"
-                })).join(" – ")}
+                {t("dateMedium", { date: new Date(doc.end_date) })}
               </td>
               <td>
                 <a href={doc.file_url}>{t("download")}</a>
