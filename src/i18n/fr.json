@@ -1,0 +1,23 @@
+{
+  "translation": {
+    "and": "et",
+    "company": {
+      "address": "Rue Gheorghe Missail 67, 011542 Secteur 1, Bucarest, Roumanie"
+    }
+  },
+  "urls": {
+    "company": "entreprise",
+    "updates": "nouveautes",
+    "todo": "nouveautés",
+    "yield": "rendement",
+    "forecast": "prevision",
+    "#history": "#historique"
+  },
+  "crops": {
+    "101": "Blé",
+    "105": "Orge",
+    "108": "Maïs", 
+    "201": "Tournesol",
+    "202": "Colza"
+  }
+}
