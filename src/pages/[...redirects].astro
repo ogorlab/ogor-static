@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from "astro";
+import { t } from "i18next";
+import config from "astro.config.mjs"
+
+export const getStaticPaths = (() => {
+  const locales = config.i18n!.locales
+  
+  return locales.map(lang => {
+    const key = "yield"
+    const redirects = "/" + lang + "/" + key
+    const url =       "/" + lang + "/" + t(key, { lng: lang, ns: "urls" })
+
+    return {
+      params: { redirects },
+      props: { url },
+    }
+  })
+}) satisfies GetStaticPaths;
+
+const { url } = Astro.props
+const content = `0;url=${url}`
+---
+<meta http-equiv="refresh" content={content} />
