@@ -94,8 +94,8 @@ function formatNumber(n: number) {
     {
       entry.data.crops.map((crop, index) => {
         return (
-          <article class="crop">
-            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="media"
+          <article class="crop" id={crop.code.toString()} style="scroll-margin-top: 6em;">
+            <a href={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}.png`} class="media"
                data-umami-event="Download Yield Map" data-umami-event-crop={crop.code}>
               <img src={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}_preview.png`} alt="" />
             </a>
@@ -116,7 +116,7 @@ function formatNumber(n: number) {
                 <cite>{crop.interpretation[Astro.currentLocale!].cite}</cite>
               </blockquote>
             )}
-            <a href='https://ogor.ro/yield/maps/ogor_yield_101_20240702.png' class="download-map-button" download
+            <a href={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}.png`} class="download-map-button" download
                data-umami-event="Download Yield Map" data-umami-event-crop={crop.code}>
               <span>{t("yield_forecast.downloadMap")}</span>
             </a>
@@ -143,18 +143,20 @@ function formatNumber(n: number) {
       </ul>
     </nav>
 
-    <div class="forecast-more-element next-forecast">
-      <p>
-        <span class="emoji">🗓️</span>
-        <span class="inline-block" set:html={
-          t("yield_forecast.nextForecast", { date: 
-            (new Date(entry.data.next_forecast_date)).toLocaleDateString(Astro.currentLocale, {
-              day: "numeric", month: "long", year: "numeric"
-            }),
-          })
-        }/>
-      </p>
-    </div>
+    { entry.data.next_forecast_date && (
+      <div class="forecast-more-element next-forecast">
+        <p>
+          <span class="emoji">🗓️</span>
+          <span class="inline-block" set:html={
+            t("yield_forecast.nextForecast", { date: 
+              (new Date(entry.data.next_forecast_date)).toLocaleDateString(Astro.currentLocale, {
+                day: "numeric", month: "long", year: "numeric"
+              }),
+            })
+          }/>
+        </p>
+      </div>
+    )}
 
     <a class="forecast-more-element contact-ogor" href="mailto:contact@ogor.ro">
       <p set:html={t("yield_forecast.contactOgorTeam")}/>
