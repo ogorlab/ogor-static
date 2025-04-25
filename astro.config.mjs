@@ -4,7 +4,8 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PROD ? "https://ogor.ro" : undefined,
+  site: "https://ogor.ro",
+  trailingSlash: "ignore",
   devToolbar: {
     enabled: false
   },
@@ -31,5 +32,15 @@ export default defineConfig({
       nesting: true, 
       applyBaseStyles: false
     })
-  ]
+  ],
+  server: {
+    open: "/",
+    host: true,
+    hmr: {
+      host: "ogor.ro",
+    }
+  },
+  security: {
+    checkOrigin: false,
+  }
 });

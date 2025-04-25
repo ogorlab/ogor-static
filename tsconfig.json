@@ -5,12 +5,14 @@
     "paths": {
       "@/*":  ["src/*"]
     },
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   },
   "include": [
+    ".astro/types.d.ts",
     "src/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.astro",
-    "src/middleware.ts",
-  ]
+    "src/middleware.ts"
+  ],
+  "exclude": ["dist"]
 }

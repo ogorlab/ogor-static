@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import UpdatesLayout from "@/layouts/UpdatesLayout.astro"
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import i18next from "i18next";
 import astroConfig from "astro.config.mjs";
 
@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
     }
     const updates = i18next.t(entry.collection, { lng: lang, ns: "urls" })
     return { 
-      params: { lang, updates, slug: entry.slug },
+      params: { lang, updates, id: entry.id },
       props: { entry }
     }
   })
@@ -29,8 +29,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 ---
 <UpdatesLayout>
-  TODO
+  { Content }
 </UpdatesLayout>

@@ -5,11 +5,21 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import ForecastContributors from "@/components/ForecastContributors.astro";
 import ForecastTable from "@/components/ForecastTable.astro"
-import { getLatestForecast } from "@/content/config"
+import { getLatestForecast } from "@/content.config"
 import { t as _t} from "i18next"
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  title: string
+  description: string
+  og_image: string
+  forecasts: CollectionEntry<"forecast">[]
+}
 
 export const getStaticPaths = (async() => {
   const forecasts = await getCollection("forecast")
+  forecasts.sort((a, b) => a.data.forecast_date.localeCompare(b.data.forecast_date))
+
   return getLocalizedPaths("yield", (item, lng) => {
     item.props.forecasts = forecasts
     item.props.title = _t("yield.ogorForecast", { lng })

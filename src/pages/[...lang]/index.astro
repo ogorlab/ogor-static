@@ -2,9 +2,9 @@
 import { getLocalizedPaths, useI18n } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
-import { getLatestForecast } from "@/content/config";
+import { getLatestForecast } from "@/content.config";
 import { screens } from "@/../tailwind.config.mjs"
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 
@@ -17,7 +17,7 @@ const latestForecastLocaleDate = (new Date(latestForecast.data.forecast_date)).t
 
 const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
 
-const testimonials = (await getCollection("testimonials", (entry) => entry.slug.startsWith(Astro.currentLocale || "ro")))
+const testimonials = (await getCollection("testimonials", (entry) => entry.id.startsWith(Astro.currentLocale || "ro")))
 ---
 <BaseLayout>
   <section id="hero">
@@ -138,7 +138,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.slug.
     <div class="carousel" data-breakpoint={screens['t']}>
       <div class="carousel-track">
         { testimonials.map(async (testimonial) => {
-          const { Content } = await testimonial.render()
+          const { Content } = await render(testimonial)
           return (
             <blockquote class="card">
               <div class="quote-wrapper">

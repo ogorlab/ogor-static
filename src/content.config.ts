@@ -1,10 +1,15 @@
 import { z, defineCollection, getCollection } from "astro:content"
+import { glob } from "astro/loaders"
+
 
 const yieldForecastCollection = defineCollection({
-  type: "data",
+  loader: glob({
+    pattern: "**/[^_]*.json",
+    base: "./src/content/forecast/",
+  }),
   schema: z.object({
     forecast_date: z.string(),
-    next_forecast_date: z.string(),
+    next_forecast_date: z.string().nullable(),
     crops: z.array(z.object({
       code: z.number(),
       avg_yield: z.number(),
@@ -17,8 +22,12 @@ const yieldForecastCollection = defineCollection({
   })
 })
 
+
 const updatesCollection = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: '**/[^_]*.{md,mdx}',
+    base: "./src/content/updates",
+  }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -26,7 +35,10 @@ const updatesCollection = defineCollection({
 })
 
 const testimonialsCollection = defineCollection({
-  type: "content",
+  loader: glob({
+    pattern: '**/[^_]*.{md,mdx}',
+    base: "./src/content/testimonials",
+  }),
   schema: z.object({
     name: z.string(),
     from: z.string()
