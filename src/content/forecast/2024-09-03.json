@@ -1,0 +1,44 @@
+{
+  "forecast_date": "2024-09-03",
+  "next_forecast_date": null,
+  "crops": [
+    {
+      "code": 108,
+      "avg_yield": 4.71,
+      "total_surface": 2370821,
+      "interpretation": {
+        "ro": {
+          "text": "Dacă momentan potențialul de producție pentru porumb și floarea soarelui se menține, următoarele 3 săptămâni vor fi cu risc crescut. De fapt, în marele sud, sud-est și o parte din vest, rezervele de apă de adâncime sunt cele mai scăzute. Prognozele valurilor de căldură pentru săptămânile următoare, combinate cu aceste limitări ale solului, vor fi în detrimentul culturilor neirigate. Pentru culturile irigate va trebui să monitorizăm impactul căldurii mari asupra polenizării la porumb și sensibilitatea soiei la umiditatea scăzută a aerului. Singura speranță este sosirea ploilor din vest, unde în țări precum Franța, Germania sau Belgia sunt ploile în exces care îi îngrijorează pe fermieri.",
+          "cite": "Patrick Valmary, Consultant agronom, expert în agriculturǎ durabilǎ"
+        },
+        "en": {
+          "text": "While the production potential for corn and sunflower currently holds, the next three weeks will be high-risk. In fact, in the far south, southeast, and part of the west, deep water reserves are at their lowest. The forecasts of heat waves for the coming weeks, combined with these soil limitations, will be detrimental to non-irrigated crops. For irrigated crops, we will need to monitor the impact of high heat on corn pollination and the sensitivity of soybeans to low air humidity. The only hope is the arrival of rains from the west, where in countries like France, Germany, or Belgium, excessive rains are worrying farmers.",
+          "cite": "Patrick Valmary, Agronomy consultant, expert in sustainable agriculture"
+        },
+        "fr": {
+          "text": "Si le potentiel de production pour le maïs et le tournesol se maintient actuellement, les trois prochaines semaines seront à haut risque. En effet, dans le grand sud, le sud-est et une partie de l'ouest, les réserves d'eau en profondeur sont les plus basses. Les prévisions de vagues de chaleur pour les semaines à venir, combinées à ces limitations du sol, seront préjudiciables aux cultures non irriguées. Pour les cultures irriguées, il faudra surveiller l'impact de la forte chaleur sur la pollinisation du maïs et la sensibilité du soja à la faible humidité de l'air. Le seul espoir est l'arrivée des pluies de l'ouest, où dans des pays comme la France, l'Allemagne ou la Belgique, les pluies excessives inquiètent les agriculteurs.",
+          "cite": "Patrick Valmary, Consultant agronome, expert en agriculture durable"
+        }
+      }
+    },
+    {
+      "code": 201,
+      "avg_yield": 1.96,
+      "total_surface": 1268761,
+      "interpretation": {
+        "ro": {
+          "text": "Dacă momentan potențialul de producție pentru porumb și floarea soarelui se menține, următoarele 3 săptămâni vor fi cu risc crescut. De fapt, în marele sud, sud-est și o parte din vest, rezervele de apă de adâncime sunt cele mai scăzute. Prognozele valurilor de căldură pentru săptămânile următoare, combinate cu aceste limitări ale solului, vor fi în detrimentul culturilor neirigate. Pentru culturile irigate va trebui să monitorizăm impactul căldurii mari asupra polenizării la porumb și sensibilitatea soiei la umiditatea scăzută a aerului. Singura speranță este sosirea ploilor din vest, unde în țări precum Franța, Germania sau Belgia sunt ploile în exces care îi îngrijorează pe fermieri.",
+          "cite": "Patrick Valmary, Consultant agronom, expert în agriculturǎ durabilǎ"
+        },
+        "en": {
+          "text": "While the production potential for corn and sunflower currently holds, the next three weeks will be high-risk. In fact, in the far south, southeast, and part of the west, deep water reserves are at their lowest. The forecasts of heat waves for the coming weeks, combined with these soil limitations, will be detrimental to non-irrigated crops. For irrigated crops, we will need to monitor the impact of high heat on corn pollination and the sensitivity of soybeans to low air humidity. The only hope is the arrival of rains from the west, where in countries like France, Germany, or Belgium, excessive rains are worrying farmers.",
+          "cite": "Patrick Valmary, Agronomy consultant, expert in sustainable agriculture"
+        },
+        "fr": {
+          "text": "Si le potentiel de production pour le maïs et le tournesol se maintient actuellement, les trois prochaines semaines seront à haut risque. En effet, dans le grand sud, le sud-est et une partie de l'ouest, les réserves d'eau en profondeur sont les plus basses. Les prévisions de vagues de chaleur pour les semaines à venir, combinées à ces limitations du sol, seront préjudiciables aux cultures non irriguées. Pour les cultures irriguées, il faudra surveiller l'impact de la forte chaleur sur la pollinisation du maïs et la sensibilité du soja à la faible humidité de l'air. Le seul espoir est l'arrivée des pluies de l'ouest, où dans des pays comme la France, l'Allemagne ou la Belgique, les pluies excessives inquiètent les agriculteurs.",
+          "cite": "Patrick Valmary, Consultant agronome, expert en agriculture durable"
+        }
+      }
+    }
+  ]
+}
