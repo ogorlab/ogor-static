@@ -20,7 +20,7 @@ const locales = config.i18n?.locales as unknown as string[]
 
   <ul class="ps-0 flex gap-4">
     <li><a href={ getUrl("company") }>{ t("nav.company") }</a></li>
-    <li><a href={ getUrl("company") + "#products" }>{ t("nav.products_long") }</a></li>
+    <li><a href={ getUrl("company", "#products") }>{ t("nav.products_long") }</a></li>
     <li class={key === "yield" ? "is-active" : ""}><a href={ getUrl("yield") }>{ t("nav.forecast_long") }</a></li>
     <!-- <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li> -->
   </ul>
@@ -55,7 +55,7 @@ const locales = config.i18n?.locales as unknown as string[]
   </a>
   <button class="tl:hidden p-[.5em] border-0 rounded-[.25em] bg-transparent" onclick="showMenu()" >
     <svg viewBox="0 0 48 48" class="icon">
-      <use href="/public/icons.svg#menu" />
+      <use href="/icons.svg#menu" />
     </svg>
   </button>
 </nav>
@@ -70,7 +70,7 @@ const locales = config.i18n?.locales as unknown as string[]
     </a>
     <button class="p-[.5em] border-0 bg-[#f5f7f3] rounded-full" onclick="closeMenu()">
       <svg viewBox="0 0 48 48" class="icon">
-        <use href="/public/icons.svg#close" />
+        <use href="/icons.svg#close" />
       </svg>
     </button>
   </div>
