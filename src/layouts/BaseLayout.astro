@@ -3,8 +3,7 @@
 import NavbarAnonymous from "@/components/NavbarAnonymous.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/global.css"
-import config from "astro.config.mjs"
-import { getUrl, useI18n } from "@/i18n"
+import { getUrl, useI18n, type Locale, locales } from "@/i18n"
 
 const { t } = useI18n(Astro.currentLocale);
 const { key } = Astro.locals;
@@ -31,12 +30,8 @@ const { key } = Astro.locals;
 
     <slot name="hreflangs">
       {	
-        /**
-         * @see https://developers.google.com/search/docs/specialty/international/localized-versions#all-method-guidelines 
-         * @todo hrefs need to be fully qualified URLs; add Astro.site after configuring with env variable
-         */
-        config.i18n?.locales.map(locale => {
-          const lang = locale as string
+        /** @see https://developers.google.com/search/docs/specialty/international/localized-versions#all-method-guidelines */
+        locales.map(lang => {
           return <link rel="alternate" hreflang={lang} href={ getUrl(lang, key) } />
         })
       }

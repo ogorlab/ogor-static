@@ -2,6 +2,8 @@
 /// <reference types="i18next" />
 /// <reference types="astro/client" />
 
+import type { Locale } from "@/i18n";
+
 interface ImportMetaEnv {
   /** Where is OGOR App located */
   readonly PUBLIC_OGOR_APP_HOST: string;
@@ -24,6 +26,8 @@ interface ImportMeta {
  */
 declare namespace App {
   interface Locals {
+    lang: Locale,
+
     /** @todo reference definitions from middleware */
     name: string;
 

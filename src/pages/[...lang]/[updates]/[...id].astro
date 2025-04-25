@@ -3,7 +3,7 @@ import type { GetStaticPaths } from "astro";
 import UpdatesLayout from "@/layouts/UpdatesLayout.astro"
 import { getCollection, render } from "astro:content";
 import i18next from "i18next";
-import astroConfig from "astro.config.mjs";
+import { defaultLocale } from "@/i18n";
 
 /**
  * Generate paths for each update.
@@ -16,7 +16,7 @@ export const getStaticPaths = (async () => {
   const entries = await getCollection("updates")
   const paths = entries.map(entry => {
     let lang: string | undefined = entry.id.split("/")[0]
-    if (lang === astroConfig.i18n?.defaultLocale) {
+    if (lang === defaultLocale) {
       lang = undefined
     }
     const updates = i18next.t(entry.collection, { lng: lang, ns: "urls" })

@@ -9,11 +9,13 @@ import fr from "./fr.json";
 
 export type Locale = "ro" | "en" | "fr"
 
-const locales = toCodes( config.i18n!.locales ) as Locale[]
-const defaultLocale = config.i18n!.defaultLocale as Locale
-const prefixDefaultLocale = (
-  typeof config.i18n!.routing === "object" && 
-  config.i18n!.routing.prefixDefaultLocale
+const i18nConfig = config.i18n!
+
+export const locales = toCodes( i18nConfig.locales ) as Locale[]
+export const defaultLocale = i18nConfig.defaultLocale as Locale
+export const prefixDefaultLocale = (
+  typeof i18nConfig.routing === "object" && 
+  i18nConfig.routing.prefixDefaultLocale
 )
 
 /**

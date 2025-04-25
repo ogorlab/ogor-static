@@ -1,16 +1,9 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { t } from "i18next";
-import config from "astro.config.mjs"
+import { defaultLocale, locales, prefixDefaultLocale } from "@/i18n";
 
 export const getStaticPaths = (() => {
-  const { locales, defaultLocale, routing } = config.i18n!
-  
-  let prefixDefaultLocale = false
-  if (typeof routing === "object" && routing.prefixDefaultLocale) {
-    prefixDefaultLocale = true
-  }
-  
   return locales.map(lang => {
     const key = "yield"
     let redirects = "/" + lang + "/" + key

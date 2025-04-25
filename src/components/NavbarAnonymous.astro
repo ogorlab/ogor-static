@@ -1,12 +1,8 @@
 ---
-import { useI18n } from "@/i18n"
-import config from "astro.config.mjs"
-import { getUrl as _getUrl } from "@/i18n"
+import { useI18n, getUrl as _getUrl, locales } from "@/i18n"
 
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl, key } = Astro.locals
-
-const locales = config.i18n?.locales as unknown as string[]
 ---
 
 <nav id="secondary_nav" class="flex tp-max:hidden">
