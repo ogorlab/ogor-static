@@ -61,7 +61,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     <a href={getUrl(`/yield/forecast/${latestForecast.id}`)} class="area-media block">
       <img src={latestForecastPreview} alt="">
     </a>
-    <div class="area-body m:mb-[1em]">
+    <div class="area-body max-t:mb-[1em]">
       <p class="tl:mt-0">
         {t("yield.lastForecast")}: <a href={getUrl(`/yield/forecast/${latestForecast.id}`)}>{latestForecastDate} →</a>
       </p>
@@ -78,7 +78,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     </div>
     <ForecastTable forecasts={forecasts} />
   </section>
-  <section class="layout-media --left tp-only:block">
+  <section class="layout-media --left t:max-d:block">
     <h3 set:html={t("yield.localityMapAndStatistics")} 
         class="area-header li-bullet-2 mt-0 tl:mb-0"
     />
@@ -101,7 +101,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
       <img class="w-full max-w-lg" src="/images/ksp_yield_county.png" alt="">
     </div>
   </section>
-  <section class="layout-media tp-only:block">
+  <section class="layout-media t:max-d:block">
     <h3 class="area-header li-bullet-3 mt-0 tl:mb-0 self-end"
         set:html={t("yield.parcelStatistics")}
     />
@@ -117,6 +117,8 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
 
 
 <style>
+  @reference "@/styles/global.css";
+
   section {
     --li-color: #C58336; /* The little bullets above headers */
 
@@ -169,7 +171,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
     column-gap: var(--gutter);
     background: hsla(44, 100%, 89%, 1);
     
-    @media screen(tl) {
+    @media (width >= theme(--breakpoint-tl)) {
       display: grid;
     }
     

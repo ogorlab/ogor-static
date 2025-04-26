@@ -3,7 +3,6 @@ import { getLocalizedPaths, useI18n } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
 import { getLatestForecast } from "@/content.config";
-import { screens } from "@/../tailwind.config.mjs"
 import { getCollection, render } from "astro:content";
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
@@ -16,8 +15,8 @@ const latestForecastLocaleDate = (new Date(latestForecast.data.forecast_date)).t
 })
 
 const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
-
 const testimonials = (await getCollection("testimonials", (entry) => entry.id.startsWith(Astro.currentLocale || "ro")))
+
 ---
 <BaseLayout>
   <section id="hero">
@@ -31,7 +30,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
     <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="_cta _cta-link block text-center content-center text-white">
       <span class="underline">{ t("home.hero_cta") }</span> →
     </a>
-    <div class="_media1 flex justify-center items-center m:hidden">
+    <div class="_media1 flex justify-center items-center max-t:hidden">
       <img src="/images/kv_devices.png" alt={t("alt:kv_devices")}>
     </div>
   </section>
@@ -45,9 +44,9 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
 
       <div class="media mx-auto">
         <picture>
-          <source media={screens['m'].raw} srcset="/images/screenshot_farm_view_mobile.png">
-          <img src="/images/screenshot_farm_view_desktop.png" alt={t("alt:screenshot_farm_view")} 
-              class="block w-full mx-auto m:max-w-[16rem] m:rounded-t-md t:max-w-[60rem t:rounded-t-2xl shadow-screenshot"
+          <source media="(min-width: 37.5rem)" srcset="/images/screenshot_farm_view_desktop.png">
+          <img src="/images/screenshot_farm_view_mobile.png" alt={t("alt:screenshot_farm_view")} 
+              class="block w-full mx-auto max-t:max-w-[16rem] max-t:rounded-t-md t:max-w-[60rem t:rounded-t-2xl shadow-screenshot"
               style="image-rendering: pixelated; clip-path: xywh(-25% -25% 150% 125%);"
           />
         </picture>
@@ -65,9 +64,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
         <p class="mb-[2em]">{ t("home.feature2_description") }</p>
       </div>
       <div class="area-media t:aspect-square content-center relative">
-        <img src="/images/flooding.png" alt={t("alt:flooding")} 
-             class="border-[.25rem] border-white"
-        />
+        <img src="/images/flooding.png" alt={t("alt:flooding")} />
         <!-- <img src="/images/patrick_isolated.png" alt="Patrick Valmary"
              class="m:w-[12em] w-[50%] absolute left-[-15%] bottom-0"
         /> -->
@@ -135,7 +132,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
   <section id="testimonials" class="px-[var(--bleed)] pt-8 pb-16  overflow-hidden bg-[#f6f8f4]">
     <h2>{ t("home.testimonials_heading") }</h2>
     <p class="max-w-[72ch] t:mr-[5em]" set:html={ t("home.testimonials_description") } />
-    <div class="carousel" data-breakpoint={screens['t']}>
+    <div class="carousel" data-breakpoint="37.5rem">
       <div class="carousel-track">
         { testimonials.map(async (testimonial) => {
           const { Content } = await render(testimonial)
@@ -152,7 +149,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
           )
         })}
       </div>
-      <div class="carousel-controls text-[larger] tl-max:mt-[2em] w-max mx-auto tl:mb-[2em] tl:absolute bottom-full right-0 bg-white shadow-lg overflow-hidden rounded-lg">
+      <div class="carousel-controls text-[larger] max-d:mt-[2em] w-max mx-auto tl:mb-[2em] tl:absolute bottom-full right-0 bg-white shadow-lg overflow-hidden rounded-lg">
         <button class="left">←</button>
         <button class="right">→</button>
       </div>
@@ -277,6 +274,8 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
   .quote-wrapper p:last-child::after { content: close-quote; }
 </style>
 <style>
+  @reference "@/styles/global.css";
+
   #hero {
     background-color: var(--brand-yellow-6);
 
@@ -319,7 +318,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
 
 
     /* Different devices */
-    @media screen(t) {
+    @media (width >= theme(--breakpoint-t)) {
       & {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -339,7 +338,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
         }
       }
     }
-    @media screen(d) {
+    @media (width >= theme(--breakpoint-d)) {
       & {
         grid-template-columns: var(--bleed) 1fr 1fr var(--bleed);
         grid-template-rows: 1fr auto auto;
@@ -391,7 +390,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
       font-size: 150%;
     }
 
-    @media screen(t) {
+    @media (width >= theme(--breakpoint-t)) {
       &::after {
         content: "";
         position: absolute;
@@ -399,7 +398,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
         bottom: 0;
         width: calc((100% - var(--gutter)) / 2);
         height: 1rem;
-        background: theme(colors.rust);
+        background: var(--color-rust);
       }
     }
   }
@@ -418,7 +417,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
       grid-template-areas: "media body";
     }
 
-    @media screen(t) {
+    @media (width >= theme(--breakpoint-t)) {
       display: grid;
       padding-bottom: initial;
     }
@@ -463,7 +462,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
     top: .9em;
   }
   .plus details:last-child::after { content: none; }
-  @media screen(t) {
+  @media (width >= theme(--breakpoint-t)) {
     .plus details:nth-last-child(2):not([open])::after { content: none; }
   }
 
@@ -487,7 +486,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
     box-sizing: border-box;
     min-width: 100%;
 
-    @media screen(t) {
+    @media (width >= theme(--breakpoint-t)) {
       min-width: calc((100% - var(--gutter)) / 2); 
     }
 

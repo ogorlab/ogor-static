@@ -5,7 +5,7 @@ const { t } = useI18n(Astro.currentLocale)
 const { getUrl, key } = Astro.locals
 ---
 
-<nav id="secondary_nav" class="flex tp-max:hidden">
+<nav id="secondary_nav" class="flex max-tl:hidden">
   <select id="language_picker" onchange="window.location.href = document.querySelector(`link[hreflang=${this.value}]`).href">
     { locales.map((locale) => (
       <option value={ locale } selected={ locale === Astro.currentLocale }>
@@ -30,7 +30,7 @@ const { getUrl, key } = Astro.locals
     </svg>
   </a>
 
-  <span class="tp-max:hidden">
+  <span class="max-tl:hidden">
     <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
       <svg viewBox="0 0 48 48" class="icon">
         <use href="/icons.svg#phone" />
@@ -119,6 +119,8 @@ const { getUrl, key } = Astro.locals
 </script>
   
 <style is:global>
+  @reference "@/styles/global.css";
+
   @layer reset {
     #primary_nav,
     #secondary_nav,
@@ -131,7 +133,7 @@ const { getUrl, key } = Astro.locals
   }
 
   #primary_nav {
-    @apply t:gap-4 m:py-2 py-4;
+    @apply t:gap-4 max-t:py-2 py-4;
 
     position: sticky;
     top: 0;

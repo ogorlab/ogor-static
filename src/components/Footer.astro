@@ -86,6 +86,8 @@ const social = [
 </footer>
 
 <style is:global>
+  @reference "@/styles/global.css";
+
   @layer reset {
     footer a {
       color: inherit;
@@ -102,7 +104,7 @@ const social = [
     padding-inline: var(--bleed);
     background: #b7e4fb;
 
-    @media screen(tl) {
+    @media (width >= theme(--breakpoint-tl)) {
       display: grid;
       grid-template-areas: 
         "contact contact contact"
@@ -146,12 +148,12 @@ const social = [
   .social-media {
     word-spacing: .5em;
   }
-  @media screen(tp-max) {
+  @media (width < theme(--breakpoint-tl)) {
     .contact {
       margin-block: 1em;
     }
   }
-  @media screen(tl) {
+  @media (width >= theme(--breakpoint-tl)) {
     .legal {
       list-style: none;
       text-align: right;

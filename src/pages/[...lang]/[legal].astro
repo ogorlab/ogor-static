@@ -129,6 +129,8 @@ const { t } = useI18n(Astro.currentLocale)
   }
 </style>
 <style>
+  @reference "@/styles/global.css";
+
   #documents {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
@@ -145,7 +147,7 @@ const { t } = useI18n(Astro.currentLocale)
   }
 
 
-  @media screen(m) {
+  @media (width < theme(--breakpoint-t)) {
     table, tbody, tr, th, td {
       display: block;
       text-align: left;
@@ -173,7 +175,7 @@ const { t } = useI18n(Astro.currentLocale)
       display: none;
     }
   }
-  @media screen(t) {
+  @media (width <= theme(--breakpoint-t)) {
     table {
       width: 100%;
       border-collapse: collapse;

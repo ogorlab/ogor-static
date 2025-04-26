@@ -1,6 +1,28 @@
-@charset "UTF-8";
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, components, layout, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  /* Define your custom breakpoints */
+  --breakpoint-*: initial;
+  --breakpoint-t: 37.5rem;
+  --breakpoint-tl: 56.25rem;
+  --breakpoint-d: 75rem;
+  --breakpoint-dl: 100rem;
+
+  /* Define your custom colors */
+  --color-rust: #B36E1F;
+
+  /* Define your custom box shadows */
+  --shadow-screenshot: 0 1em 2em 0 hsla(0, 0%, 0%, 0.25);
+  --shadow-map-preview: 0 0.25rem 1.5rem 0 rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 0.25em 1em 0 rgba(0, 0, 0, 0.15);
+
+  /* Define your custom font sizes */
+  --text-larger: larger;
+}
 
 @font-face {
   font-family: "Instrument Sans";
@@ -65,8 +87,8 @@ html {
   font-family: "Instrument Sans", system-ui, sans-serif;
   line-height: 1.5;
 
-  @media screen(tl) { font-size: 116.66%; }
-  @media screen(d)  { font-size: 133.33%; }
+  @media (width >= theme(--breakpoint-tl)) { font-size: 116.66%; }
+  @media (width >= theme(--breakpoint-d))  { font-size: 133.33%; }
 }
 
 @layer reset {
@@ -226,13 +248,12 @@ html {
   }
 }
 
-@layer utilities {
-  .text-muted {
-    color: var(--muted);
-  }
-  .stretch-95 {
-    font-stretch: 95%;
-  }
+@utility text-muted {
+  color: var(--muted);
+}
+
+@utility stretch-95 {
+  font-stretch: 95%;
 }
 
 @layer layout {
