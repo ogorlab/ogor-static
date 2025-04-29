@@ -12,7 +12,7 @@
     "timestamp": "{{date,datetime(hour: 'numeric'; minute: '2-digit')}}",
     "relativeTime": "{{val,relativeTime(style:'long')}}",
 
-    "RON": "{{ val, currency(currency: RON; currencyDisplay: narrowSymbol; maximumSignificantDigits: 2) }}"
+    "RON": "{{ val, currency(currency: RON; maximumSignificantDigits: 2) }}"
   },
   "translation": {
     "and": "și",

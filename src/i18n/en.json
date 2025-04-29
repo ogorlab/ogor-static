@@ -48,7 +48,7 @@
       "updates_long": "Latest updates"
     },
     "company": {
-      "tagline": "IT for Agricultură",
+      "tagline": "IT for Agriculture",
       "description": "Founded in 2019, our company specializes in processing satellite data for agriculture. We collaborate with farmers, agronomists, and researchers to provide accessible remote crop monitoring and precision agriculture solutions.",
       "address": "67 Gheorghe Missail Street, 011542 Sector 1, BUCHAREST, ROMANIA"
     },
@@ -125,11 +125,35 @@
       "aboutTheProject": "About the Project",
       "nextForecast": "Next forecast available on <em>{{date}}</em>.",
       "contactOgorTeam": "For county and locality-level maps and statistics, <strong>contact the OGOR sales team →</strong>"
+    }
+  },
+  "products": {
+    "addons": "Addons",
+
+    "ogor": {
+      "name": "OGOR",
+      "description": "<strong>OGOR</strong> processes satellite data across the entire surface of Romania every week to produce vegetation maps for 300+ farmers."
     },
-    "ogor_description_product": "<strong>The OGOR platform</strong> processes satellite data across the entire surface of Romania every week to produce vegetation maps for 300+ farmers.",
-    "ogor_yield_description_product": "By applying proprietary machine learning algorithms on satellite images and pedoclimatic data, <strong>OGOR</strong> produces productivity forecasts 2 months before harvest.",
-    "ogor_vra_description_product": "Create <strong>VRA maps in 10 minutes</strong> or less. VRA — <em>Variable Rate Application</em> — allows adjusting treatment quantities by zones to optimize amendment costs for the plot.",
-    "tarla_description_product": "<strong>Tarla</strong> was created to centralize land data in a single application, with the ability to see all lands on the same map and locate them on-site."
+    "ogor_yield": {
+      "name": "OGOR Yield",
+      "description": "By applying proprietary machine learning algorithms to satellite imagery and pedoclimatic data, <strong>OGOR</strong> produces yield forecasts 2 months before harvest."
+    },
+    "ogor_journal": {
+      "name": "OGOR Journal",
+      "description": "With <strong>OGOR Journal</strong>, all crop and work reports are organized, with photos and comments automatically geotagged."
+    },
+    "ogor_plan": {
+      "name": "OGOR Plan",
+      "description": "The technological sheet for each crop. Track the execution of work and keep records of costs and profits throughout the season."
+    },
+    "ogor_vra": {
+      "name": "OGOR VRA",
+      "description": "Create <strong>VRA maps in 10 minutes</strong> or less. VRA — <em>Variable Rate Application</em> — allows adjustment of treatment quantities by zone to optimize amendment costs."
+    },
+    "tarla": {
+      "name": "Tarla",
+      "description": "<strong>Tarla</strong> was created to centralize land data in a single app, allowing you to view all fields on the same map and locate them on-site."
+    }
   },
   "urls": {
     "company": "company",

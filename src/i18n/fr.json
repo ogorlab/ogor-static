@@ -1,8 +1,155 @@
 {
   "translation": {
     "and": "et",
+    "year": "année",
+    "Date": "Date",
+    "document": "Document",
+    "availability": "Disponibilité",
+    "link": "Lien",
+    "map": "carte",
+    "starting_from": "À partir de",
+    "autumn_crops": "Cultures d'automne",
+    "spring_crops": "Cultures de printemps",
+    "contact": "Contact",
+    "download": "Télécharger",
+    "about": "À propos",
+  
+    "your_account": "Votre compte",
+    "create_account": "Créer un compte",
+    "create_account_ogor": "Créer un compte OGOR",
+  
+    "accumulated_precipitation": "Précipitations accumulées",
+    "accumulated_precipitation_home": "Un indicateur clé pour estimer la productivité, anticiper les maladies et les ravageurs, etc. Il n'y a pas d'agriculture de précision sans précipitations accumulées.",
+    "weather_forecast": "Prévisions météorologiques",
+    "weather_forecast_home": "Pour les 7 prochains jours ; <strong>toutes les 3 heures pour la journée en cours !</strong> Données météorologiques fournies par Météo Roumanie.",
+    "water_capacity": "Capacité en eau du sol",
+    "water_capacity_home": "Capacité en eau du sol à différentes profondeurs pour les cultures de printemps et d'automne.",
+    "crop_rotation": "Rotation des cultures",
+    "crop_rotation_home": "Outils pour gérer et planifier la rotation des cultures, du dessin des parcelles à l'affectation des cultures.",
+    "soil_map": "Carte des sols et des textures",
+    "soil_map_home": "Type de sol, texture, teneur en éléments grossiers, etc.",
+    "vra": "Application à Taux Variable (VRA)",
+    "vra_home": "👍 Réduisez les coûts des engrais. 💧 Économisez l'eau. 🔻 Réduisez l'utilisation de produits chimiques. 🚜 Diminuez la consommation de carburant et de main-d'œuvre. 🌾 Augmentez les rendements.<br><br><a href=\"{{href}}\" rel=\"external\">À partir de 6 $/carte</a> →",
+    "soil_analysis": "Analyses de sol",
+    "soil_analysis_home": "L'analyse du sol et de l'eau est la méthode sûre pour une fertilisation efficace et l'amendement des parcelles, vers une agriculture de précision. En partenariat avec <strong>Alcedo.</strong>",
+  
+    "products": "Produits",
+    "products_title_company": "Nos produits",
+  
+    "nav": {
+      "company": "Entreprise",
+      "company_long": "Présentation de l'entreprise",
+      "products": "Produits",
+      "products_long": "Nos produits",
+      "forecast": "Prévisions",
+      "forecast_long": "OGOR Yield",
+      "updates": "Mises à jour",
+      "updates_long": "Dernières mises à jour"
+    },
     "company": {
+      "tagline": "IT pour l'agriculture",
+      "description": "Fondée en 2019, notre entreprise est spécialisée dans le traitement des données satellitaires pour l'agriculture. Nous collaborons avec des agriculteurs, des agronomes et des chercheurs pour fournir des solutions accessibles de surveillance des cultures à distance et d'agriculture de précision.",
       "address": "Rue Gheorghe Missail 67, 011542 Secteur 1, Bucarest, Roumanie"
+    },
+    "legal": {
+      "title": "Mentions légales",
+      "history": "Versions précédentes",
+      "terms": "Conditions générales",
+      "privacy": "Politique de confidentialité",
+      "cookie": "Politique relative aux cookies",
+      "generaltos_terms": "Conditions générales d'utilisation",
+      "tos_terms": "Conditions générales contractuelles",
+      "marketing_terms": "Politique marketing",
+      "cookie_terms": "$t(legal.cookie)",
+      "privacy_terms": "$t(legal.privacy)"
+    },
+    "meta": {
+      "title": "Suite numérique pour une agriculture décisive",
+      "description": "Confiance dans les décisions agronomiques grâce à des données actualisées sur la végétation, la météo et le sol."
+    },
+    "home": {
+      "hero_heading": "La suite logicielle agricole pour des décisions éclairées",
+      "hero_description": "Un niveau de <strong>confiance dans les décisions agronomiques</strong> rendu possible par des données actualisées sur la <strong>végétation, la météo et le sol.</strong>",
+      "hero_cta": "Essayez-le dès aujourd'hui",
+      "why_ogor": "Pourquoi OGOR?",
+      "feature1_heading": "Surveillance active des cultures",
+      "feature1_description": "Observez la végétation avant d'effectuer des inspections sur le terrain ! Avec une vue aérienne de la ferme, vous pouvez identifier rapidement les zones où la croissance est affectée.",
+      "feature2_heading": "Interventions agronomiques précoces",
+      "feature2_description": "En observant la ferme d'en haut, vous identifiez rapidement les zones affectées et diviser les parcelles en zones de gestion permet de réduire les coûts grâce à des interventions ciblées.",
+      "feature3_heading": "Prévision de rendement 2 mois avant la récolte",
+      "feature3_description": "En appliquant des algorithmes propriétaires d'apprentissage automatique, OGOR fournit des prévisions de rendement pour le maïs, le tournesol, le blé, l'orge et le colza 2 mois avant la récolte. Les prévisions sont mises à jour toutes les deux semaines jusqu'à la récolte.",
+      "feature4_heading": "Journal agronomique collaboratif",
+      "feature4_description": "Que ce soit pour plusieurs utilisateurs de votre ferme ou des conseillers externes, ajoutez des photos et des notes sur la carte pour toujours savoir ce qui s'est passé sur les parcelles et quels travaux ont été réalisés.",
+      "context": "Dans un contexte de plus en plus complexe lié au climat, au marché et aux politiques agricoles, <strong>OGOR</strong> soutient les agriculteurs avec des solutions abordables basées sur l'imagerie satellite.",
+      "testimonials_heading": "Que disent les clients OGOR?",
+      "testimonials_description": "Nous restons constamment en contact avec nos clients pour développer les meilleures solutions. Voici ce qu'ils nous ont répondu à la question : <q><strong>Comment OGOR vous a-t-il aidé jusqu'à présent?</strong></q>",
+      "got_questions": "Des questions?",
+      "here_to_help": "Nous sommes là pour vous aider. Disponible par téléphone ou email du lundi au vendredi de 9h00 à 17h00.",
+      "cta": "Créer un compte <strong>OGOR</strong>",
+      "cta_assurance1": "Il faut 3 minutes pour importer vos terres via le compte APIA",
+      "cta_assurance2": "Compatible avec votre matériel existant, sans formation spécialisée requise",
+      "cta_assurance3": "Support technique et agronomique tout au long de la saison agricole",
+      "with_the_support_of": "Avec le soutien de",
+      "partners": "Partenaires"
+    },
+    "yield_title": "Production de {{crops}}",
+    "yield": {
+      "ogorForecast": "Prévision OGOR",
+      "usingAlgorithms": "En appliquant des algorithmes propriétaires d'apprentissage automatique sur des images satellites et des données pédoclimatiques, <strong>OGOR</strong> produit des prévisions de rendement pour 5 cultures majeures : <strong>blé, orge, maïs, tournesol et colza.</strong>",
+      "forecastIsSent": "La prévision est publiée <strong>2 mois avant la récolte</strong> et mise à jour toutes les <strong>2 semaines</strong>.",
+      "aboutForecast": "La prévision OGOR est disponible sous 3 formats distincts :",
+      "nationalMapAndStatistics": "<strong>Carte nationale et statistiques</strong> publiées gratuitement sur ogor.ro/productivity.",
+      "lastForecast": "Dernière prévision",
+      "history": "Historique des prévisions OGOR",
+      "localityMapAndStatistics": "<strong>Carte et statistiques au niveau départemental et local,</strong> fournies sous contrat.",
+      "yieldMap": "Carte de rendement",
+      "cropMap": "Carte des cultures détectées",
+      "statisticsTable": "Tableau des statistiques par culture :",
+      "countyYield": "Rendement maximal, moyen et minimal au niveau départemental",
+      "localityCultivatedArea": "Surface cultivée par localité",
+      "salesContact": "Contact commercial →",
+      "parcelStatistics": "<strong>Statistiques au niveau de la ferme et prévision par parcelle,</strong> accessibles avec un abonnement OGOR.",
+      "subscriptionOptions": "Options d'abonnement OGOR"
+    },
+    "yield_forecast": {
+      "ogorForecastFrom": "Prévision OGOR du {{date}}",
+      "ogorForecastProject": "<strong>OGOR Yield</strong> est un projet de recherche mené par Field Data Zoom SRL (OGOR), avec le soutien de <em>l'Agence Spatiale Européenne (ESA)</em> et de <em>l'Agence Spatiale Roumaine (ROSA)</em>. Les données validées sur le terrain sont fournies par <em>l'Agence de Paiement et d'Intervention pour l'Agriculture (APIA)</em> et les données météorologiques par <em>OpenWeather</em>.",
+      "regarding": "concernant",
+      "byApplyingML": "en appliquant des algorithmes propriétaires d'apprentissage automatique sur des observations satellites et des données météorologiques",
+      "averageYield": "Rendement moyen",
+      "harvestedSurface": "Surface récoltée",
+      "downloadMap": "Télécharger la carte",
+      "lastForecast": "Dernière prévision ({{date}})",
+      "history": "Historique des prévisions OGOR",
+      "aboutTheProject": "À propos du projet",
+      "nextForecast": "Prochaine prévision disponible le <em>{{date}}</em>.",
+      "contactOgorTeam": "Pour des cartes et statistiques au niveau départemental et local, <strong>contactez l'équipe commerciale OGOR →</strong>"
+    }
+  },
+  "products": {
+    "ogor": {
+      "name": "OGOR",
+      "description": "<strong>La plateforme OGOR</strong> traite chaque semaine des données satellitaires sur toute la Roumanie pour produire des cartes de végétation pour plus de 300 agriculteurs."
+    },
+    "ogor_yield": {
+      "name": "OGOR Yield",
+      "description": "En appliquant des algorithmes d'apprentissage automatique propriétaires sur des images satellites et des données pédoclimatiques, <strong>OGOR</strong> produit des prévisions de rendement 2 mois avant la récolte."
+    },
+    "ogor_journal": {
+      "name": "OGOR Journal",
+      "description": "Avec <strong>OGOR Journal</strong>, tous les rapports de culture et de travaux agricoles sont organisés, avec photos et commentaires automatiquement géolocalisés."
+    },
+    "ogor_plan": {
+      "name": "OGOR Plan",
+      "description": "La fiche technologique pour chaque culture. Suivez l'exécution des travaux agricoles et tenez un registre des coûts et des profits tout au long de la saison."
+    },
+    "ogor_vra": {
+      "name": "OGOR VRA",
+      "description": "Créez des <strong>cartes VRA en 10 minutes</strong> ou moins. VRA — <em>Application à Taux Variable</em> — ajuste la quantité de traitement par zone pour optimiser les coûts d'amendement."
+    },
+    "tarla": {
+      "name": "Tarla",
+      "description": "<strong>Tarla</strong> a été créé pour centraliser les données foncières dans une seule application, permettant de voir tous les terrains sur une même carte et de les localiser sur place."
     }
   },
   "urls": {
@@ -11,7 +158,19 @@
     "todo": "nouveautés",
     "yield": "rendement",
     "forecast": "prevision",
-    "#history": "#historique"
+    "#history": "#historique",
+    "#products": "#produits",
+    "#generaltos_terms": "#conditions",
+    "#privacy_terms": "#confidentialite",
+    "#cookie_terms": "#cookie"
+  },
+  "alt": {
+    "kv_main": "Agriculteur dans le champ",
+    "kv_devices": "OGOR sur différents appareils",
+    "screenshot_farm_view": "Capture d'écran de l'application OGOR avec vue d'ensemble de la ferme",
+    "flooding": "Zone affectée par les inondations visible sur les cartes NDVI",
+    "pests": "Note avec photo identifiant les nuisibles",
+    "forecast_country": "Carte des prévisions OGOR du {{ date }} concernant le rendement au niveau national"
   },
   "crops": {
     "101": "Blé",
