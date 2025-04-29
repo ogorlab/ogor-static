@@ -18,6 +18,13 @@ export const prefixDefaultLocale = (
   i18nConfig.routing.prefixDefaultLocale
 )
 
+declare module "i18next" {  
+  interface CustomTypeOptions {
+    /** When working heavily with translations you might need help finding the keys */
+    resources: typeof ro
+  }
+}
+
 /**
  * @todo move namespaces in external files
  * @link https://www.i18next.com/misc/json-format#i18next-json-v4
