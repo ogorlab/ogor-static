@@ -1,9 +1,15 @@
 ---
 import { getLocalizedPaths, useI18n } from "@/i18n";
 import type { GetStaticPaths } from "astro";
+import { t as _t} from "i18next"
 import BaseLayout from "@/layouts/BaseLayout.astro"
+import GooglePlay from "@/images/badge_google_play.png"
+import AppStore from "@/images/badge_app_store.png"
 
-export const getStaticPaths = (() => getLocalizedPaths("company")) satisfies GetStaticPaths;
+export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) => {
+  item.props.title = _t("company.title", { lng })
+  return item
+})) satisfies GetStaticPaths;
 
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
@@ -14,84 +20,176 @@ const { getUrl } = Astro.locals
     <p class="max-w-[72ch]">{ t("company.description") }</p>
   </header>
   <section id={t("urls:#products").substring(1)} class="t:my-[4em]" style="scroll-margin-top: 6em;">
-    <h2>{ t("products_title_company") }</h2>
-    <div class="t:grid t:grid-cols-2 tl:grid-cols-4 gap-8">
-      <article class="min-h-[20em] flex flex-col gap-4">
-        <img class="w-full aspect-squarerounded-2xl" src="/images/ogor_thumbnail.png" alt="">
-        <div class="flex items-center gap-2">
-          <img class="size-12 shadow-md rounded-lg" src="/logos/ogor_avatar.png" alt="Logo OGOR">
-          <h4 class="m-0 stretch-95">
-            <a href={ import.meta.env.PUBLIC_OGOR_APP_LOGIN_URL } class="text-inherit no-underline">OGOR</a>
-          </h4>
-        </div>
-        <p set:html={t("ogor_description_product")} class="m-0 grow" />
-        <p class="m-0">
-          <span class="font-medium underline">€150/{t("year")}</span>
+    <h2 class="ml-8">{ t("products_title_company") }</h2>
+    <article class="text-larger mb-[2em] bg-[#E5F3E5] p-8 rounded-[2em]">
+      <div class="area-media tl:float-right tl:w-1/2" style="order: 1;">
+        <img src="/images/kv_devices.png" class="">
+      </div>
+
+      <div class="area-body clear-left">
+        <h4 class="mt-0 stretch-95">
+          <img class="product-logo size-14" src="/logos/ogor.png" alt="Logo OGOR">
+          <a href="/redirect" class="text-inherit no-underline">OGOR</a>
+        </h4>
+        <p set:html={t("products:ogor.description")} />
+        <p>
+          <span class="font-medium underline">{t("RON", { val: 700 })}/{t("year")}</span>
         </p>
-      </article>
-      <article class="min-h-[20em] flex flex-col gap-4">
-        <img class="w-full aspect-square" src="/images/ogor_yield_thumbnail.png" alt="">
-        <div class="flex items-center gap-2">
-          <img class="size-12 shadow-md rounded-lg" src="/logos/ogor_yield_avatar.png" alt="">
-          <h4 class="m-0 stretch-95">
-            <a href={getUrl("/yield")} class="text-inherit no-underline">
-              {t("yield.ogorForecast")}
+      </div>
+    </article>
+
+
+    <section id="addons">
+      <h2 class="ml-8 text-rust">{t("products:addons")}</h2>
+      <article class="product">
+        <img class="product-thumbnail aspect-auto t:self-center" src="/images/ogor_yield_thumbnail.png" alt="">
+        <div class="product-description">
+          <h4 class="mt-0 stretch-95">
+            <img class="product-logo size-12" src="/logos/ogor_yield.png" alt="Logo OGOR">
+            <a href={ getUrl("yield") } class="text-inherit no-underline">
+              {t("products:ogor_yield.name")}
             </a>
           </h4>
+          <p set:html={t("products:ogor_yield.description")} class="m-0 mb-[1em] grow" />
+          <p class="m-0">
+            <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
+          </p>
         </div>
-        <p set:html={t("ogor_yield_description_product")} class="m-0 grow" />
-        <p class="m-0">
-          <small class="text-muted">{t("starting_from")}:</small><br>
-          <span class="font-medium underline">€50/{t("year")}</span>
-        </p>
       </article>
-      <article class="min-h-[20em] flex flex-col gap-4">
-        <img src="/images/ogor_vra_thumbnail.png" alt="" class="w-full aspect-square rounded-2xl">
-        <div class="flex items-center gap-2">
-          <img class="size-12 shadow-md rounded-lg" src="/logos/ogor_vra_avatar.png" alt="">
-          <h4 class="m-0 stretch-95">
-            <a href="https://ogor.farm/vra" class="text-inherit no-underline">OGOR VRA</a>
+      <article class="product">
+        <img class="product-thumbnail" src="/images/ogor_journal_thumbnail.png" alt="">
+        <div class="product-description">
+          <h4 class="mt-0 stretch-95">
+            <img class="product-logo size-12" src="/logos/ogor_journal.png" alt="">
+            {t("products:ogor_journal.name")}
           </h4>
+          <p set:html={t("products:ogor_journal.description")} class="m-0 mb-[1em] grow" />
+          <p class="m-0">
+            <small class="text-muted">{t("starting_from")}:</small><br>
+            <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
+          </p>
+          <p>
+            <a href="https://play.google.com/store/apps/details?id=com.ogor.ogorjournal" rel="external" target="_blank" style="text-decoration: none;">
+              <img src={GooglePlay.src} class="h-10">
+            </a>
+            <a href="https://apps.apple.com/ro/app/ogor-journal/id6723886516" rel="external" target="_blank" style="text-decoration: none;">
+              <img src={AppStore.src} class="h-10">
+            </a>
+          </p>
         </div>
-        <p set:html={t("ogor_description_product")} class="m-0 grow" />
-        <p class="m-0">
-          <small class="text-muted">{t("starting_from")}:</small><br>
-          <span class="font-medium underline">$6/{t("map")}</span>
-        </p>
       </article>
-      <article class="min-h-[20em] flex flex-col gap-4">
-        <img src="/images/tarla_thumbnail.png" alt="" class="w-full aspect-square rounded-2xl">
-        <div class="flex items-center gap-2">
-          <img class="size-12 shadow-md rounded-lg" src="/logos/tarla.png" alt="">
-          <h4 class="m-0 stretch-95">Tarla</h4>
+      <article class="product">
+        <img class="product-thumbnail" src="/images/ogor_plan_thumbnail.png" alt="">
+        <div class="product-description">
+          <h4 class="mt-0 stretch-95">
+            <img class="product-logo size-12" src="/logos/ogor_plan.png" alt="">
+            {t("products:ogor_plan.name")}
+          </h4>
+          <p set:html={t("products:ogor_plan.description")} class="m-0 mb-[1em] grow" />
+          <p class="m-0">
+            <small class="text-muted">{t("starting_from")}:</small><br>
+            <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
+          </p>
         </div>
-        <p set:html={t("tarla_description_product")}class="m-0 grow" />
-        <p class="m-0">
-          <span class="font-medium underline">€50/{t("year")}</span>
-        </p>
       </article>
-    </div>
+      <article class="product">
+        <img class="product-thumbnail" src="/images/ogor_vra_thumbnail.png" alt="">
+        <div class="product-description">
+          <h4 class="mt-0 stretch-95">
+            <img class="product-logo size-12" src="/logos/ogor_vra.png" alt="">
+            <a href="https://ogor.farm/vra" class="text-inherit no-underline">
+              {t("products:ogor_vra.name")}
+            </a>
+          </h4>
+          <p set:html={t("products:ogor_vra.description")} class="m-0 mb-[1em] grow" />
+          <p class="m-0">
+            <small class="text-muted">{t("starting_from")}:</small><br>
+            <span class="font-medium underline">{t("RON", { val: 42 })}/{t("map")}</span>
+          </p>
+        </div>
+      </article>
+    </section>
   </section>
 </BaseLayout>
 
 <style>
+  @reference "@/styles/global.css";
+
   header {
     margin-inline: var(--neg-bleed);
     padding-inline: var(--bleed);
   }
-  article {
-    position: relative;
-    & a::before {
-      content: "";
-      position: absolute;
-      inset: -.5em;
-      border-radius: 1.25em;
-    }
-    & a:hover::before,
-    & a:focus::before {
-      outline: medium dashed #B9E5FB;
+
+  #addons {
+    @media (width >= theme(--breakpoint-d)) {
+      position: relative;
+  
+      h2 {
+        background: white;
+        width: fit-content;
+        padding-right: 1rem;
+      }
+  
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 1rem 12.5% 8rem 8rem;
+        z-index: -1;
+        display: block;
+        border: thick solid #E5F3E5;
+        border-left: 0;
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+      }
     }
   }
+
+  @layer components {
+    article {
+      position: relative;
+      
+      & h4 a::before {
+        content: "";
+        position: absolute;
+        inset: -.5em;
+        border-radius: 2.5em;
+      }
+      & h4 a:hover::before,
+      & h4 a:focus::before {
+        outline: medium dashed black;
+      }
+
+      #addons & {
+        @apply max-t:flex-col gap-4 t:gap-8 mb-4 t:mb-8 d:mr-[25%];
+
+        display: flex;
+        padding: 2rem;
+        border-radius: 2rem;
+        background: #FFFAEA;
+      }
+    }
+
+    .product-thumbnail {
+      max-width: 20em;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 1em;
+      border: thin solid var(--border);
+      /* box-shadow: 0 .2em .5em var(--border); */
+      
+      @media (width >= theme(--breakpoint-t)) {
+        width: 50%;
+      }
+    }
+    .product-logo {
+      vertical-align: middle;
+      margin-right: .5em;
+      border-radius: .5em;
+      box-shadow: 0 -.1em .2em 0 rgba(0, 0, 0, 0.10) inset, 0 .1em .3em 0 rgba(0, 0, 0, 0.25);
+      background: white;
+    }
+  }
+
 </style>
 <style is:inline>
   #content {

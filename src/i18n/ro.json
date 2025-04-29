@@ -10,7 +10,9 @@
     "dateMedium": "{{date,datetime(dateStyle: 'medium')}}",
     "timestampShort": "{{date,datetime(weekday: 'short'; hour: 'numeric'; minute: '2-digit')}}",
     "timestamp": "{{date,datetime(hour: 'numeric'; minute: '2-digit')}}",
-    "relativeTime": "{{val,relativeTime(style:'long')}}"
+    "relativeTime": "{{val,relativeTime(style:'long')}}",
+
+    "RON": "{{ val, currency(currency: RON; currencyDisplay: narrowSymbol; maximumSignificantDigits: 2) }}"
   },
   "translation": {
     "and": "și",
@@ -63,6 +65,7 @@
       "updates_long": "Ultimele noutăți"
     },
     "company": {
+      "title": "$t(about)",
       "tagline": "IT pentru Agricultură",
       "description": "Înființată în 2019, compania noastră este specializată în procesarea datelor satelitare pentru agricultură. Colaborăm cu fermieri, agronomi și cercetători pentru a oferi soluții accesibile de monitorizare de la distanță a culturilor și de agricultură de precizie.",
       "name": "Field Data Zoom SRL (OGOR)",
@@ -144,11 +147,35 @@
       "aboutTheProject": "Despre proiect",
       "nextForecast": "Urmǎtoarea prognozǎ disponibilǎ pe data de <em>{{date}}</em>.",
       "contactOgorTeam": "Pentru hărți și statistici la nivel de județ și localitate <strong>contactează echipa de vânzări OGOR →</strong>"
+    }
+  },
+  "products": {
+    "addons": "Module opționale",
+
+    "ogor": {
+      "name": "OGOR",
+      "description": "<strong>Platforma OGOR</strong> prelucrează în fiecare săptămână date satelitare pe toată suprafața României pentru a produce hărți de vegetație pentru 300+ fermieri."
     },
-    "ogor_description_product": "<strong>Platforma OGOR</strong> prelucrează în fiecare săptămână date satelitare pe toată suprafața României pentru a produce hărți de vegetație pentru 300+ fermieri.",
-    "ogor_yield_description_product": "Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate cu 2 luni înainte de recoltă.",
-    "ogor_vra_description_product": "Creează hărți <strong>VRA în 10 minute</strong> sau mai puțin. VRA — <em>Aplicare cu Ratǎ Variabilă</em> — permite ajustarea cantității de tratament pe zone pentru eficientizarea costurilor de amendare a parcelei.",
-    "tarla_description_product": "<strong>Tarla</strong> a fost creat pentru a centraliza datele funciare într-o singură aplicație, cu posibilitatea de a vedea toate terenurile pe aceeași hartǎ și de a le putea localiza la fața locului."
+    "ogor_yield": {
+      "name": "Prognoza OGOR",
+      "description": "Aplicând algoritmi proprii de învățare automată pe imagini din satelit și date pedoclimatice, <strong>OGOR</strong> produce prognoza de productivitate cu 2 luni înainte de recoltă."
+    },
+    "ogor_journal": {
+      "name": "Jurnal de OGOR",
+      "description": "Cu <strong>Jurnal de OGOR</strong>, toate rapoartele de cultură și de lucrare sunt organizate, cu poze și comentarii auto‑corelate cu locația."
+    },
+    "ogor_plan": {
+      "name": "Plan de OGOR",
+      "description": "Fișa tehnologică pentru fiecare cultură. Urmărește execuția lucrările și ține evidența de costurilor și a profiturilor pe parcusul sezonului."
+    },
+    "ogor_vra": {
+      "name": "OGOR VRA",
+      "description": "Creează hărți <strong>VRA în 10 minute</strong> sau mai puțin. VRA — <em>Aplicare cu Ratǎ Variabilă</em> — permite ajustarea cantității de tratament pe zone pentru eficientizarea costurilor de amendare a parcelei."
+    },
+    "tarla": {
+      "name": "Tarla",
+      "description": "<strong>Tarla</strong> a fost creat pentru a centraliza datele funciare într-o singură aplicație, cu posibilitatea de a vedea toate terenurile pe aceeași hartǎ și de a le putea localiza la fața locului."
+    }
   },
   "urls": {
     "company": "compania",
