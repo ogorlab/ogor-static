@@ -1,9 +1,13 @@
 ---
 import { getLocalizedPaths, useI18n } from "@/i18n";
 import type { GetStaticPaths } from "astro";
+import { t as _t} from "i18next"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 
-export const getStaticPaths = (() => getLocalizedPaths("legal")) satisfies GetStaticPaths;
+export const getStaticPaths = (() => getLocalizedPaths("legal", (item, lng) => {
+  item.props.title = _t("legal.title", { lng })
+  return item
+})) satisfies GetStaticPaths;
 
 const lang = Astro.currentLocale || "ro"
 
