@@ -9,7 +9,6 @@ const yieldForecastCollection = defineCollection({
   }),
   schema: z.object({
     forecast_date: z.string(),
-    next_forecast_date: z.string().nullable(),
     crops: z.array(z.object({
       code: z.number(),
       avg_yield: z.number(),

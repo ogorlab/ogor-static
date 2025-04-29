@@ -51,6 +51,7 @@ export const getStaticPaths = (async () => {
 const { t } = useI18n(Astro.currentLocale)
 const { entry } = Astro.props
 const { getUrl } = Astro.locals
+const next_forecast_date = undefined
 
 const entries = await getCollection("forecast")
 const lastForecast = entries[entries.length - 1].id
@@ -143,13 +144,13 @@ function formatNumber(n: number) {
       </ul>
     </nav>
 
-    { entry.data.next_forecast_date && (
+    { next_forecast_date && (
       <div class="forecast-more-element next-forecast">
         <p>
           <span class="emoji">🗓️</span>
           <span class="inline-block" set:html={
             t("yield_forecast.nextForecast", { date: 
-              (new Date(entry.data.next_forecast_date)).toLocaleDateString(Astro.currentLocale, {
+              (new Date(next_forecast_date)).toLocaleDateString(Astro.currentLocale, {
                 day: "numeric", month: "long", year: "numeric"
               }),
             })
