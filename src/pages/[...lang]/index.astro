@@ -7,8 +7,10 @@ import { getCollection, render } from "astro:content";
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 
+console.log({...Astro.params}, {...Astro.props})
 const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
+
 const latestForecast = await getLatestForecast()
 const latestForecastLocaleDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
   day: "numeric", month: "long", year: "numeric"
