@@ -2,7 +2,7 @@ import { defineConfig, envField } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
-const site = import.meta.env.APP_HOST || "https://ogor.ro"
+const site = import.meta.env.OGOR_APP_HOST || "https://ogor.ro"
 
 // https://astro.build/config
 export default defineConfig({
