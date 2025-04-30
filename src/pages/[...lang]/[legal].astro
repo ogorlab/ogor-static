@@ -27,7 +27,7 @@ type LegalHistory = {
 }
 
 async function fetchLegal() {
-  const endpoint = OGOR_BE_HOST + "/api/v1/legal"
+  const endpoint = OGOR_BE_HOST + "/api/v1/legal?format=json"
   const requestInit: RequestInit = {
     headers: {
       "Accept-Language": lang
