@@ -37,7 +37,6 @@ i18n.init({
   resources: { ro, en, fr },
   initImmediate: true,
   returnObjects: true,
-  returnNull: false,
 })
 
 i18n.services.formatter?.add('ha', (value, lng) => {
@@ -76,7 +75,7 @@ type GetLocalizedPathCallback<T extends GetLocalizedPathsItem = GetLocalizedPath
 export function getUrl(locale: string = defaultLocale, key: string, hash?: string) {
   const params = key.split("/")
 
-  let url = params.map(param => t(param, "", { lng: locale, ns: "urls" })).join("/")
+  let url = params.map(param => t(param, { lng: locale, ns: "urls" })).join("/")
 
   if (url[0] !== "/") {
     url = "/" + url
@@ -85,7 +84,7 @@ export function getUrl(locale: string = defaultLocale, key: string, hash?: strin
     url = "/" + locale + url
   }
   if (hash) {
-    url += t(hash, "", { lng: locale, ns: "urls" })
+    url += t(hash, { lng: locale, ns: "urls" })
   }
 
   return url
@@ -117,7 +116,7 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
   const paths: GetStaticPathsResult = []
 
   for (let lang of locales) {
-    const entries = params.map(param => [param, t(param, "", { lng: lang, ns: "urls" })])
+    const entries = params.map(param => [param, t(param, { lng: lang, ns: "urls" })])
 
     if (!prefixDefaultLocale && lang !== defaultLocale) {
       entries.push(["lang", lang])
