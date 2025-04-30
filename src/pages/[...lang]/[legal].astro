@@ -1,5 +1,5 @@
 ---
-import { OGOR_BE_HOST } from "astro:env/client";
+import { PUBLIC_OGOR_BE_HOST } from "astro:env/client";
 import { t } from "i18next"
 import { getLocalizedPaths } from "@/i18n";
 import type { GetStaticPaths } from "astro";
@@ -27,7 +27,7 @@ type LegalHistory = {
 }
 
 async function fetchLegal() {
-  const endpoint = OGOR_BE_HOST + "/api/v1/legal?format=json"
+  const endpoint = PUBLIC_OGOR_BE_HOST + "/api/v1/legal?format=json"
   const requestInit: RequestInit = {
     headers: {
       "Accept-Language": lang

@@ -1,5 +1,5 @@
 ---
-import { OGOR_APP_LOGIN_URL } from "astro:env/client";
+import { PUBLIC_OGOR_APP_LOGIN_URL } from "astro:env/client";
 import { t } from "i18next"
 import { getLocalizedPaths } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
@@ -28,7 +28,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       <h1 class="max-w-[45rem] mt-0 text-[200%]">{ t("home.hero_heading") }</h1>
       <p  class="max-w-[45rem] text-[larger]" set:html={ t("home.hero_description") } />
     </div>
-    <a href={ OGOR_APP_LOGIN_URL } class="_cta _cta-link block text-center content-center text-white">
+    <a href={ PUBLIC_OGOR_APP_LOGIN_URL } class="_cta _cta-link block text-center content-center text-white">
       <span class="underline">{ t("home.hero_cta") }</span> →
     </a>
     <div class="_media1 flex justify-center items-center max-t:hidden">
@@ -176,7 +176,7 @@ export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStatic
       </a>
     </p>
     <p class="max-w-[40em] mx-auto text-[larger]">
-      <a href={ OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
+      <a href={ PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
         <svg class="icon">
           <use href="/logos/ogor.svg#logo" />
         </svg>

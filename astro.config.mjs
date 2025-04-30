@@ -2,7 +2,7 @@ import { defineConfig, envField } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
-const site = import.meta.env.OGOR_APP_HOST || "https://ogor.ro"
+const site = import.meta.env.PUBLIC_OGOR_APP_HOST || "https://ogor.ro"
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,11 +33,11 @@ export default defineConfig({
   ],
   env: {
     schema: {
-      OGOR_APP_HOST: envField.string({ context: "client", access: "public", default: site }),
-      OGOR_APP_LOGIN_URL: envField.string({ context: "client", access: "public", default: site + "/auth/login" }),
-      OGOR_APP_SIGNUP_URL: envField.string({ context: "client", access: "public", default: site + "/auth/new-account"}),
-      OGOR_BE_HOST: envField.string({ context: "client", access: "public", default: site }),
-      TRACKING_ENABLED: envField.boolean({ context: "client", access: "public", default: false }),
+      PUBLIC_OGOR_APP_HOST: envField.string({ context: "client", access: "public", default: site }),
+      PUBLIC_OGOR_APP_LOGIN_URL: envField.string({ context: "client", access: "public", default: site + "/auth/login" }),
+      PUBLIC_OGOR_APP_SIGNUP_URL: envField.string({ context: "client", access: "public", default: site + "/auth/new-account"}),
+      PUBLIC_OGOR_BE_HOST: envField.string({ context: "client", access: "public", default: site }),
+      PUBLIC_TRACKING_ENABLED: envField.boolean({ context: "client", access: "public", default: false }),
     }
   },
   server: {

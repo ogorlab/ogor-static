@@ -1,5 +1,5 @@
 ---
-import { OGOR_APP_LOGIN_URL } from "astro:env/client";
+import { PUBLIC_OGOR_APP_LOGIN_URL } from "astro:env/client";
 import { t } from "i18next"
 import { getUrl as _getUrl, locales } from "@/i18n"
 
@@ -47,7 +47,7 @@ const { getUrl, key } = Astro.locals
     </a>
   </span>
 
-  <a href={ OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
+  <a href={ PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded-full">
     { t("your_account") }
   </a>
   <button class="tl:hidden p-[.5em] border-0 rounded-[.25em] bg-transparent" onclick="showMenu()" >
@@ -73,7 +73,7 @@ const { getUrl, key } = Astro.locals
   </div>
 
   <p class="mb-[2em]">
-    <a id="your_account" href={ OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
+    <a id="your_account" href={ PUBLIC_OGOR_APP_LOGIN_URL } class="btn btn-black rounded">
       { t("your_account") } →
     </a>
   </p>

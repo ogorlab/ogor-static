@@ -1,5 +1,5 @@
 ---
-import { OGOR_APP_LOGIN_URL } from "astro:env/client";
+import { PUBLIC_OGOR_APP_LOGIN_URL } from "astro:env/client";
 import { t } from "i18next";
 
 const { getUrl } = Astro.locals
@@ -68,7 +68,7 @@ const social = [
     <li><a href={ getUrl("company") }>{ t("nav.company_long") }</a></li>
     <li><a href={ getUrl("company", "#products") }>{ t("nav.products_long") }</a></li>
     <!-- <li><a href={ getUrl("updates") }>{ t("nav.updates_long") }</a></li> -->
-    <li><a href={ OGOR_APP_LOGIN_URL }>{t("create_account_ogor")} →</a></li>
+    <li><a href={ PUBLIC_OGOR_APP_LOGIN_URL }>{t("create_account_ogor")} →</a></li>
   </ul>
 
   <ul class="legal">
