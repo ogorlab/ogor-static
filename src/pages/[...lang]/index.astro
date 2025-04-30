@@ -1,14 +1,11 @@
 ---
-import { getLocalizedPaths, useI18n } from "@/i18n";
+import { t } from "i18next"
+import { getLocalizedPaths } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
 import { getLatestForecast } from "@/content.config";
 import { getCollection, render } from "astro:content";
 
-export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
-
-console.log({...Astro.params}, {...Astro.props})
-const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
 
 const latestForecast = await getLatestForecast()
@@ -19,13 +16,14 @@ const latestForecastLocaleDate = (new Date(latestForecast.data.forecast_date)).t
 const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
 const testimonials = (await getCollection("testimonials", (entry) => entry.id.startsWith(Astro.currentLocale || "ro")))
 
+export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 ---
 <BaseLayout>
   <section id="hero">
     <div class="_media2">
       <img src="/images/kv_main.png" alt={t("alt:kv_main")}>
     </div>
-    <div class="_body" >
+    <div class="_body">
       <h1 class="max-w-[45rem] mt-0 text-[200%]">{ t("home.hero_heading") }</h1>
       <p  class="max-w-[45rem] text-[larger]" set:html={ t("home.hero_description") } />
     </div>

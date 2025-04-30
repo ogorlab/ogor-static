@@ -1,5 +1,5 @@
 ---
-import { useI18n } from "@/i18n"
+import { t } from "i18next";
 import type { CollectionEntry } from "astro:content"
 
 interface Props {
@@ -7,7 +7,6 @@ interface Props {
 }
 
 const forecasts = Astro.props.forecasts.toReversed()
-const { t } = useI18n(Astro.currentLocale)
 const { getUrl } = Astro.locals
 
 const id = t("urls:#history")
@@ -70,7 +69,7 @@ forecasts.forEach(({ data }, index) => {
                 </div>
               </th>
               <th class="text-left pr-4">
-                {t(crop_code, { ns: "crops" })}
+                {t(crop_code.toString(), { ns: "crops" })}
               </th>
               { dates.map((date, index) => {
                 const avg_yield = yields[crop_code][index]?.toLocaleString(Astro.currentLocale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })

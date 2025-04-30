@@ -5,6 +5,9 @@ import { getCollection, render } from "astro:content";
 import i18next from "i18next";
 import { defaultLocale } from "@/i18n";
 
+const { entry } = Astro.props
+const { Content } = await render(entry)
+
 /**
  * Generate paths for each update.
  * Take notice, not all updates need translation!
@@ -27,9 +30,6 @@ export const getStaticPaths = (async () => {
   })
   return paths
 }) satisfies GetStaticPaths;
-
-const { entry } = Astro.props
-const { Content } = await render(entry)
 ---
 <UpdatesLayout>
   { Content }

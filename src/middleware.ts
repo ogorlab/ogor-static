@@ -1,15 +1,21 @@
 import { defineMiddleware } from "astro:middleware";
-import { getUrl as _getUrl, defaultLocale } from "@/i18n"
+import { getUrl, defaultLocale } from "@/i18n"
+import i18next from "i18next"
 
 /**
  * @link https://docs.astro.build/en/guides/middleware/
  */
-export const onRequest = defineMiddleware((context, next) => {
-  const { lang = defaultLocale } = context.params
-  Object.assign(context.locals, {
-    key: context.props.key,
+export const onRequest = defineMiddleware(({ locals, params, props }, next) => {
+  const { lang = defaultLocale } = params
+
+  if (i18next.language !== lang) {
+    i18next.changeLanguage(lang)
+  }
+
+  Object.assign(locals, {
+    key: props.key,
     lang,
-    getUrl: _getUrl.bind(null, context.currentLocale),
+    getUrl: getUrl.bind(undefined, lang),
     backUrl: "TODO"
   })
 

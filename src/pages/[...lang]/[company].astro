@@ -1,18 +1,18 @@
 ---
-import { getLocalizedPaths, useI18n } from "@/i18n";
+import { t } from "i18next";
+import { getLocalizedPaths } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import { t as _t} from "i18next"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import GooglePlay from "@/images/badge_google_play.png"
 import AppStore from "@/images/badge_app_store.png"
 
+const { getUrl } = Astro.locals
+
 export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) => {
   item.props.title = _t("company.title", { lng })
   return item
 })) satisfies GetStaticPaths;
-
-const { t } = useI18n(Astro.currentLocale)
-const { getUrl } = Astro.locals
 ---
 <BaseLayout {...Astro.props}>
   <header class="py-[2em] bg-[#B9E5FB]">

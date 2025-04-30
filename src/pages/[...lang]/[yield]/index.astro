@@ -1,5 +1,6 @@
 ---
-import { getLocalizedPaths, useI18n } from "@/i18n";
+import { t } from "i18next";
+import { getLocalizedPaths } from "@/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
@@ -16,6 +17,15 @@ interface Props {
   forecasts: CollectionEntry<"forecast">[]
 }
 
+const { forecasts } = Astro.props
+const { getUrl } = Astro.locals
+
+const latestForecast = await getLatestForecast()
+const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
+  day: "numeric", month: "long", year: "numeric"
+})
+const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}.png` // "ogor_yield_101_20240702.png"
+
 export const getStaticPaths = (async() => {
   const forecasts = await getCollection("forecast")
   forecasts.sort((a, b) => a.data.forecast_date.localeCompare(b.data.forecast_date))
@@ -28,16 +38,6 @@ export const getStaticPaths = (async() => {
     return item
   })
 }) satisfies GetStaticPaths;
-
-const { t } = useI18n(Astro.currentLocale)
-const { forecasts } = Astro.props
-const { getUrl } = Astro.locals
-
-const latestForecast = await getLatestForecast()
-const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
-  day: "numeric", month: "long", year: "numeric"
-})
-const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}.png` // "ogor_yield_101_20240702.png"
 ---
 
 <BaseLayout {...Astro.props}>
@@ -69,7 +69,7 @@ const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crop
         {
           latestForecast.data.crops.map(c => 
             <tr>
-              <td>{t(c.code, { ns: "crops" })}</td>
+              <td>{t(c.code.toString(), { ns: "crops" })}</td>
               <td>{c.avg_yield.toLocaleString(Astro.currentLocale)} t/ha</td>
             </tr>
           )

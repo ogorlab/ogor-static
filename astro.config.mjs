@@ -29,18 +29,16 @@ export default defineConfig({
       }
     }), 
   ],
-
   server: {
+    allowedHosts: ["ogor.ro"],
     host: true,
     hmr: {
       host: "ogor.ro",
     }
   },
-
   security: {
     checkOrigin: false,
   },
-
   vite: {
     plugins: [
       tailwindcss({

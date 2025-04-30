@@ -9,6 +9,9 @@ interface Props {
   entries: CollectionEntry<"forecast">[]
 }
 
+const { entries } = Astro.props
+const { getUrl } = Astro.locals
+
 export const getStaticPaths = (async () => {
   const entries = await getCollection("forecast")
 
@@ -17,10 +20,6 @@ export const getStaticPaths = (async () => {
     return item
   })
 }) satisfies GetStaticPaths;
-
-const { entries } = Astro.props
-const { getUrl } = Astro.locals
-
 ---
 <BaseLayout>
   Forecast index page: { Astro.currentLocale }

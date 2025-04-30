@@ -5,8 +5,7 @@ import { getLocalizedPaths } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import { useI18n } from "@/i18n";
-import { t as _t } from "i18next"
+import { t } from "i18next";
 
 interface Props {
   entry: CollectionEntry<"forecast">;
@@ -14,41 +13,6 @@ interface Props {
   title_long: string;
 }
 
-export const getStaticPaths = (async () => {
-  const entries = await getCollection("forecast")
-  const paths = entries.flatMap(entry => {
-    return getLocalizedPaths("yield/forecast", (item, lng) => {
-      const date = new Date(entry.data.forecast_date)
-      const localeDate = date.toLocaleDateString(lng, {
-        day: "numeric", month: "long", year: "numeric"
-      })
-      const crop_code = entry.data.crops[0].code
-      const forecastCrops = entry.data.crops.map(crop => crop.code)
-      const title = _t("yield_title", { lng, crops: forecastCrops.slice(0, -1)
-        // @ts-ignore it accepts numbers as keys, but doen't know it
-        .map(c => _t(c, { lng, ns: "crops" }))
-        .join(", ")
-        .concat(
-          " " + _t("and", { lng }) + " " +
-          // @ts-ignore
-          _t(forecastCrops[forecastCrops.length - 1], { lng, ns: "crops" })
-        )
-      })
-
-      item.params.slug = entry.id
-      item.props.entry = entry;
-      item.props.title = _t("yield_forecast.ogorForecastFrom", { lng, date: localeDate })
-      item.props.title_long = title
-      item.props.description = title
-      item.props.og_image = `/yield/maps/ogor_yield_${crop_code}_${entry.id.replaceAll("-", "")}_preview.png`
-
-      return item
-    })
-  })
-  return paths
-}) satisfies GetStaticPaths;
-
-const { t } = useI18n(Astro.currentLocale)
 const { entry } = Astro.props
 const { getUrl } = Astro.locals
 const next_forecast_date = undefined
@@ -67,7 +31,39 @@ function formatNumber(n: number) {
   });
 }
 
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("forecast")
+  const paths = entries.flatMap(entry => {
+    return getLocalizedPaths("yield/forecast", (item, lng) => {
+      const date = new Date(entry.data.forecast_date)
+      const localeDate = date.toLocaleDateString(lng, {
+        day: "numeric", month: "long", year: "numeric"
+      })
+      const crop_code = entry.data.crops[0].code
+      const forecastCrops = entry.data.crops.map(crop => crop.code)
+      const title = t("yield_title", { lng, crops: forecastCrops.slice(0, -1)
+        // @ts-ignore it accepts numbers as keys, but doen't know it
+        .map(c => t(c, { lng, ns: "crops" }))
+        .join(", ")
+        .concat(
+          " " + t("and", { lng }) + " " +
+          // @ts-ignore
+          t(forecastCrops[forecastCrops.length - 1], { lng, ns: "crops" })
+        )
+      })
 
+      item.params.slug = entry.id
+      item.props.entry = entry;
+      item.props.title = t("yield_forecast.ogorForecastFrom", { lng, date: localeDate })
+      item.props.title_long = title
+      item.props.description = title
+      item.props.og_image = `/yield/maps/ogor_yield_${crop_code}_${entry.id.replaceAll("-", "")}_preview.png`
+
+      return item
+    })
+  })
+  return paths
+}) satisfies GetStaticPaths;
 ---
 <BaseLayout {...Astro.props}>
   <header class="yield-header">
@@ -100,7 +96,7 @@ function formatNumber(n: number) {
                data-umami-event="Download Yield Map" data-umami-event-crop={crop.code}>
               <img src={`/yield/maps/ogor_yield_${crop.code}_${entry.data.forecast_date.replaceAll("-","")}_preview.png`} alt="" />
             </a>
-            <h2 class={ "li-bullet-" + (index + 1) }>{t(crop.code, { ns: "crops"}).toUpperCase()}</h2>
+            <h2 class={ "li-bullet-" + (index + 1) }>{t(crop.code.toString(), { ns: "crops"}).toUpperCase()}</h2>
             
             <div class="key-metric">
               <span>{crop.avg_yield} t/ha</span>

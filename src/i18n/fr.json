@@ -42,7 +42,7 @@
       "products": "Produits",
       "products_long": "Nos produits",
       "forecast": "Prévisions",
-      "forecast_long": "OGOR Yield",
+      "forecast_long": "Prévisions OGOR",
       "updates": "Mises à jour",
       "updates_long": "Dernières mises à jour"
     },
@@ -127,20 +127,21 @@
     }
   },
   "products": {
+    "addons": "Modules optionnels",
     "ogor": {
       "name": "OGOR",
       "description": "<strong>La plateforme OGOR</strong> traite chaque semaine des données satellitaires sur toute la Roumanie pour produire des cartes de végétation pour plus de 300 agriculteurs."
     },
     "ogor_yield": {
-      "name": "OGOR Yield",
+      "name": "Prévisions OGOR",
       "description": "En appliquant des algorithmes d'apprentissage automatique propriétaires sur des images satellites et des données pédoclimatiques, <strong>OGOR</strong> produit des prévisions de rendement 2 mois avant la récolte."
     },
     "ogor_journal": {
-      "name": "OGOR Journal",
+      "name": "Journal OGOR",
       "description": "Avec <strong>OGOR Journal</strong>, tous les rapports de culture et de travaux agricoles sont organisés, avec photos et commentaires automatiquement géolocalisés."
     },
     "ogor_plan": {
-      "name": "OGOR Plan",
+      "name": "Plan OGOR",
       "description": "La fiche technologique pour chaque culture. Suivez l'exécution des travaux agricoles et tenez un registre des coûts et des profits tout au long de la saison."
     },
     "ogor_vra": {

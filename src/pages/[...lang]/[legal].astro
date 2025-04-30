@@ -1,11 +1,11 @@
 ---
-import { getLocalizedPaths, useI18n } from "@/i18n";
+import { t } from "i18next"
+import { getLocalizedPaths } from "@/i18n";
 import type { GetStaticPaths } from "astro";
-import { t as _t} from "i18next"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 
 export const getStaticPaths = (() => getLocalizedPaths("legal", (item, lng) => {
-  item.props.title = _t("legal.title", { lng })
+  item.props.title = t("legal.title", { lng })
   return item
 })) satisfies GetStaticPaths;
 
@@ -58,8 +58,6 @@ Object.entries(data).forEach(([type, docs]) => {
 })
 
 const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
-
-const { t } = useI18n(Astro.currentLocale)
 ---
 
 <BaseLayout {...Astro.props}>
@@ -82,7 +80,7 @@ const { t } = useI18n(Astro.currentLocale)
           <p class="mt-1 italic text-muted">
             {t("date", { date: new Date(doc.start_date) })}
           </p>
-          <a href={doc.file_url} download class="mt-auto font-medium no-underline">{t("Download")}</a>
+          <a href={doc.file_url} download class="mt-auto font-medium no-underline">{t("download")}</a>
         </article>
       )
     )}

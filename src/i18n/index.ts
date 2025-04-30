@@ -1,7 +1,6 @@
 import type { GetStaticPathsItem, GetStaticPathsResult } from "astro";
 import i18n, { t } from "i18next"
-import type { TOptions } from "i18next"
-import config from "astro.config.mjs"
+import * as config from "astro:config/client"
 import { toCodes } from "astro:i18n";
 import ro from "./ro.json";
 import en from "./en.json";
@@ -21,7 +20,7 @@ export const prefixDefaultLocale = (
 declare module "i18next" {  
   interface CustomTypeOptions {
     /** When working heavily with translations you might need help finding the keys */
-    resources: typeof ro
+    // resources: typeof ro
   }
 }
 
@@ -38,6 +37,7 @@ i18n.init({
   resources: { ro, en, fr },
   initImmediate: true,
   returnObjects: true,
+  returnNull: false,
 })
 
 i18n.services.formatter?.add('ha', (value, lng) => {
@@ -76,7 +76,7 @@ type GetLocalizedPathCallback<T extends GetLocalizedPathsItem = GetLocalizedPath
 export function getUrl(locale: string = defaultLocale, key: string, hash?: string) {
   const params = key.split("/")
 
-  let url = params.map(param => t(param, { lng: locale, ns: "urls" })).join("/")
+  let url = params.map(param => t(param, "", { lng: locale, ns: "urls" })).join("/")
 
   if (url[0] !== "/") {
     url = "/" + url
@@ -85,7 +85,7 @@ export function getUrl(locale: string = defaultLocale, key: string, hash?: strin
     url = "/" + locale + url
   }
   if (hash) {
-    url += t(hash, { lng: locale, ns: "urls" })
+    url += t(hash, "", { lng: locale, ns: "urls" })
   }
 
   return url
@@ -121,7 +121,7 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
       // @ts-ignore
       lang = undefined
     }
-    const entries = params.map(param => [param, t(param, { lng: lang, ns: "urls" })])
+    const entries = params.map(param => [param, t(param, "", { lng: lang, ns: "urls" })])
     entries.push(["lang", lang as string])
 
     const path = {
@@ -134,22 +134,4 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
   }
 
   return paths
-}
-
-/**
- * @example
- * ```astro
- * ---
- * const { t } = useI18n(Astro.currentLocale)
- * ---
- * { t("your_translation_key") }
- * ```
- */
-export function useI18n(lang: string = defaultLocale) {
-  return {
-    t: function(key: string | number, options?: TOptions) {
-      // @ts-ignore - key works just fine with number
-      return t(key, { lng: lang, ...options })
-    }
-  }
 }
