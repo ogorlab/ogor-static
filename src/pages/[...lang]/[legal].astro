@@ -95,7 +95,7 @@ const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
           <tr>
             <th>{t("Date")}</th>
             <th>{t("document")}</th>
-            <th>{t("availability")}</th>
+            <th>{t("up_to")}</th>
             <th>{t("link")}</th>
           </tr>
         </thead>
@@ -109,8 +109,9 @@ const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
                   {t("dateMedium", { date: new Date(doc.start_date) })}
                 </td>
               }
-              <td>{t("legal." + doc.type)}</td>
+              <th>{t("legal." + doc.type)}</th>
               <td>
+                <span class="t:hidden">{t("up_to")}</span>
                 {t("dateMedium", { date: new Date(doc.end_date) })}
               </td>
               <td>
@@ -149,6 +150,10 @@ const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
     }
   }
 
+  table th {
+    font-weight: 600;
+  }
+
 
   @media (width < theme(--breakpoint-t)) {
     table, tbody, tr, th, td {
@@ -166,8 +171,10 @@ const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
         background: var(--action-bg-alt);
       }
     }
+
     
-    td:has(a) {
+    
+    td a {
       position: absolute;
       inset: 0;
       opacity: 0;
@@ -175,10 +182,15 @@ const dates = Object.keys(history).sort((a, b) => b.localeCompare(a))
     }
 
     td[rowspan] {
-      display: none;
+      margin: -.5em;
+      margin-bottom: .5em;
+      padding: .5em;
+      background: var(--bg);
+
+      /* display: none; */
     }
   }
-  @media (width <= theme(--breakpoint-t)) {
+  @media (width >= theme(--breakpoint-t)) {
     table {
       width: 100%;
       border-collapse: collapse;
