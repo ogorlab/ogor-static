@@ -1,5 +1,6 @@
 ---
 // import { ClientRouter } from 'astro:transitions';
+import { TRACKING_ENABLED } from "astro:env/client"
 import { t } from "i18next"
 import NavbarAnonymous from "@/components/NavbarAnonymous.astro"
 import Footer from "@/components/Footer.astro"
@@ -38,13 +39,15 @@ const { key } = Astro.locals;
       <link rel="alternate" hreflang="x-default" href={ getUrl(undefined, key) } />
     </slot>
 
-    { import.meta.env.PROD && (
+    { TRACKING_ENABLED && (
       <script>
-        {/* const script = document.createElement("script");
-        script.id = "umami-script";
-        script.setAttribute("data-website-id", "e276f75b-a362-4278-a43f-de918ff8d2a7");
-        script.src = "https://cloud.umami.is/script.js";
-        document.body.appendChild(script); */}
+        if (!document.getElementById("umami-script")) {
+          const script = document.createElement("script");
+          script.id = "umami-script";
+          script.setAttribute("data-website-id", "e276f75b-a362-4278-a43f-de918ff8d2a7");
+          script.src = "https://cloud.umami.is/script.js";
+          document.body.appendChild(script);
+        }
       </script>
     )}
 
