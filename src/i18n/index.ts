@@ -117,12 +117,14 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
   const paths: GetStaticPathsResult = []
 
   for (let lang of locales) {
-    if (!prefixDefaultLocale && lang === defaultLocale) {
-      // @ts-ignore
-      lang = undefined
-    }
     const entries = params.map(param => [param, t(param, "", { lng: lang, ns: "urls" })])
-    entries.push(["lang", lang as string])
+
+    if (!prefixDefaultLocale && lang !== defaultLocale) {
+      entries.push(["lang", lang])
+    } else {
+      // @ts-ignore - if we don't prefix default locale this needs to be undefined
+      entries.push(["lang", undefined])
+    }
 
     const path = {
       params: Object.fromEntries(entries),
