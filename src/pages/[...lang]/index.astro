@@ -2,6 +2,7 @@
 import { PUBLIC_OGOR_APP_LOGIN_URL } from "astro:env/client";
 import { t } from "i18next"
 import { getLocalizedPaths } from "@/i18n";
+import CheckAuthentication from "@/components/CheckAuthentication.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import type { GetStaticPaths } from "astro";
 import { getLatestForecast } from "@/content.config";
@@ -19,6 +20,7 @@ const testimonials = (await getCollection("testimonials", (entry) => entry.id.st
 
 export const getStaticPaths = (() => getLocalizedPaths("/")) satisfies GetStaticPaths;
 ---
+<CheckAuthentication />
 <BaseLayout>
   <section id="hero">
     <div class="_media2">
