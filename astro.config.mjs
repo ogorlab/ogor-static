@@ -1,8 +1,12 @@
+import { loadEnv } from "vite";
 import { defineConfig, envField } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
-const site = import.meta.env.PUBLIC_OGOR_APP_HOST || "https://ogor.ro"
+// https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
+const { PUBLIC_OGOR_APP_HOST } = loadEnv(process.env.NODE_ENV, process.cwd(), "")
+
+const site = PUBLIC_OGOR_APP_HOST || "https://ogor.ro"
 
 // https://astro.build/config
 export default defineConfig({
