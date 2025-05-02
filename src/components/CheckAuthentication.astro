@@ -6,7 +6,7 @@ import { PUBLIC_OGOR_APP_HOST, PUBLIC_OGOR_BE_HOST } from "astro:env/client";
 // User is authenticated, returns to homepage, but then navigates away to a different public page.
 // How does he return without being redirected? NOT IMPLEMENTED YET
 ---
-<script data-be-host={PUBLIC_OGOR_BE_HOST} data-app-host={PUBLIC_OGOR_APP_HOST}>
+<script is:inline data-be-host={PUBLIC_OGOR_BE_HOST} data-app-host={PUBLIC_OGOR_APP_HOST}>
 {
   async function checkAuthentication() {
     const BE_HOST = document.currentScript.dataset["beHost"]
