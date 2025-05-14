@@ -16,7 +16,7 @@ const yieldForecastCollection = defineCollection({
       interpretation: z.record(z.string({}), z.object({
         text: z.string(),
         cite: z.string()
-      }))
+      })).optional()
     })),
   })
 })

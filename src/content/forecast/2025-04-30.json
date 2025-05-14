@@ -1,0 +1,20 @@
+{
+  "forecast_date": "2025-04-30",
+  "crops": [
+    {
+      "code": 101,
+      "avg_yield": 4.79,
+      "total_surface": 2241845
+    },
+    {
+      "code": 105,
+      "avg_yield": 5.32,
+      "total_surface": 410258.36
+    },
+    {
+      "code": 202,
+      "avg_yield": 2.9,
+      "total_surface": 991938
+    }
+  ]
+}
