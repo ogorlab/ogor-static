@@ -76,7 +76,10 @@ export const getStaticPaths = (async() => {
         }
       </table>
     </div>
-    <ForecastTable forecasts={forecasts} />
+    <a href={getUrl("yield/forecast/")} class="border-rust border-dotted rounded-[.5rem] p-2 no-underline" style="border-width: 1px;">
+      ⏵ {t("yield_forecast.history")}
+    </a>
+    <!-- <ForecastTable forecasts={forecasts} /> -->
   </section>
   <section class="layout-media --left t:max-d:block">
     <h3 set:html={t("yield.localityMapAndStatistics")} 
