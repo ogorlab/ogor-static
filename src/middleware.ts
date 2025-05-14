@@ -10,6 +10,7 @@ export const onRequest = defineMiddleware(({ locals, params, props }, next) => {
 
   if (i18next.language !== lang) {
     i18next.changeLanguage(
+      // @ts-ignore stupid TS!
       locales.includes(lang) ? lang : defaultLocale
     )
   }
