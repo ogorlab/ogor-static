@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro:middleware";
-import { getUrl, defaultLocale } from "@/i18n"
+import { getUrl, defaultLocale, locales } from "@/i18n"
 import i18next from "i18next"
 
 /**
@@ -9,7 +9,9 @@ export const onRequest = defineMiddleware(({ locals, params, props }, next) => {
   const { lang = defaultLocale } = params
 
   if (i18next.language !== lang) {
-    i18next.changeLanguage(lang)
+    i18next.changeLanguage(
+      locales.includes(lang) ? lang : defaultLocale
+    )
   }
 
   Object.assign(locals, {

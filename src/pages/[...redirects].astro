@@ -12,9 +12,9 @@ export const getStaticPaths = (() => {
     let redirects = "/" + lang + "/" + key
     let path       = "/" + lang + "/" + t(key, { lng: lang, ns: "urls" })
 
-    if (!prefixDefaultLocale && lang === defaultLocale) {
-      path = path.replace("/" + lang, "")
-    }
+    // if (!prefixDefaultLocale && lang === defaultLocale) {
+    //   path = path.replace("/" + lang, "")
+    // }
 
     return {
       params: { redirects },

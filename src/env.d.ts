@@ -31,8 +31,6 @@ declare global {
     interface Locals {
       lang: Locale,
 
-      t: TFunction
-
       /** Displayed title */
       title: string;
       og_image?: string;

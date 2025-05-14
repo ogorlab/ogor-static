@@ -73,16 +73,17 @@ type GetLocalizedPathCallback<T extends GetLocalizedPathsItem = GetLocalizedPath
  * @todo make it work with interpolated params...
  */
 export function getUrl(locale: string = defaultLocale, key: string, hash?: string) {
-  const params = key.split("/")
+  const params = key.replace(/^\//, '').split("/") // Remove leading slash then split
 
   let url = params.map(param => t(param, { lng: locale, ns: "urls" })).join("/")
 
-  if (url[0] !== "/") {
-    url = "/" + url
-  }
-  if (prefixDefaultLocale || locale !== defaultLocale) {
-    url = "/" + locale + url
-  }
+  // if (url[0] !== "/") {
+  //   url = "/" + url
+  // }
+  // if (prefixDefaultLocale || locale !== defaultLocale) {
+  // }
+  url = "/" + locale + "/" + url
+
   if (hash) {
     url += t(hash, { lng: locale, ns: "urls" })
   }
@@ -118,12 +119,12 @@ export function getLocalizedPaths<T extends GetLocalizedPathsItem = GetLocalized
   for (let lang of locales) {
     const entries = params.map(param => [param, t(param, { lng: lang, ns: "urls" })])
 
-    if (!prefixDefaultLocale && lang !== defaultLocale) {
-      entries.push(["lang", lang])
-    } else {
-      // @ts-ignore - if we don't prefix default locale this needs to be undefined
-      entries.push(["lang", undefined])
-    }
+    entries.push(["lang", lang])
+    // if (!prefixDefaultLocale && lang !== defaultLocale) {
+    // } else {
+    //   // @ts-ignore - if we don't prefix default locale this needs to be undefined
+    //   entries.push(["lang", undefined])
+    // }
 
     const path = {
       params: Object.fromEntries(entries),
