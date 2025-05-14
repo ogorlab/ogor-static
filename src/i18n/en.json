@@ -1,5 +1,9 @@
 {
+  "common": {
+    "dateShort": "{{date,datetime(day: 'numeric'; month: 'short')}}"
+  },
   "translation": {
+    "back": "Back",
     "and": "and",
     "year": "year",
     "Date": "Date",

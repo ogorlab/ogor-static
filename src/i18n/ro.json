@@ -8,6 +8,7 @@
     "dateTimeMedium": "{{date,datetime(month: 'short'; day: 'numeric')}} {{date,datetime(hour: '2-digit'; minute: '2-digit')}}",
     "date": "{{date,datetime(year: 'numeric'; month: 'long'; day: 'numeric')}}",
     "dateMedium": "{{date,datetime(dateStyle: 'medium')}}",
+    "dateShort": "{{date,datetime(month: 'short'; day: 'numeric')}}",
     "timestampShort": "{{date,datetime(weekday: 'short'; hour: 'numeric'; minute: '2-digit')}}",
     "timestamp": "{{date,datetime(hour: 'numeric'; minute: '2-digit')}}",
     "relativeTime": "{{val,relativeTime(style:'long')}}",
@@ -15,6 +16,7 @@
     "RON": "{{ val, currency(currency: RON; maximumSignificantDigits: 2) }}"
   },
   "translation": {
+    "back": "Înapoi",
     "and": "și",
     "year": "an",
     "Date": "Dată",
