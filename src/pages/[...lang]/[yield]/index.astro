@@ -24,7 +24,7 @@ const latestForecast = await getLatestForecast()
 const latestForecastDate = (new Date(latestForecast.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
   day: "numeric", month: "long", year: "numeric"
 })
-const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}.png` // "ogor_yield_101_20240702.png"
+const latestForecastPreview = `/yield/maps/ogor_yield_${latestForecast.data.crops[0].code}_${latestForecast.data.forecast_date.replaceAll("-", "")}_preview.png` // "ogor_yield_101_20240702_preview.png"
 
 export const getStaticPaths = (async() => {
   const forecasts = await getCollection("forecast")
