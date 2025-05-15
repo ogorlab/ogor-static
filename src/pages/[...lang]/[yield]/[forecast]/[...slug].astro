@@ -53,6 +53,8 @@ export const getStaticPaths = (async () => {
       })
 
       item.params.slug = entry.id
+      item.props.umamiKey = item.props.key + "/<date>"
+      item.props.key += "/" + entry.id
       item.props.entry = entry;
       item.props.title = t("yield_forecast.ogorForecastFrom", { lng, date: localeDate })
       item.props.title_long = title

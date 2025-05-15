@@ -43,6 +43,9 @@ declare global {
 
       /** The abstract (non-localized) path of the route. */
       key: string;
+
+      /** Optional key to group pages in umami, defaults to key. */
+      umamiKey?: string;
     }
   }
 }

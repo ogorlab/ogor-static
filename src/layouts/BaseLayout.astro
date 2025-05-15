@@ -1,17 +1,17 @@
 ---
 // import { ClientRouter } from 'astro:transitions';
 import "@/styles/global.css" // Make sure it's above other components that use style, e.g. Navbar
-import { PUBLIC_TRACKING_ENABLED } from "astro:env/client"
+import { PUBLIC_TRACKING_UMAMI_ID } from "astro:env/client"
 import { t } from "i18next"
 import NavbarAnonymous from "@/components/NavbarAnonymous.astro"
 import Footer from "@/components/Footer.astro"
 import { getUrl, locales, defaultLocale } from "@/i18n"
 
-const { key } = Astro.locals;
+const { umamiKey, key, lang } = Astro.locals;
 ---
 
 <!doctype html>
-<html lang={ Astro.currentLocale || "ro" }>
+<html lang={ lang }>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -39,17 +39,26 @@ const { key } = Astro.locals;
       <link rel="alternate" hreflang="x-default" href={ getUrl(defaultLocale, key) } />
     </slot>
 
-    { PUBLIC_TRACKING_ENABLED && (
-      <script>
+    { PUBLIC_TRACKING_UMAMI_ID &&
+      <script data-id={PUBLIC_TRACKING_UMAMI_ID} data-url={umamiKey}>
         if (!document.getElementById("umami-script")) {
           const script = document.createElement("script");
+          const { id, url } = document.currentScript.dataset;
+
+          window.beforeSendHandler = function(type, payload) {
+            payload.language = document.documentElement.lang
+            payload.url = url
+            return payload;
+          }
+          
           script.id = "umami-script";
-          script.setAttribute("data-website-id", "e276f75b-a362-4278-a43f-de918ff8d2a7");
+          script.setAttribute("data-website-id", id);
+          script.setAttribute("data-before-send", "beforeSendHandler")
           script.src = "https://cloud.umami.is/script.js";
-          document.body.appendChild(script);
+          document.head.appendChild(script);
         }
       </script>
-    )}
+    }
     <slot name="headscripts"></slot>
     <!-- <ClientRouter /> -->
   </head>

@@ -41,7 +41,7 @@ export default defineConfig({
       PUBLIC_OGOR_APP_LOGIN_URL: envField.string({ context: "client", access: "public", default: site + "/auth/login" }),
       PUBLIC_OGOR_APP_SIGNUP_URL: envField.string({ context: "client", access: "public", default: site + "/auth/new-account"}),
       PUBLIC_OGOR_BE_HOST: envField.string({ context: "client", access: "public", default: site }),
-      PUBLIC_TRACKING_ENABLED: envField.boolean({ context: "client", access: "public", default: false }),
+      PUBLIC_TRACKING_UMAMI_ID: envField.string({ context: "client", access: "public", optional: true }),
     }
   },
   server: {

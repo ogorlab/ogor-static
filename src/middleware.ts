@@ -17,6 +17,7 @@ export const onRequest = defineMiddleware(({ locals, params, props }, next) => {
 
   Object.assign(locals, {
     key: props.key,
+    umamiKey: props.umamiKey || props.key,
     lang,
     getUrl: getUrl.bind(undefined, lang),
     backUrl: "TODO"
