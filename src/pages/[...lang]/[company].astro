@@ -32,9 +32,9 @@ export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) =>
           <a href="/redirect" class="text-inherit no-underline">OGOR</a>
         </h4>
         <p set:html={t("products:ogor.description")} />
-        <p>
+        <!-- <p>
           <span class="font-medium underline">{t("RON", { val: 700 })}/{t("year")}</span>
-        </p>
+        </p> -->
       </div>
     </article>
 
@@ -51,9 +51,9 @@ export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) =>
             </a>
           </h4>
           <p set:html={t("products:ogor_yield.description")} class="m-0 mb-[1em] grow" />
-          <p class="m-0">
+          <!-- <p class="m-0">
             <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
-          </p>
+          </p> -->
         </div>
       </article>
       <article class="product">
@@ -64,10 +64,10 @@ export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) =>
             {t("products:ogor_journal.name")}
           </h4>
           <p set:html={t("products:ogor_journal.description")} class="m-0 mb-[1em] grow" />
-          <p class="m-0">
+          <!-- <p class="m-0">
             <small class="text-muted">{t("starting_from")}:</small><br>
             <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
-          </p>
+          </p> -->
           <p>
             <a href="https://play.google.com/store/apps/details?id=com.ogor.ogorjournal" rel="external" target="_blank" style="text-decoration: none;">
               <img src={GooglePlay.src} class="h-10">
@@ -86,10 +86,10 @@ export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) =>
             {t("products:ogor_plan.name")}
           </h4>
           <p set:html={t("products:ogor_plan.description")} class="m-0 mb-[1em] grow" />
-          <p class="m-0">
+          <!-- <p class="m-0">
             <small class="text-muted">{t("starting_from")}:</small><br>
             <span class="font-medium underline">{t("RON", { val: 500 })}/{t("year")}</span>
-          </p>
+          </p> -->
         </div>
       </article>
       <article class="product">
@@ -102,10 +102,10 @@ export const getStaticPaths = (() => getLocalizedPaths("company", (item, lng) =>
             </a>
           </h4>
           <p set:html={t("products:ogor_vra.description")} class="m-0 mb-[1em] grow" />
-          <p class="m-0">
+          <!-- <p class="m-0">
             <small class="text-muted">{t("starting_from")}:</small><br>
             <span class="font-medium underline">{t("RON", { val: 42 })}/{t("map")}</span>
-          </p>
+          </p> -->
         </div>
       </article>
     </section>
