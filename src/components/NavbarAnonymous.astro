@@ -32,11 +32,12 @@ const { getUrl, key } = Astro.locals
   </a>
 
   <span class="max-tl:hidden">
-    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
+    <a href="tel:+40746347347" class="no-wrap">
       <svg viewBox="0 0 48 48" class="icon">
         <use href="/icons.svg#phone" />
       </svg>
-      <span class="underline">{t("company.phone")}</span>
+      <span class="underline">+40 (746) 347 347</span>
+      <span class="text-muted">({t("sales")})</span>
     </a>
     &ensp;
     <a href={"mailto:" + t("company.email")} class="no-wrap">
@@ -83,22 +84,39 @@ const { getUrl, key } = Astro.locals
     <li class="my-[1em]"><a href={ getUrl("/yield") }>{ t("nav.forecast_long") }</a></li>
     <!-- <li class="my-[1em]"><a href={ getUrl("/updates") }>{ t("nav.updates_long") }</a></li> -->
   </ul>
-  <div class="flex flex-wrap gap-4 my-[2em]">
-    <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
-      <svg viewBox="0 0 48 48" class="icon">
-        <use href="/icons.svg#phone" />
-      </svg>
-      <span class="underline">{t("company.phone")}</span>
-    </a>
-    <a href={"mailto:" + t("company.email")} class="no-wrap">
-      <svg viewBox="0 0 48 48" class="icon">
-        <use href="/icons.svg#email" />
-      </svg>
-      <span class="underline">{t("company.email")}</span>
-    </a>
-  </div>
+  <hr>
+  <dl>
+    <dt>{t("sales")}:</dt>
+    <dd class="mt-[.5em]">
+      <a href="tel:+40746347347" class="no-wrap">
+        <svg viewBox="0 0 48 48" class="icon">
+          <use href="/icons.svg#phone" />
+        </svg>
+        <span class="underline">+40 (746) 347 347</span>
+        <span>(Alin Oprea)</span>
+      </a>
+    </dd>
+    <dt class="mt-[1em]">Business:</dt>
+    <dd class="mt-[.5em]">
+      <a href={"tel:" + t("company.phone").replaceAll(/[^+|^0-9.]/g, "")} class="no-wrap">
+        <svg viewBox="0 0 48 48" class="icon">
+          <use href="/icons.svg#phone" />
+        </svg>
+        <span class="underline">{t("company.phone")}</span>
+        <span>(Cornel Nițu)</span>
+      </a>
+    </dd>
+    <dd class="mt-[.5em]">
+      <a href={"mailto:" + t("company.email")} class="no-wrap">
+        <svg viewBox="0 0 48 48" class="icon">
+          <use href="/icons.svg#email" />
+        </svg>
+        <span class="underline">{t("company.email")}</span>
+      </a>
+    </dd>
+  </dl>
 
-  <p class="text-[smaller] font-normal flex flex-wrap gap-[1em]">
+  <p class="mt-[2em] text-[smaller] font-normal flex flex-wrap gap-[1em]">
     { locales.map((locale) => (
       locale === Astro.currentLocale ? (
         <span class="text-muted">{t(locale)}</span>
