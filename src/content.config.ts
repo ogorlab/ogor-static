@@ -51,11 +51,25 @@ export const collections = {
 }
 
 export async function getLatestForecast() {
+  const collection = await getForecasts()
+
+  return collection[0]
+}
+
+/** Sorted from newest to oldest */
+export async function getForecasts() {
   const collection = await getCollection("forecast")
-  
-  return collection.reduce((latest, current) => {
-    const latestDate = new Date(latest.data.forecast_date)
-    const currentDate = new Date(current.data.forecast_date)
-    return currentDate > latestDate ? current : latest;
-  })
+
+  return collection.toSorted(
+    (a, b) => b.data.forecast_date.localeCompare(a.data.forecast_date)
+  )
+}
+
+export async function getForecastsByYear() {
+  const collection = await getForecasts()
+  const record: Record<string, typeof collection[number]> = {}
+
+  collection.forEach(entry => record[entry.data.forecast_date] = entry)
+
+  return record
 }

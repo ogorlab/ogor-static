@@ -3,8 +3,8 @@ import { t } from "i18next";
 import { getLocalizedPaths } from "@/i18n";
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getForecasts } from "@/content.config";
 
 interface Props {
   entries: CollectionEntry<"forecast">[]
@@ -13,8 +13,7 @@ interface Props {
 const { entries } = Astro.props
 const { getUrl } = Astro.locals
 
-const forecasts = entries.toReversed().map((entry, index, arr) => {
-
+const forecasts = entries.map((entry, index, arr) => {
   const prevEntry = arr[index - 1]
   const prevYear = prevEntry && new Date(prevEntry.data.forecast_date).getFullYear()
 
@@ -33,7 +32,7 @@ const forecasts = entries.toReversed().map((entry, index, arr) => {
 const crop_codes = [101, 105, 202, 108, 201]
 
 export const getStaticPaths = (async () => {
-  const entries = await getCollection("forecast")
+  const entries = await getForecasts()
 
   return getLocalizedPaths("yield/forecast", (item) => {
     item.props.entries = entries
