@@ -18,10 +18,8 @@ const { entry, entries } = Astro.props
 const { getUrl } = Astro.locals
 const next_forecast_date = undefined
 
-const lastForecast = entries[entries.length - 1].id
-const lastForecastLocaleDate = (new Date(lastForecast)).toLocaleDateString(Astro.currentLocale, {
-  day: "numeric", month: "long", year: "numeric"
-})
+const lastForecast = entries[0].data.forecast_date
+const lastForecastLocaleDate = t("common:date", { date: new Date(lastForecast) })
 const forecastLocaleDate = (new Date(entry.data.forecast_date)).toLocaleDateString(Astro.currentLocale, {
   day: "numeric", month: "long", year: "numeric"
 })
@@ -135,7 +133,7 @@ export const getStaticPaths = (async () => {
           </a>
         </li>
         <li>
-          <a href={getUrl("/yield", "#history")}>
+          <a href={getUrl("/yield/forecast")}>
             {t("yield_forecast.history")}
           </a>
         </li>
